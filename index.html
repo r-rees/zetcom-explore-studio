@@ -2194,6 +2194,13 @@ async function pngExport(seiten) {
     $('#export-status').textContent = 'Das Bild ließ sich nicht erstellen. Bitte noch einmal versuchen.';
   } finally { $('#export-los').disabled = false; exportKnopf(); }
 }
+// Vor jeder Aufnahme: alle Schriften der Seite laden und einmal klein vorrendern. Sonst fehlt im ersten Bild
+// Text in einer Schrift, die noch nicht dekodiert ist (V3: die Menuepunkte in Poppins Regular, nur Home stand da)
+async function aufwaermen(doc, breite) {
+  await Promise.all([...doc.fonts].map((f) => f.load().catch(() => null)));
+  await doc.fonts.ready;
+  try { await doc.defaultView.htmlToImage.toCanvas(doc.documentElement, { pixelRatio: 0.1, width: breite, height: 400 }); } catch (e) { /* nur Vorlauf */ }
+}
 // Eine Seite unsichtbar aufbauen und in voller Laenge aufnehmen. Das Fenster bleibt laptophoch,
 // damit Hoehen in vh wie im Browser wirken
 async function seiteAlsBild(key, breite, format) {
@@ -2209,6 +2216,7 @@ async function seiteAlsBild(key, breite, format) {
     await doc.fonts.ready; await warte(500);
     const h = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight);
     const s = doc.createElement('script'); s.textContent = D.vendor.htmlToImage; doc.head.appendChild(s);
+    await aufwaermen(doc, breite);
     const grund = f.contentWindow.getComputedStyle(doc.body).backgroundColor;
     const url = await f.contentWindow.htmlToImage[format === 'png' ? 'toPng' : 'toJpeg'](doc.documentElement, {
       quality: 0.9, pixelRatio: breite < 800 ? 2 : 1.5, width: breite, height: h,
@@ -2266,6 +2274,7 @@ async function seiteAufnahme(key, breite, hoehe, pr) {
     const ohne = doc.createElement('style'); ohne.textContent = 'html,body{scrollbar-width:none}'; doc.head.appendChild(ohne);
     await doc.fonts.ready; await warte(500);
     const s = doc.createElement('script'); s.textContent = D.vendor.htmlToImage; doc.head.appendChild(s);
+    await aufwaermen(doc, breite);
     const g = w.getComputedStyle(doc.body).backgroundColor;
     const grund = g && !/rgba\(0, 0, 0, 0\)/.test(g) ? g : '#ffffff';
     const farben = { grund: hex(grund), haupt: hex(w.getComputedStyle(doc.documentElement).getPropertyValue('--color-primary') || '#000') };

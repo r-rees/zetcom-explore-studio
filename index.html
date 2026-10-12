@@ -51,32 +51,36 @@ svg.i { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor;
 [hidden] { display: none !important; }
 
 /* ---------- Kopfleiste ---------- */
-/* Links Marke und Entwurf, Mitte Gestaltung als eine Gruppe, rechts Ansicht und Ausgabe.
+/* Nach Robins Vorlage (12.10.2026): links Pixelmarke und App-Name, daneben die Gestaltung als eine Gruppe;
+   rechts Rueckgaengig, Entwurf, Ansicht und Ausgabe. Geraet und Modus sitzen im Dock unten rechts.
    Labels fallen stufenweise weg, die Leiste bleibt immer im Fenster. */
-.leiste { display: flex; align-items: center; gap: 10px; padding: 0 14px; min-width: 0; background: var(--flaeche); border-bottom: 1px solid var(--linie); position: relative; z-index: 30; }
-.leiste .logo { width: 30px; height: 30px; display: block; flex: none; }
+.leiste { display: flex; align-items: center; gap: 12px; padding: 0 16px; min-width: 0; background: var(--flaeche); border-bottom: 1px solid var(--linie); position: relative; z-index: 30; }
+.marke { display: flex; align-items: center; gap: 12px; flex: none; }
+.leiste .logo { width: 40px; height: 40px; display: block; flex: none; }
+.marke .trenn { height: 40px; background: var(--tinte); }
+.appname { font-weight: 700; font-size: 18px; line-height: 1.12; letter-spacing: -.01em; color: var(--tinte); }
 .trenn { width: 1px; height: 24px; background: var(--linie); flex: none; }
-.projekt { display: flex; flex-direction: column; justify-content: center; gap: 1px; flex: 0 1 210px; min-width: 96px; }
-.projekt input { width: 100%; border: 0; background: none; font-weight: 650; font-size: 14px; letter-spacing: -.01em; color: var(--tinte); padding: 1px 6px; margin-left: -6px; border-radius: 6px; outline: none; text-overflow: ellipsis; }
-.projekt input:hover { background: var(--hover); }
-.projekt input:focus { background: var(--hover); box-shadow: 0 0 0 2px var(--akzent); }
-.projekt .stand { white-space: nowrap; font-size: 11.5px; color: var(--leise); display: flex; align-items: center; gap: 3px; }
-.projekt .stand.warn { color: #b45309; }
-.mitte { display: flex; align-items: center; gap: 2px; margin: 0 auto; padding: 3px; flex: none; background: var(--flaeche-2); border: 1px solid var(--linie); border-radius: 12px; }
-.mitte .trenn { height: 20px; margin: 0 4px; }
-.werkzeug { display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 10px; border: 0; background: none; border-radius: 9px; color: var(--tinte-2); white-space: nowrap; font-weight: 500; }
+.mitte { display: flex; align-items: center; gap: 2px; margin-left: 12px; padding: 3px; flex: none; background: var(--flaeche-2); border: 1px solid var(--linie); border-radius: 12px; }
+.mitte .trenn { height: 20px; margin: 0 6px; }
+.werkzeug { display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 11px; border: 0; background: none; border-radius: 9px; color: var(--tinte-2); white-space: nowrap; font-weight: 500; font-size: 15px; }
 .werkzeug:hover { background: var(--flaeche); color: var(--tinte); }
 .werkzeug[aria-expanded="true"] { background: var(--tinte); color: #fff; }
 .werkzeug b { font-weight: 650; color: var(--tinte); overflow: hidden; text-overflow: ellipsis; }
 #lbl-seite { max-width: 140px; }
 .werkzeug[aria-expanded="true"] b { color: #fff; }
 .werkzeug .pfeil { width: 14px; height: 14px; opacity: .6; }
+.projekt { display: flex; flex-direction: column; justify-content: center; gap: 1px; flex: 0 1 220px; min-width: 96px; margin: 0 8px 0 4px; }
+.projekt input { width: 100%; border: 0; background: none; font-weight: 600; font-size: 15px; color: var(--tinte-2); padding: 1px 6px; margin-left: -6px; border-radius: 6px; outline: none; text-overflow: ellipsis; }
+.projekt input:hover { background: var(--hover); }
+.projekt input:focus { background: var(--hover); box-shadow: 0 0 0 2px var(--akzent); }
+.projekt .stand { white-space: nowrap; font-size: 12px; color: var(--leise); display: flex; align-items: center; gap: 3px; }
+.projekt .stand.warn { color: #b45309; }
 .chip-logo { width: 22px; height: 22px; border-radius: 6px; background: var(--flaeche-2) center / contain no-repeat; border: 1px solid var(--linie); display: grid; place-items: center; }
 .chip-farben { display: inline-flex; }
 .chip-farben i { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--flaeche); margin-left: -6px; box-shadow: 0 0 0 1px var(--linie); }
 .chip-farben i:first-child { margin-left: 0; }
 .chip-aa { font-size: 17px; font-weight: 600; line-height: 1; width: 22px; text-align: center; }
-.rechts { display: flex; align-items: center; gap: 4px; flex: none; }
+.rechts { display: flex; align-items: center; gap: 4px; flex: 1 1 auto; justify-content: flex-end; min-width: 0; }
 .rechts .trenn { margin: 0 4px; }
 .knopf { display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--linie-2); background: var(--flaeche); font-weight: 600; white-space: nowrap; transition: background .15s, border-color .15s, transform .1s; }
 .knopf:hover { background: var(--hover); }
@@ -98,10 +102,10 @@ svg.i { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor;
 .segment--voll button { flex: 1; }
 .farben-notiz { margin: 8px 0 0; font-size: 12px; line-height: 1.45; color: var(--leise); }
 #dunkel[aria-pressed="true"] { background: var(--akzent-hell); color: var(--akzent-2); }
-@media (max-width: 1520px) { .mitte .lbl { display: none; } }
-@media (max-width: 1240px) { #export-auf .lbl { display: none; } #export-auf { width: 38px; padding: 0; justify-content: center; } .rechts .trenn { display: none; } }
-@media (max-width: 1080px) { #vorschau-an, #geraete-auf, #vor { display: none; } .projekt { flex-basis: 150px; } }
-@media (max-width: 900px) { .mitte .trenn, .werkzeug .pfeil, #zurueck { display: none; } .leiste { gap: 6px; padding: 0 10px; } .werkzeug { padding: 0 8px; } #lbl-seite { max-width: 90px; } }
+@media (max-width: 1440px) { .mitte .lbl { display: none; } }
+@media (max-width: 1180px) { .appname, .marke .trenn { display: none; } #export-auf .lbl { display: none; } #export-auf { width: 38px; padding: 0; justify-content: center; } }
+@media (max-width: 980px) { #vorschau-an, #geraete-auf, #vor, .rechts .trenn { display: none; } .projekt { flex-basis: 140px; } }
+@media (max-width: 820px) { .mitte .trenn, .werkzeug .pfeil, #zurueck { display: none; } .leiste { gap: 6px; padding: 0 10px; } .mitte { margin-left: 0; } .werkzeug { padding: 0 8px; } #lbl-seite { max-width: 90px; } }
 
 /* ---------- Popover ---------- */
 .pop { position: fixed; z-index: 40; top: 70px; width: 360px; max-height: calc(100vh - 90px); display: flex; flex-direction: column; background: var(--flaeche); border: 1px solid var(--linie); border-radius: var(--r-l); box-shadow: var(--schatten-l); animation: auf .14s ease-out; }
@@ -160,7 +164,13 @@ svg.i { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor;
 .tipp-karte p { margin: 0; flex: 1; font-size: 13px; line-height: 1.4; }
 
 /* Farben */
-.paletten { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.paletten { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding-top: 10px; }
+.pal-wahl summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 96px 1fr auto; align-items: center; gap: 12px; padding: 8px 10px; border: 1px solid var(--linie-2); border-radius: 10px; font-weight: 600; }
+.pal-wahl summary::-webkit-details-marker { display: none; }
+.pal-wahl summary:hover { background: var(--hover); }
+.pal-wahl summary .streifen { display: flex; height: 22px; border-radius: 5px; overflow: hidden; box-shadow: 0 0 0 1px var(--linie); }
+.pal-wahl summary .streifen i { flex: 1; }
+.pal-wahl[open] summary svg { transform: rotate(180deg); }
 .palette { border: 1px solid var(--linie); background: var(--flaeche); border-radius: 10px; padding: 8px; text-align: left; transition: border-color .15s, box-shadow .15s; }
 .palette:hover { border-color: var(--linie-2); box-shadow: var(--schatten); }
 .palette .streifen { display: flex; height: 28px; border-radius: 6px; overflow: hidden; }
@@ -244,6 +254,7 @@ details.mehr[open] summary svg { transform: rotate(180deg); }
 .schirm { position: relative; overflow: hidden; background: #fff; }
 .geraet[data-art="tablet"] .schirm { border-radius: 22px; }
 .geraet[data-art="mobil"] .schirm { border-radius: 38px; }
+.geraet[data-art="tablet"] .schirm, .geraet[data-art="mobil"] .schirm { background: #15181d; }
 .geraet[data-art="mobil"] .schirm::before { content: ""; position: absolute; z-index: 2; top: calc(11px * var(--s, 1)); left: 50%; transform: translateX(-50%); width: calc(125px * var(--s, 1)); height: calc(36px * var(--s, 1)); background: #15181d; border-radius: 99px; pointer-events: none; }
 /* iOS-Statusleiste ueber der Seite, Farbe wie die Kopfzeile der Seite (statusFarbe) */
 .status { display: none; position: absolute; left: 0; right: 0; top: 0; z-index: 1; align-items: center; justify-content: space-between; padding: 0 calc(30px * var(--s, 1)) 0 calc(40px * var(--s, 1)); font-weight: 600; font-size: calc(16px * var(--s, 1)); letter-spacing: -.01em; background: #fff; color: #000; pointer-events: none; }
@@ -311,7 +322,10 @@ dialog[open] { animation: dialogauf .18s ease-out; }
 
 /* Meldung */
 /* Zoom unten rechts */
-.zoom { position: fixed; right: 16px; bottom: 16px; z-index: 25; display: flex; align-items: center; gap: 2px; padding: 4px; background: var(--flaeche); border: 1px solid var(--linie); border-radius: 12px; box-shadow: var(--schatten-l); }
+.dock { position: fixed; right: 16px; bottom: 16px; z-index: 25; display: grid; gap: 6px; padding: 6px; background: var(--flaeche); border: 1px solid var(--linie); border-radius: 14px; box-shadow: var(--schatten-l); }
+.dock-zeile { display: flex; justify-content: space-between; gap: 6px; }
+.dock-zeile .segment button { height: 34px; min-width: 42px; }
+.zoom { display: flex; align-items: center; gap: 2px; }
 .zoom button { height: 32px; min-width: 32px; border: 0; background: none; border-radius: 8px; display: inline-grid; place-items: center; color: var(--tinte-2); }
 .zoom button:hover { background: var(--hover); color: var(--tinte); }
 .zoom input[type=range] { width: 120px; margin: 0 4px; accent-color: var(--tinte); }
@@ -415,10 +429,10 @@ dialog[open] { animation: dialogauf .18s ease-out; }
 </svg>
 
 <header class="leiste">
-  <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTA0IiBoZWlnaHQ9IjUwNCIgdmlld0JveD0iMCAwIDUwNCA1MDQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+DQo8cmVjdCB3aWR0aD0iNTA0IiBoZWlnaHQ9IjUwNCIgZmlsbD0id2hpdGUiPjwvcmVjdD4NCjxyZWN0IHg9IjIwMS42MDIiIHk9IjEwMC44IiB3aWR0aD0iMTAwLjgiIGhlaWdodD0iMTAwLjgiIHRyYW5zZm9ybT0icm90YXRlKDkwIDIwMS42MDIgMTAwLjgpIiBmaWxsPSJibGFjayI+PC9yZWN0Pg0KPHJlY3QgeD0iMzAyLjQwMiIgeT0iMTAwLjgiIHdpZHRoPSIxMDAuOCIgaGVpZ2h0PSIxMDAuOCIgdHJhbnNmb3JtPSJyb3RhdGUoOTAgMzAyLjQwMiAxMDAuOCkiIGZpbGw9ImJsYWNrIj48L3JlY3Q+DQo8cmVjdCB4PSI0MDMuMTk5IiB5PSIxMDAuOCIgd2lkdGg9IjEwMC44IiBoZWlnaHQ9IjEwMC44IiB0cmFuc2Zvcm09InJvdGF0ZSg5MCA0MDMuMTk5IDEwMC44KSIgZmlsbD0iYmxhY2siPjwvcmVjdD4NCjxyZWN0IHg9IjMwMi40MDIiIHk9IjIwMS42IiB3aWR0aD0iMTAwLjgiIGhlaWdodD0iMTAwLjgiIHRyYW5zZm9ybT0icm90YXRlKDkwIDMwMi40MDIgMjAxLjYpIiBmaWxsPSJibGFjayI+PC9yZWN0Pg0KPHJlY3QgeD0iNDAzLjE5OSIgeT0iMjAxLjYiIHdpZHRoPSIxMDAuOCIgaGVpZ2h0PSIxMDAuOCIgdHJhbnNmb3JtPSJyb3RhdGUoOTAgNDAzLjE5OSAyMDEuNikiIGZpbGw9ImJsYWNrIj48L3JlY3Q+DQo8cmVjdCB4PSIyMDEuNjAyIiB5PSIzMDIuNCIgd2lkdGg9IjEwMC44IiBoZWlnaHQ9IjEwMC44IiB0cmFuc2Zvcm09InJvdGF0ZSg5MCAyMDEuNjAyIDMwMi40KSIgZmlsbD0iYmxhY2siPjwvcmVjdD4NCjxyZWN0IHg9IjQwMy4xOTkiIHk9IjMwMi40IiB3aWR0aD0iMTAwLjgiIGhlaWdodD0iMTAwLjgiIHRyYW5zZm9ybT0icm90YXRlKDkwIDQwMy4xOTkgMzAyLjQpIiBmaWxsPSJibGFjayI+PC9yZWN0Pg0KPC9zdmc+" alt="zetcom" title="Explore Studio">
-  <div class="projekt">
-    <input id="museum" placeholder="Unbenannter Entwurf" aria-label="Name des Entwurfs" autocomplete="off">
-    <span class="stand" id="stand" title="Automatisch gespeichert"><svg class="i" style="width:12px;height:12px"><use href="#s-haken"/></svg><span> Gespeichert</span></span>
+  <div class="marke">
+    <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTA0IiBoZWlnaHQ9IjUwNCIgdmlld0JveD0iMCAwIDUwNCA1MDQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+DQo8cmVjdCB3aWR0aD0iNTA0IiBoZWlnaHQ9IjUwNCIgZmlsbD0id2hpdGUiPjwvcmVjdD4NCjxyZWN0IHg9IjIwMS42MDIiIHk9IjEwMC44IiB3aWR0aD0iMTAwLjgiIGhlaWdodD0iMTAwLjgiIHRyYW5zZm9ybT0icm90YXRlKDkwIDIwMS42MDIgMTAwLjgpIiBmaWxsPSJibGFjayI+PC9yZWN0Pg0KPHJlY3QgeD0iMzAyLjQwMiIgeT0iMTAwLjgiIHdpZHRoPSIxMDAuOCIgaGVpZ2h0PSIxMDAuOCIgdHJhbnNmb3JtPSJyb3RhdGUoOTAgMzAyLjQwMiAxMDAuOCkiIGZpbGw9ImJsYWNrIj48L3JlY3Q+DQo8cmVjdCB4PSI0MDMuMTk5IiB5PSIxMDAuOCIgd2lkdGg9IjEwMC44IiBoZWlnaHQ9IjEwMC44IiB0cmFuc2Zvcm09InJvdGF0ZSg5MCA0MDMuMTk5IDEwMC44KSIgZmlsbD0iYmxhY2siPjwvcmVjdD4NCjxyZWN0IHg9IjMwMi40MDIiIHk9IjIwMS42IiB3aWR0aD0iMTAwLjgiIGhlaWdodD0iMTAwLjgiIHRyYW5zZm9ybT0icm90YXRlKDkwIDMwMi40MDIgMjAxLjYpIiBmaWxsPSJibGFjayI+PC9yZWN0Pg0KPHJlY3QgeD0iNDAzLjE5OSIgeT0iMjAxLjYiIHdpZHRoPSIxMDAuOCIgaGVpZ2h0PSIxMDAuOCIgdHJhbnNmb3JtPSJyb3RhdGUoOTAgNDAzLjE5OSAyMDEuNikiIGZpbGw9ImJsYWNrIj48L3JlY3Q+DQo8cmVjdCB4PSIyMDEuNjAyIiB5PSIzMDIuNCIgd2lkdGg9IjEwMC44IiBoZWlnaHQ9IjEwMC44IiB0cmFuc2Zvcm09InJvdGF0ZSg5MCAyMDEuNjAyIDMwMi40KSIgZmlsbD0iYmxhY2siPjwvcmVjdD4NCjxyZWN0IHg9IjQwMy4xOTkiIHk9IjMwMi40IiB3aWR0aD0iMTAwLjgiIGhlaWdodD0iMTAwLjgiIHRyYW5zZm9ybT0icm90YXRlKDkwIDQwMy4xOTkgMzAyLjQpIiBmaWxsPSJibGFjayI+PC9yZWN0Pg0KPC9zdmc+" alt="zetcom">
+    <span class="trenn"></span>
+    <span class="appname">Explore<br>Studio</span>
   </div>
 
   <nav class="mitte" aria-label="Gestaltung">
@@ -435,17 +449,11 @@ dialog[open] { animation: dialogauf .18s ease-out; }
     <button class="knopf knopf--leer knopf--rund" id="zurueck" title="Rückgängig (Strg+Z)" aria-label="Rückgängig"><svg class="i"><use href="#s-zurueck"/></svg></button>
     <button class="knopf knopf--leer knopf--rund" id="vor" title="Wiederholen (Strg+Y)" aria-label="Wiederholen"><svg class="i"><use href="#s-vor"/></svg></button>
     <span class="trenn"></span>
-    <span class="segment" role="group" aria-label="Gerät">
-      <button data-breite="1440" title="Desktop" aria-label="Desktop"><svg class="i"><use href="#s-desktop"/></svg></button>
-      <button data-breite="820" title="Tablet" aria-label="Tablet"><svg class="i"><use href="#s-tablet"/></svg></button>
-      <button data-breite="390" title="Smartphone" aria-label="Smartphone"><svg class="i"><use href="#s-mobil"/></svg></button>
-    </span>
-    <span class="segment modus" role="group" aria-label="Modus">
-      <button data-modus="bearbeiten" aria-pressed="true" title="Bearbeiten: Texte und Bilder anklicken und ändern (E)" aria-label="Bearbeiten"><svg class="i"><use href="#s-stift"/></svg></button>
-      <button data-modus="ansehen" aria-pressed="false" title="Ansehen: durch die Website klicken, Links sind aktiv (E)" aria-label="Ansehen"><svg class="i"><use href="#s-zeiger"/></svg></button>
-    </span>
+    <div class="projekt">
+      <input id="museum" placeholder="Unbenannter Entwurf" aria-label="Name des Entwurfs" autocomplete="off">
+      <span class="stand" id="stand" title="Automatisch gespeichert"><svg class="i" style="width:12px;height:12px"><use href="#s-haken"/></svg><span> Gespeichert</span></span>
+    </div>
     <button class="knopf knopf--leer knopf--rund" id="dunkel" aria-pressed="false" title="Dunkelmodus (D)" aria-label="Dunkelmodus"><svg class="i"><use href="#s-mond"/></svg></button>
-    <span class="trenn"></span>
     <button class="knopf knopf--leer knopf--rund" id="geraete-auf" title="Geräte-Vorschau: der Entwurf auf Monitor, Tablet und Smartphone (G)" aria-label="Geräte-Vorschau"><svg class="i"><use href="#s-geraete"/></svg></button>
     <button class="knopf knopf--leer knopf--rund" id="vorschau-an" title="Präsentieren, ohne Leiste (P)" aria-label="Präsentieren"><svg class="i"><use href="#s-spielen"/></svg></button>
     <button class="knopf knopf--haupt" id="export-auf" title="Exportieren: PDF, Geräte-Mockup, Pitch-Datei"><svg class="i"><use href="#s-export"/></svg><span class="lbl">Exportieren</span></button>
@@ -468,12 +476,25 @@ dialog[open] { animation: dialogauf .18s ease-out; }
   </div>
 </main>
 
+<div class="dock">
+<div class="dock-zeile">
+  <span class="segment" role="group" aria-label="Gerät">
+    <button data-breite="1440" title="Desktop" aria-label="Desktop"><svg class="i"><use href="#s-desktop"/></svg></button>
+    <button data-breite="820" title="Tablet" aria-label="Tablet"><svg class="i"><use href="#s-tablet"/></svg></button>
+    <button data-breite="390" title="Smartphone" aria-label="Smartphone"><svg class="i"><use href="#s-mobil"/></svg></button>
+  </span>
+  <span class="segment modus" role="group" aria-label="Modus">
+    <button data-modus="bearbeiten" aria-pressed="true" title="Bearbeiten: Texte und Bilder anklicken und ändern (E)" aria-label="Bearbeiten"><svg class="i"><use href="#s-stift"/></svg></button>
+    <button data-modus="ansehen" aria-pressed="false" title="Ansehen: durch die Website klicken, Links sind aktiv (E)" aria-label="Ansehen"><svg class="i"><use href="#s-zeiger"/></svg></button>
+  </span>
+</div>
 <div class="zoom" role="group" aria-label="Zoom">
   <button id="zoom-kleiner" title="Kleiner" aria-label="Kleiner"><svg class="i"><use href="#s-minus"/></svg></button>
   <input type="range" id="zoom-regler" min="25" max="150" step="1" aria-label="Zoom">
   <button id="zoom-groesser" title="Größer" aria-label="Größer"><svg class="i"><use href="#s-neu"/></svg></button>
   <span class="trenn"></span>
   <button class="wert" id="zoom-wert" title="Einpassen"></button>
+</div>
 </div>
 
 <dialog id="be" aria-label="Bild ändern">
@@ -579,8 +600,9 @@ dialog[open] { animation: dialogauf .18s ease-out; }
       <button data-dunkel="1"><svg class="i"><use href="#s-mond"/></svg>Dunkel</button>
     </span>
     <p class="farben-notiz" id="farben-notiz" hidden>Abgeleitet aus den hellen Farben. Was Sie hier ändern, gilt nur im Dunkelmodus.</p>
-    <div class="abschnitt" id="paletten-titel">Paletten</div>
-    <div class="paletten" id="paletten"></div>
+    <div class="abschnitt" id="paletten-titel">Farbvorschläge</div>
+    <details class="pal-wahl" id="pal-wahl"><summary><span class="streifen" id="pal-akt-streifen"></span><span id="pal-akt-name"></span><svg class="i"><use href="#s-runter"/></svg></summary>
+    <div class="paletten" id="paletten"></div></details>
     <div class="abschnitt">Feinabstimmung</div>
     <div id="rollen-haupt"></div>
     <details class="mehr"><summary>Weitere Farben <svg class="i" style="width:14px;height:14px"><use href="#s-runter"/></svg></summary><div id="rollen-mehr"></div></details>
@@ -1340,6 +1362,11 @@ async function setzeBild(el, e) {
 async function wende(doc, voll, export_) {
   if (!doc || !doc.getElementById('pitch-stil')) return;
   await stil(doc, export_);
+  // V2 setzt die Wortmarke weiss, auf einer hellen Kopfzeile verschwindet sie: dort schwarz (Robin, 12.10.2026)
+  const kf = kopfGrund(doc);
+  let lf = doc.getElementById('pitch-logofarbe');
+  if (!lf) { lf = doc.createElement('style'); lf.id = 'pitch-logofarbe'; doc.head.appendChild(lf); }
+  lf.textContent = kontrast(kf, '#000000') >= kontrast(kf, '#ffffff') ? 'header:not(.tify-header) svg.pitch-logo [fill="white"]{fill:#000}' : '';
   if (doc === fenster.contentDocument) statusFarbe(doc);
   if (!voll) return;
   doc.querySelectorAll('.pitch-logo').forEach((el) => {
@@ -1823,7 +1850,12 @@ function farbenPop() {
     + liste.slice(0, eigene.length).map(knopf).join('')
     + '<div class="pal-gruppe">Allgemein</div>'
     + liste.slice(eigene.length).map((p, i) => knopf(p, i + eigene.length)).join('');
-  $$('#paletten .palette[data-i]').forEach((b) => b.onclick = () => setzeFarben(liste[b.dataset.i].f, `Palette ${liste[b.dataset.i].name} übernommen.`));
+  $$('#paletten .palette[data-i]').forEach((b) => b.onclick = () => { $('#pal-wahl').open = false; setzeFarben(liste[b.dataset.i].f, `Palette ${liste[b.dataset.i].name} übernommen.`); });
+  // Kopf der Aufklappliste: die gewaehlte Palette, sonst die aktuellen Farben
+  const akt = !P.dunkel && liste.find((p) => gewaehlt(p.f));
+  const jetzt = {}; ['primary', 'accent', 'bg-default', 'bg-footer'].forEach((k) => { jetzt[k] = wert(k); });
+  $('#pal-akt-streifen').innerHTML = (akt ? proben(akt.f).map((k) => streifen(akt.f)[k]) : Object.values(jetzt)).map((c) => `<i style="background:${c}"></i>`).join('');
+  $('#pal-akt-name').textContent = akt ? akt.name : (Object.keys(P.dunkel ? P.farbenDunkel : P.farben).length ? 'Eigene Farben' : 'Wie Template');
   const lb = $('#paletten [data-logo]');
   if (lb) {
     logoFarben(P.logo).then((fa) => {
@@ -1878,8 +1910,7 @@ function schriftPop() {
     const karte = ([n, t, x, wofuer], i) => {
       const st = schrift(t), sx = schrift(x); probe(t); probe(x);
       const an = P.titel && P.text && P.titel.name === t && P.text.name === x;
-      const inkl = st.quelle === 'explore' && sx.quelle === 'explore';
-      return `<button class="paar" data-i="${i}" aria-pressed="${an}"><span class="t" style="font-family:${familie(st)};${TITEL_ART[P.vorlage] || ''}">${esc(P.museum || 'Die Sammlung')}</span><span class="x" style="font-family:${familie(sx)}">Werke und Objekte aus der Sammlung, offen für alle.</span>${wofuer ? `<span class="wofuer">${esc(wofuer)}</span>` : ''}<span class="meta"><span>${n} · ${t}${t !== x ? ' und ' + x : ''}</span>${inkl ? '<span class="marke-inkl">In Explore enthalten</span>' : ''}</span></button>`;
+      return `<button class="paar" data-i="${i}" aria-pressed="${an}"><span class="t" style="font-family:${familie(st)};${TITEL_ART[P.vorlage] || ''}">${esc(P.museum || 'Die Sammlung')}</span><span class="x" style="font-family:${familie(sx)}">Werke und Objekte aus der Sammlung, offen für alle.</span>${wofuer ? `<span class="wofuer">${esc(wofuer)}</span>` : ''}<span class="meta"><span>${n} · ${t}${t !== x ? ' und ' + x : ''}</span></span></button>`;
     };
     ziel.innerHTML = '<div class="paare">'
       + (eigene.length ? `<div class="pal-gruppe">Passend zu ${VORLAGEN[P.vorlage][0]}</div>` : '')
@@ -1899,7 +1930,7 @@ const sichtbar = new IntersectionObserver((ee) => ee.forEach((e) => { if (e.isIn
 function liste() {
   const q = $('#such').value.trim().toLowerCase();
   const akt = P[reiter];
-  const zeile = (s) => `<button data-s='${JSON.stringify(s).replace(/'/g, '&#39;')}' data-name="${s.name}" aria-pressed="${String(!!akt && akt.name === s.name)}"><span class="probe" style="font-family:${familie(s)}">${s.name}</span><small>${s.quelle === 'explore' ? '<span class="marke-inkl">In Explore</span>' : ART[s.art] || ''}</small></button>`;
+  const zeile = (s) => `<button data-s='${JSON.stringify(s).replace(/'/g, '&#39;')}' data-name="${s.name}" aria-pressed="${String(!!akt && akt.name === s.name)}"><span class="probe" style="font-family:${familie(s)}">${s.name}</span><small>${ART[s.art] || ''}</small></button>`;
   const eigen = EIGEN_OBJ.filter((s) => (!q || s.name.toLowerCase().includes(q)) && (art === 'alle' || s.art === art));
   const google = [];
   for (const [name, g] of GF) {
@@ -1910,7 +1941,7 @@ function liste() {
     if (google.length >= 300) break;
   }
   let h = '';
-  if (eigen.length) h += '<div class="gruppe">In Explore enthalten</div>' + eigen.map(zeile).join('');
+  if (eigen.length) h += '<div class="gruppe">Empfohlen</div>' + eigen.map(zeile).join('');
   if (google.length) h += '<div class="gruppe">Google Fonts, Open Source</div>' + google.map(zeile).join('');
   $('#schriftliste').innerHTML = h || '<p style="color:var(--leise);padding:16px 10px">Keine Schrift gefunden.</p>';
   $$('#schriftliste button').forEach((b) => {
@@ -1943,7 +1974,9 @@ function masse() {
   const oben = vorschau ? 64 : 24, unten = 72;
   const avB = B - 48 - rand * 2, avH = H - oben - unten - rand * 2 - kopfH;
   zoomPassend = artG === 'desktop' ? Math.min(1, avB / P.breite) : Math.min(1, avB / P.breite, avH / hoch);
-  const s = zoom === 'auto' ? (artG === 'desktop' ? Math.min(zoomPassend, 0.6) : zoomPassend) : zoom;
+  let s = zoom === 'auto' ? (artG === 'desktop' ? Math.min(zoomPassend, 0.6) : zoomPassend) : zoom;
+  // Ganze Pixel fuer den Bildschirm, sonst blitzt rechts der Grund des Schirms als Haarlinie durch
+  if (artG !== 'desktop') s = Math.floor(P.breite * s) / P.breite;
   const schirmB = P.breite * s;
   const schirmH = artG === 'desktop' ? Math.max(200, H - oben - 24 - kopfH) : hoch * s;
   const gb = schirmB + rand * 2;
@@ -2165,6 +2198,14 @@ SZENEN.forEach((s) => { s.url = blob(bytes(s.bild), 'image/webp'); delete s.bild
 const GV = { seite: null, szene: null, passend: null, auf: null, stempel: '', lauf: 0 };
 const szeneBild = (s) => s.img || (s.img = new Promise((ok, fehl) => { const i = new Image(); i.onload = () => ok(i); i.onerror = fehl; i.src = s.url; }));
 const aktSzene = () => SZENEN.find((s) => s.id === GV.szene) || SZENEN[0];
+// Monitor: Aufnahme so breit wie ein Full-HD-Bildschirm, die Explore-Seiten (bis 1440) stehen darin mit Rand (Robin, 12.10.2026)
+const MONITOR = 1920;
+// Smartphone: der ausgeschnittene Bildschirm der Szene reicht bis an das Gehaeuse. Ein schwarzer Rand wie beim
+// iPhone (rund 1,6 Prozent der Breite) haelt die Seite im Geraet, die Ecken werden rund beschnitten
+function glas(m) {
+  const i = Math.round(m.b * 0.016 * 2) / 2;
+  return { x: m.x + i, y: m.y + i, b: m.b - 2 * i, h: m.h - 2 * i, r: m.b * 0.14, insel: m.insel ? [Math.max(0, m.insel[0] - i), m.insel[1]] : null };
+}
 // Statusleiste so hoch wie beim iPhone: Abstand ueber der Insel noch einmal darunter
 const statusHoehe = (m) => (m.insel ? m.insel[0] + m.insel[1] + 4 : Math.round(m.h * 0.064));
 
@@ -2216,13 +2257,14 @@ async function gvAufnehmen() {
     // Das Tablet zeigt immer die Sammlung (Robin, 09.10.2026), die Seitenwahl gilt fuer Monitor und Smartphone
     const Q = gvFaktor(SZENEN[0]);
     $('#gv-laden-text').textContent = 'Monitor wird aufgenommen';
-    const gross = await seiteAufnahme(GV.seite, 1440, Math.round(1440 * g.desktop.h / g.desktop.b), Math.max(1, g.desktop.b * Q / 1440));
+    const gross = await seiteAufnahme(GV.seite, MONITOR, Math.round(MONITOR * g.desktop.h / g.desktop.b), Math.max(1, g.desktop.b * Q / MONITOR));
     if (lauf !== GV.lauf) return;
     $('#gv-laden-text').textContent = 'Tablet wird aufgenommen';
     const tablet = await seiteAufnahme('sammlung', 1180, 820, 1.5);
     if (lauf !== GV.lauf) return;
     $('#gv-laden-text').textContent = 'Smartphone wird aufgenommen';
-    const mobil = await seiteAufnahme(GV.seite, 390, Math.round(390 * (m.h - statusHoehe(m)) / m.b), 2);
+    const mi = glas(m);
+    const mobil = await seiteAufnahme(GV.seite, 390, Math.round(390 * (mi.h - statusHoehe(mi)) / mi.b), 2);
     if (lauf !== GV.lauf) return;
     await document.fonts.load('600 17px "DM Sans"');
     GV.auf = { gross: gross.bild, tablet: tablet.bild, mobil: mobil.bild, kopf: kopfFarbe(mobil.bild) };
@@ -2247,6 +2289,11 @@ function mittel(c) {
 }
 // Statusleiste der Buehne: Farbe der Kopfzeile, eine halb durchsichtige (Template 2) ueber dem Seitengrund
 function statusFarbe(doc) {
+  const f = kopfGrund(doc), st = $('#status'); st.style.background = f;
+  st.style.color = kontrast(f, '#000000') >= kontrast(f, '#ffffff') ? '#000' : '#fff';
+}
+// Sichtbare Farbe der Kopfzeile: eine halb durchsichtige ueber dem Seitengrund
+function kopfGrund(doc) {
   const w = doc.defaultView, kopf = doc.querySelector('header:not(.tify-header)');
   const bg = [doc.body, doc.documentElement].map((e) => w.getComputedStyle(e).backgroundColor).find((c) => !/rgba\(0, 0, 0, 0\)|transparent/.test(c));
   const grund = bg ? hex(bg) : '#ffffff';
@@ -2256,8 +2303,7 @@ function statusFarbe(doc) {
     const a = m.length > 3 ? m[3] : m.length ? 1 : 0;
     if (a > 0) f = zuHex(m.slice(0, 3).map((x, i) => x * a + rgb(grund)[i] * (1 - a)));
   }
-  const st = $('#status'); st.style.background = f;
-  st.style.color = kontrast(f, '#000000') >= kontrast(f, '#ffffff') ? '#000' : '#fff';
+  return f;
 }
 // Farbe der Statusleiste: Mittel der obersten Zeilen, so wie Safari die Leiste einfaerbt
 function kopfFarbe(c) {
@@ -2391,7 +2437,7 @@ function statusleiste(ctx, m, sb, grund) {
 // weich vergroessert, die Bildschirminhalte bleiben scharf, weil sie in voller Aufloesung aufgenommen sind
 const gvFaktor = (s) => (s.b < 2500 ? 2 : 1);
 function gvKomposit(ctx, s, img, Q) {
-  const g = s.schirme, A = GV.auf, R = 2, d = g.desktop, m = g.mobil, sb = statusHoehe(m);
+  const g = s.schirme, A = GV.auf, R = 2, d = g.desktop, m0 = g.mobil, m = glas(m0), sb = statusHoehe(m);
   ctx.setTransform(Q, 0, 0, Q, 0, 0);
   ctx.clearRect(0, 0, s.b, s.h);
   ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
@@ -2399,8 +2445,11 @@ function gvKomposit(ctx, s, img, Q) {
   const T = g.tablet, ecken = [[T.tl[0] - R, T.tl[1] - R], [T.tr[0] + R, T.tr[1] - R], [T.br[0] + R, T.br[1] + R], [T.bl[0] - R, T.bl[1] + R]];
   const w = verzerrtGL(A.tablet, ecken, Q);
   if (w) ctx.drawImage(w.bild, w.x, w.y, w.b, w.h); else verzerrt(ctx, A.tablet, T, R);
-  ctx.fillStyle = A.kopf; ctx.fillRect(m.x - R, m.y - R, m.b + 2 * R, sb + R + 1);
-  fuelle(ctx, A.mobil, m.x - R, m.y + sb, m.b + 2 * R, m.h - sb + R);
+  ctx.fillStyle = '#0b0c0e'; ctx.fillRect(m0.x - R, m0.y - R, m0.b + 2 * R, m0.h + 2 * R);
+  ctx.save(); rund(ctx, m.x, m.y, m.b, m.h, m.r); ctx.clip();
+  ctx.fillStyle = A.kopf; ctx.fillRect(m.x, m.y, m.b, sb + 1);
+  fuelle(ctx, A.mobil, m.x, m.y + sb, m.b, m.h - sb);
+  ctx.restore();
   statusleiste(ctx, m, sb, A.kopf);
   ctx.drawImage(img, 0, 0, s.b, s.h);
 }

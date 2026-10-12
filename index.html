@@ -299,7 +299,7 @@ dialog[open] { animation: dialogauf .18s ease-out; }
 .willkommen-raster .vkarte { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: center; }
 .willkommen-raster .vkarte strong { margin-top: 0; }
 #export { width: 720px; }
-.export-art { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+.export-art { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 18px; }
 .export-art button { display: flex; gap: 12px; align-items: center; text-align: left; padding: 14px; border: 1px solid var(--linie); border-radius: var(--r); background: var(--flaeche); }
 .export-art button[aria-pressed="true"] { border-color: var(--tinte); box-shadow: 0 0 0 1px var(--tinte); }
 .export-art .ico { width: 38px; height: 38px; border-radius: 10px; background: var(--flaeche-2); display: grid; place-items: center; }
@@ -683,6 +683,7 @@ dialog[open] { animation: dialogauf .18s ease-out; }
   <div class="d-inhalt">
     <div class="export-art" role="group" aria-label="Format">
       <button data-art="pdf" aria-pressed="true"><span class="ico"><svg class="i"><use href="#s-pdf"/></svg></span><span><strong>PDF</strong><small>Zum Verschicken an den Kunden</small></span></button>
+      <button data-art="png" aria-pressed="false"><span class="ico"><svg class="i"><use href="#s-bild"/></svg></span><span><strong>PNG</strong><small>Einzelne Seiten als Bild</small></span></button>
       <button data-art="datei" aria-pressed="false"><span class="ico"><svg class="i"><use href="#s-datei"/></svg></span><span><strong>Entwurfsdatei</strong><small>Später weiterbearbeiten</small></span></button>
       <button data-art="geraete" aria-pressed="false"><span class="ico"><svg class="i"><use href="#s-geraete"/></svg></span><span><strong>Geräte-Mockup</strong><small>Bild für Präsentationen</small></span></button>
     </div>
@@ -2130,13 +2131,15 @@ function exportArtSetzen(a) {
   if (a === 'geraete') { $('#export').close(); geraeteAuf(); return; }
   exportArt = a;
   $$('.export-art button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.art === a)));
-  $('#export-pdf').hidden = a !== 'pdf'; $('#export-datei').hidden = a !== 'datei';
+  // PDF und PNG teilen Seitenwahl und Geraet
+  $('#export-pdf').hidden = a === 'datei'; $('#export-datei').hidden = a !== 'datei';
   exportKnopf();
 }
 function exportKnopf() {
   const n = $$('#seitenwahl input:checked').length;
-  $('#export-los').textContent = exportArt === 'datei' ? 'Datei speichern' : n ? `PDF herunterladen, ${n} ${n === 1 ? 'Seite' : 'Seiten'}` : 'Seiten wählen';
-  $('#export-los').disabled = exportArt === 'pdf' && !n;
+  const fmt = exportArt === 'png' ? (n === 1 ? 'PNG' : `${n} PNG`) : 'PDF';
+  $('#export-los').textContent = exportArt === 'datei' ? 'Datei speichern' : n ? `${fmt} herunterladen${exportArt === 'pdf' ? `, ${n} ${n === 1 ? 'Seite' : 'Seiten'}` : ''}` : 'Seiten wählen';
+  $('#export-los').disabled = exportArt !== 'datei' && !n;
 }
 $$('.export-art button').forEach((b) => b.onclick = () => exportArtSetzen(b.dataset.art));
 $('#export-alle').onclick = () => { const c = $$('#seitenwahl input'); const alle = c.every((x) => x.checked); c.forEach((x) => { x.checked = !alle; }); exportKnopf(); };
@@ -2145,6 +2148,7 @@ $('#export-ab').onclick = () => { exportAbbruch = true; $('#export').close(); };
 $('#export-los').onclick = async () => {
   if (exportArt === 'datei') { speichern(); $('#export').close(); return; }
   const seiten = $$('#seitenwahl input:checked').map((x) => x.value);
+  if (exportArt === 'png') { await pngExport(seiten); return; }
   if (!window.jspdf) { const s = document.createElement('script'); s.textContent = D.vendor.jspdf; document.head.appendChild(s); }
   exportAbbruch = false; $('#export-los').disabled = true; $('#export-balken').hidden = false;
   const balken = $('#export-balken i');
@@ -2167,9 +2171,32 @@ $('#export-los').onclick = async () => {
     $('#export-status').textContent = 'Das PDF ließ sich nicht erstellen. Bitte noch einmal versuchen.';
   } finally { $('#export-los').disabled = false; exportKnopf(); }
 };
+// PNG: jede gewaehlte Seite eine Datei in voller Laenge, verlustfrei (Robin, 12.10.2026).
+// Mehrere Seiten laden nacheinander herunter, der Browser fragt dabei einmal nach mehreren Downloads
+async function pngExport(seiten) {
+  exportAbbruch = false; $('#export-los').disabled = true; $('#export-balken').hidden = false;
+  const balken = $('#export-balken i'), S = D.demos[P.vorlage].seiten;
+  const geraet = { 1440: 'desktop', 820: 'tablet', 390: 'smartphone' }[exportBreite] || exportBreite;
+  try {
+    for (let i = 0; i < seiten.length; i++) {
+      if (exportAbbruch) return;
+      $('#export-status').textContent = `${S[seiten[i]].name} wird aufgenommen, ${i + 1} von ${seiten.length}`;
+      balken.style.width = ((i + 0.3) / seiten.length * 100) + '%';
+      const { url } = await seiteAlsBild(seiten[i], exportBreite, 'png');
+      const a = document.createElement('a'); a.href = url;
+      a.download = `explore-studio-${dateiname()}-${VORLAGEN[P.vorlage][0].toLowerCase()}-${slug(S[seiten[i]].name)}-${geraet}.png`; a.click();
+      balken.style.width = ((i + 1) / seiten.length * 100) + '%';
+      await warte(300);
+    }
+    $('#export').close(); melde(seiten.length === 1 ? 'PNG heruntergeladen.' : `${seiten.length} PNG heruntergeladen.`);
+  } catch (err) {
+    console.error(err);
+    $('#export-status').textContent = 'Das Bild ließ sich nicht erstellen. Bitte noch einmal versuchen.';
+  } finally { $('#export-los').disabled = false; exportKnopf(); }
+}
 // Eine Seite unsichtbar aufbauen und in voller Laenge aufnehmen. Das Fenster bleibt laptophoch,
 // damit Hoehen in vh wie im Browser wirken
-async function seiteAlsBild(key, breite) {
+async function seiteAlsBild(key, breite, format) {
   const f = document.createElement('iframe');
   f.style.cssText = `position:fixed;left:-20000px;top:0;width:${breite}px;height:${breite < 800 ? 844 : 900}px;border:0`;
   document.body.appendChild(f);
@@ -2177,11 +2204,13 @@ async function seiteAlsBild(key, breite) {
     await new Promise((ok) => { f.onload = ok; f.srcdoc = seitenHtml(String(P.vorlage), key); });
     const doc = f.contentDocument;
     await bereite(doc, { d: P.vorlage, export: true });
+    // PNG ohne Scrollleiste, die Seite nimmt die volle Breite (Robin, 12.10.2026); das PDF behaelt sie
+    if (format === 'png') { const o = doc.createElement('style'); o.textContent = 'html,body{scrollbar-width:none}html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}'; doc.head.appendChild(o); }
     await doc.fonts.ready; await warte(500);
     const h = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight);
     const s = doc.createElement('script'); s.textContent = D.vendor.htmlToImage; doc.head.appendChild(s);
     const grund = f.contentWindow.getComputedStyle(doc.body).backgroundColor;
-    const url = await f.contentWindow.htmlToImage.toJpeg(doc.documentElement, {
+    const url = await f.contentWindow.htmlToImage[format === 'png' ? 'toPng' : 'toJpeg'](doc.documentElement, {
       quality: 0.9, pixelRatio: breite < 800 ? 2 : 1.5, width: breite, height: h,
       backgroundColor: grund && !/rgba\(0, 0, 0, 0\)/.test(grund) ? grund : '#ffffff',
     });

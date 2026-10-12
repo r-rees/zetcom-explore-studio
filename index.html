@@ -2201,10 +2201,13 @@ const aktSzene = () => SZENEN.find((s) => s.id === GV.szene) || SZENEN[0];
 // Monitor: Aufnahme so breit wie ein Full-HD-Bildschirm, die Explore-Seiten (bis 1440) stehen darin mit Rand (Robin, 12.10.2026)
 const MONITOR = 1920;
 // Smartphone: der ausgeschnittene Bildschirm der Szene reicht bis an das Gehaeuse. Ein schwarzer Rand wie beim
-// iPhone (rund 1,6 Prozent der Breite) haelt die Seite im Geraet, die Ecken werden rund beschnitten
+// iPhone (rund 1,6 Prozent der Breite) haelt die Seite im Geraet, die Ecken werden rund beschnitten.
+// Um das Geraet herum sind die Szenen durchsichtig: alles, was hier gezeichnet wird, folgt der Innenkante
+// des Gehaeuses, gemessen an den Szenen mit Radius 0,154 der Bildschirmbreite (28 px bei 182)
+const ECKE = 0.154;
 function glas(m) {
   const i = Math.round(m.b * 0.016 * 2) / 2;
-  return { x: m.x + i, y: m.y + i, b: m.b - 2 * i, h: m.h - 2 * i, r: m.b * 0.14, insel: m.insel ? [Math.max(0, m.insel[0] - i), m.insel[1]] : null };
+  return { x: m.x + i, y: m.y + i, b: m.b - 2 * i, h: m.h - 2 * i, r: m.b * ECKE - i, insel: m.insel ? [Math.max(0, m.insel[0] - i), m.insel[1]] : null };
 }
 // Statusleiste so hoch wie beim iPhone: Abstand ueber der Insel noch einmal darunter
 const statusHoehe = (m) => (m.insel ? m.insel[0] + m.insel[1] + 4 : Math.round(m.h * 0.064));
@@ -2445,7 +2448,7 @@ function gvKomposit(ctx, s, img, Q) {
   const T = g.tablet, ecken = [[T.tl[0] - R, T.tl[1] - R], [T.tr[0] + R, T.tr[1] - R], [T.br[0] + R, T.br[1] + R], [T.bl[0] - R, T.bl[1] + R]];
   const w = verzerrtGL(A.tablet, ecken, Q);
   if (w) ctx.drawImage(w.bild, w.x, w.y, w.b, w.h); else verzerrt(ctx, A.tablet, T, R);
-  ctx.fillStyle = '#0b0c0e'; ctx.fillRect(m0.x - R, m0.y - R, m0.b + 2 * R, m0.h + 2 * R);
+  ctx.fillStyle = '#0b0c0e'; rund(ctx, m0.x - 1, m0.y - 1, m0.b + 2, m0.h + 2, m0.b * ECKE + 1); ctx.fill();
   ctx.save(); rund(ctx, m.x, m.y, m.b, m.h, m.r); ctx.clip();
   ctx.fillStyle = A.kopf; ctx.fillRect(m.x, m.y, m.b, sb + 1);
   fuelle(ctx, A.mobil, m.x, m.y + sb, m.b, m.h - sb);

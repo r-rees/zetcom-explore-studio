@@ -12,7 +12,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Explore Studio</title>
+<title>Explore Studio</title>
 <!-- zetcom-favicon:start -->
 <!-- ERZEUGT von tools/embed-favicon.mjs, nicht von Hand aendern.
      Das schwarze Favicon ist der Standard fuer interne Anwendungen,
@@ -51,22 +51,24 @@ svg.i { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor;
 [hidden] { display: none !important; }
 
 /* ---------- Kopfleiste ---------- */
-.leiste { display: flex; align-items: center; gap: 12px; padding: 0 16px; min-width: 0; background: var(--flaeche); border-bottom: 1px solid var(--linie); position: relative; z-index: 30; }
-.leiste .logo { width: 96px; height: auto; display: block; }
-.appname { font-weight: 700; font-size: 15px; letter-spacing: -.02em; white-space: nowrap; line-height: 20px; }
-.zeile-projekt { display: flex; align-items: center; gap: 6px; }
+/* Links Marke und Entwurf, Mitte Gestaltung als eine Gruppe, rechts Ansicht und Ausgabe.
+   Labels fallen stufenweise weg, die Leiste bleibt immer im Fenster. */
+.leiste { display: flex; align-items: center; gap: 10px; padding: 0 14px; min-width: 0; background: var(--flaeche); border-bottom: 1px solid var(--linie); position: relative; z-index: 30; }
+.leiste .logo { width: 30px; height: 30px; display: block; flex: none; }
 .trenn { width: 1px; height: 24px; background: var(--linie); flex: none; }
-.projekt { display: flex; flex-direction: column; flex: none; }
-.projekt input { border: 0; background: none; font-weight: 500; font-size: 13px; color: var(--tinte-2); padding: 2px 6px; margin-left: -6px; border-radius: 6px; width: 190px; outline: none; }
+.projekt { display: flex; flex-direction: column; justify-content: center; gap: 1px; flex: 0 1 210px; min-width: 96px; }
+.projekt input { width: 100%; border: 0; background: none; font-weight: 650; font-size: 14px; letter-spacing: -.01em; color: var(--tinte); padding: 1px 6px; margin-left: -6px; border-radius: 6px; outline: none; text-overflow: ellipsis; }
 .projekt input:hover { background: var(--hover); }
 .projekt input:focus { background: var(--hover); box-shadow: 0 0 0 2px var(--akzent); }
-.projekt .stand { white-space: nowrap; font-size: 12px; color: var(--leise); display: flex; align-items: center; gap: 4px; }
+.projekt .stand { white-space: nowrap; font-size: 11.5px; color: var(--leise); display: flex; align-items: center; gap: 3px; }
 .projekt .stand.warn { color: #b45309; }
-.mitte { display: flex; align-items: center; gap: 4px; margin: 0 auto; }
-.werkzeug { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 12px; border: 0; background: none; border-radius: 10px; color: var(--tinte-2); white-space: nowrap; }
-.werkzeug:hover { background: var(--hover); color: var(--tinte); }
+.mitte { display: flex; align-items: center; gap: 2px; margin: 0 auto; padding: 3px; flex: none; background: var(--flaeche-2); border: 1px solid var(--linie); border-radius: 12px; }
+.mitte .trenn { height: 20px; margin: 0 4px; }
+.werkzeug { display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 10px; border: 0; background: none; border-radius: 9px; color: var(--tinte-2); white-space: nowrap; font-weight: 500; }
+.werkzeug:hover { background: var(--flaeche); color: var(--tinte); }
 .werkzeug[aria-expanded="true"] { background: var(--tinte); color: #fff; }
-.werkzeug b { font-weight: 600; color: var(--tinte); }
+.werkzeug b { font-weight: 650; color: var(--tinte); overflow: hidden; text-overflow: ellipsis; }
+#lbl-seite { max-width: 140px; }
 .werkzeug[aria-expanded="true"] b { color: #fff; }
 .werkzeug .pfeil { width: 14px; height: 14px; opacity: .6; }
 .chip-logo { width: 22px; height: 22px; border-radius: 6px; background: var(--flaeche-2) center / contain no-repeat; border: 1px solid var(--linie); display: grid; place-items: center; }
@@ -74,7 +76,8 @@ svg.i { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor;
 .chip-farben i { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--flaeche); margin-left: -6px; box-shadow: 0 0 0 1px var(--linie); }
 .chip-farben i:first-child { margin-left: 0; }
 .chip-aa { font-size: 17px; font-weight: 600; line-height: 1; width: 22px; text-align: center; }
-.rechts { display: flex; align-items: center; gap: 6px; }
+.rechts { display: flex; align-items: center; gap: 4px; flex: none; }
+.rechts .trenn { margin: 0 4px; }
 .knopf { display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--linie-2); background: var(--flaeche); font-weight: 600; white-space: nowrap; transition: background .15s, border-color .15s, transform .1s; }
 .knopf:hover { background: var(--hover); }
 .knopf:active { transform: translateY(1px); }
@@ -95,9 +98,10 @@ svg.i { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor;
 .segment--voll button { flex: 1; }
 .farben-notiz { margin: 8px 0 0; font-size: 12px; line-height: 1.45; color: var(--leise); }
 #dunkel[aria-pressed="true"] { background: var(--akzent-hell); color: var(--akzent-2); }
-@media (max-width: 1560px) { .modus .lbl, #vorschau-an .lbl, #geraete-auf .lbl, .werkzeug:has(b) > .i:not(.pfeil) { display: none; } .projekt input { width: 124px; } .stand > span { display: none; } .leiste { gap: 8px; } .mitte { gap: 0; } .werkzeug { padding: 0 9px; } }
-@media (max-width: 1320px) { .werkzeug .lbl, .werkzeug b { display: none; } .projekt input { width: 150px; } .stand > span { display: none; } }
-@media (max-width: 1080px) { .knopf .lbl { display: none; } .leiste .logo { width: 84px; } }
+@media (max-width: 1520px) { .mitte .lbl { display: none; } }
+@media (max-width: 1240px) { #export-auf .lbl { display: none; } #export-auf { width: 38px; padding: 0; justify-content: center; } .rechts .trenn { display: none; } }
+@media (max-width: 1080px) { #vorschau-an, #geraete-auf, #vor { display: none; } .projekt { flex-basis: 150px; } }
+@media (max-width: 900px) { .mitte .trenn, .werkzeug .pfeil, #zurueck { display: none; } .leiste { gap: 6px; padding: 0 10px; } .werkzeug { padding: 0 8px; } #lbl-seite { max-width: 90px; } }
 
 /* ---------- Popover ---------- */
 .pop { position: fixed; z-index: 40; top: 70px; width: 360px; max-height: calc(100vh - 90px); display: flex; flex-direction: column; background: var(--flaeche); border: 1px solid var(--linie); border-radius: var(--r-l); box-shadow: var(--schatten-l); animation: auf .14s ease-out; }
@@ -240,7 +244,11 @@ details.mehr[open] summary svg { transform: rotate(180deg); }
 .schirm { position: relative; overflow: hidden; background: #fff; }
 .geraet[data-art="tablet"] .schirm { border-radius: 22px; }
 .geraet[data-art="mobil"] .schirm { border-radius: 38px; }
-.geraet[data-art="mobil"] .schirm::before { content: ""; position: absolute; z-index: 2; top: 10px; left: 50%; transform: translateX(-50%); width: 34%; height: 24px; background: #15181d; border-radius: 99px; pointer-events: none; }
+.geraet[data-art="mobil"] .schirm::before { content: ""; position: absolute; z-index: 2; top: calc(11px * var(--s, 1)); left: 50%; transform: translateX(-50%); width: calc(125px * var(--s, 1)); height: calc(36px * var(--s, 1)); background: #15181d; border-radius: 99px; pointer-events: none; }
+/* iOS-Statusleiste ueber der Seite, Farbe wie die Kopfzeile der Seite (statusFarbe) */
+.status { display: none; position: absolute; left: 0; right: 0; top: 0; z-index: 1; align-items: center; justify-content: space-between; padding: 0 calc(30px * var(--s, 1)) 0 calc(40px * var(--s, 1)); font-weight: 600; font-size: calc(16px * var(--s, 1)); letter-spacing: -.01em; background: #fff; color: #000; pointer-events: none; }
+.geraet[data-art="mobil"] .status { display: flex; }
+.status svg { height: calc(12px * var(--s, 1)); width: auto; fill: currentColor; }
 .fenster { position: absolute; left: 0; top: 0; border: 0; transform-origin: 0 0; background: #fff; }
 .laden { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(255, 255, 255, .6); backdrop-filter: blur(2px); opacity: 0; pointer-events: none; transition: opacity .15s; }
 .laden.an { opacity: 1; }
@@ -407,42 +415,40 @@ dialog[open] { animation: dialogauf .18s ease-out; }
 </svg>
 
 <header class="leiste">
-  <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQyNiIgaGVpZ2h0PSIzODgiIHZpZXdCb3g9IjAgMCAxNDI2IDM4OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMTI0MC42NiIgeT0iMTE3LjgiIHdpZHRoPSI1MC40IiBoZWlnaHQ9IjUwLjQiIHRyYW5zZm9ybT0icm90YXRlKDkwIDEyNDAuNjYgMTE3LjgpIiBmaWxsPSIjRDEzM0MzIj48L3JlY3Q+CjxyZWN0IHg9IjEyOTEuMDYiIHk9IjExNy44IiB3aWR0aD0iNTAuNCIgaGVpZ2h0PSI1MC40IiB0cmFuc2Zvcm09InJvdGF0ZSg5MCAxMjkxLjA2IDExNy44KSIgZmlsbD0iI0ZGNTkwMCI+PC9yZWN0Pgo8cmVjdCB4PSIxMzQxLjQ2IiB5PSIxMTcuOCIgd2lkdGg9IjUwLjQiIGhlaWdodD0iNTAuNCIgdHJhbnNmb3JtPSJyb3RhdGUoOTAgMTM0MS40NiAxMTcuOCkiIGZpbGw9IiNGRjU5MDAiPjwvcmVjdD4KPHJlY3QgeD0iMTI5MS4wNiIgeT0iMTY4LjIiIHdpZHRoPSI1MC40IiBoZWlnaHQ9IjUwLjQiIHRyYW5zZm9ybT0icm90YXRlKDkwIDEyOTEuMDYgMTY4LjIpIiBmaWxsPSIjNjQzMkM5Ij48L3JlY3Q+CjxyZWN0IHg9IjEzNDEuNDYiIHk9IjE2OC4yIiB3aWR0aD0iNTAuNCIgaGVpZ2h0PSI1MC40IiB0cmFuc2Zvcm09InJvdGF0ZSg5MCAxMzQxLjQ2IDE2OC4yKSIgZmlsbD0iI0ZGNTkwMCI+PC9yZWN0Pgo8cmVjdCB4PSIxMjQwLjY2IiB5PSIyMTguNiIgd2lkdGg9IjUwLjQiIGhlaWdodD0iNTAuNCIgdHJhbnNmb3JtPSJyb3RhdGUoOTAgMTI0MC42NiAyMTguNikiIGZpbGw9IiNGNUI0MDAiPjwvcmVjdD4KPHJlY3QgeD0iMTM0MS40NiIgeT0iMjE4LjYiIHdpZHRoPSI1MC40IiBoZWlnaHQ9IjUwLjQiIHRyYW5zZm9ybT0icm90YXRlKDkwIDEzNDEuNDYgMjE4LjYpIiBmaWxsPSIjMkE5MUZGIj48L3JlY3Q+CjxwYXRoIGQ9Ik04NCAyMTUuNzU5TDE4OS4xMDMgMTU2LjIxVjE0OS44OThIODkuOVYxMTguNDc3SDIxOC4zMjlWMTc0LjQ1OUwxMTMuNzc1IDIzMi42MzZWMjM4LjI2MUgyMTguNjAzVjI3MC4yMzFIODRWMjE1Ljc1OVoiIGZpbGw9ImJsYWNrIj48L3BhdGg+CjxwYXRoIGQ9Ik0yMzkuMTE2IDE5NC4zNTRDMjM5LjExNiAxNzEuNDg2IDI0Ni41MjUgMTUyLjQ1OSAyNjEuMzQ0IDEzNy4yNzVDMjc2LjI1NCAxMjIuMDkgMjk0Ljg2OSAxMTQuNDk4IDMxNy4xODkgMTE0LjQ5OEMzMzkuODc0IDExNC40OTggMzU4LjQ4OSAxMjIuMTM2IDM3My4wMzMgMTM3LjQxMkMzODcuNjY5IDE1Mi42ODggMzk0Ljk4NyAxNzEuMzk0IDM5NC45ODcgMTkzLjUzMUMzOTQuOTg3IDE5Ni4wMDEgMzk0LjgwNCAxOTkuNDc3IDM5NC40MzggMjAzLjk1OUgyNzQuMjQyQzI3NS43MDUgMjE2LjEyNSAyODAuMzI1IDIyNS43MyAyODguMSAyMzIuNzczQzI5NS44NzUgMjM5LjcyNSAzMDUuNTcxIDI0My4yMDEgMzE3LjE4OSAyNDMuMjAxQzMzNC4zODYgMjQzLjIwMSAzNDYuOTYzIDIzNi4wMiAzNTQuOTIxIDIyMS42NTlIMzkxLjQxOUMzODUuNjU2IDIzNy45NDEgMzc2LjE0MyAyNTAuNzkzIDM2Mi44OCAyNjAuMjE1QzM0OS43MDcgMjY5LjU0NSAzMzQuNDc3IDI3NC4yMSAzMTcuMTg5IDI3NC4yMUMyOTUuMDUyIDI3NC4yMSAyNzYuNDgzIDI2Ni41NzIgMjYxLjQ4MSAyNTEuMjk2QzI0Ni41NzEgMjM2LjAyIDIzOS4xMTYgMjE3LjA0IDIzOS4xMTYgMTk0LjM1NFpNMzQ0LjkwNSAxNTMuNjAzQzMzNy4zMTMgMTQ3LjIgMzI4LjA3NCAxNDMuOTk4IDMxNy4xODkgMTQzLjk5OEMzMDYuMzAzIDE0My45OTggMjk3LjExIDE0Ny4yNDUgMjg5LjYwOSAxNTMuNzRDMjgyLjIgMTYwLjIzNSAyNzcuNDQzIDE2OS4wMTYgMjc1LjMzOSAxODAuMDg0SDM2MC4yNzNDMzU3LjYyIDE2OC44MzMgMzUyLjQ5NyAxNjAuMDA2IDM0NC45MDUgMTUzLjYwM1oiIGZpbGw9ImJsYWNrIj48L3BhdGg+CjxwYXRoIGQ9Ik01MTcuNTE1IDI3MC4yMzFINDM4LjA3MVYxNDYuMzMxSDQwOS4zOTRWMTE4LjQ3N0g0MzcuNzk2TDQzOC4wNzEgNzhINDcyLjA5OVYxMTguNDc3SDUxNi40MThWMTQ2LjMzMUg0NzIuOTIyVjIzOS4zNTlINTE3LjUxNVYyNzAuMjMxWiIgZmlsbD0iYmxhY2siPjwvcGF0aD4KPHBhdGggZD0iTTU4Mi42OSAxNjAuNzM4QzU3NC4xODMgMTY5LjcwMiA1NjkuOTMgMTgwLjgxNiA1NjkuOTMgMTk0LjA4QzU2OS45MyAyMDcuMzQzIDU3NC4yMjkgMjE4LjU5NSA1ODIuODI4IDIyNy44MzNDNTkxLjQyNiAyMzYuOTgxIDYwMi4xMjkgMjQxLjU1NCA2MTQuOTM1IDI0MS41NTRDNjI0LjA4MiAyNDEuNTU0IDYzMi4zMTUgMjM5LjA4NSA2MzkuNjMzIDIzNC4xNDVDNjQ2Ljk1IDIyOS4yMDYgNjUyLjU3NiAyMjIuMjk5IDY1Ni41MDkgMjEzLjQyNkg2OTEuMzYxQzY4Ny40MjcgMjMxLjYzIDY3OC40NjMgMjQ2LjMxMSA2NjQuNDY4IDI1Ny40NzFDNjUwLjQ3MiAyNjguNjMxIDYzMy45NjEgMjc0LjIxIDYxNC45MzUgMjc0LjIxQzU5Mi4yNDkgMjc0LjIxIDU3My4yMjMgMjY2LjUyNyA1NTcuODU1IDI1MS4xNTlDNTQyLjQ4OCAyMzUuNzkyIDUzNC44MDQgMjE2Ljc2NSA1MzQuODA0IDE5NC4wOEM1MzQuODA0IDE3MS4zOTQgNTQyLjQ0MiAxNTIuNDU5IDU1Ny43MTggMTM3LjI3NUM1NzIuOTk0IDEyMi4wOSA1OTIuMDY2IDExNC40OTggNjE0LjkzNSAxMTQuNDk4QzYzNC4wNTMgMTE0LjQ5OCA2NTAuNDcyIDExOS44OTUgNjY0LjE5MyAxMzAuNjg5QzY3Ny45MTQgMTQxLjQ4MyA2ODYuNzQxIDE1NS44OSA2OTAuNjc1IDE3My45MUg2NTYuMjM1QzY1Mi42NjggMTY1LjQ5NCA2NDcuMjI1IDE1OC45NTQgNjM5LjkwNyAxNTQuMjg5QzYzMi41ODkgMTQ5LjUzMiA2MjQuMjY1IDE0Ny4xNTQgNjE0LjkzNSAxNDcuMTU0QzYwMi4wMzcgMTQ3LjE1NCA1OTEuMjg5IDE1MS42ODIgNTgyLjY5IDE2MC43MzhaIiBmaWxsPSJibGFjayI+PC9wYXRoPgo8cGF0aCBkPSJNNzM0LjY1MSAyNTEuNDM0QzcxOS4xOTIgMjM2LjI0OSA3MTEuNDYyIDIxNy4yMjMgNzExLjQ2MiAxOTQuMzU0QzcxMS40NjIgMTcxLjQ4NiA3MTkuMTkyIDE1Mi40NTkgNzM0LjY1MSAxMzcuMjc1Qzc1MC4xMSAxMjIuMDkgNzY5LjQ1NiAxMTQuNDk4IDc5Mi42OSAxMTQuNDk4QzgxNi4xMDggMTE0LjQ5OCA4MzUuNTQ2IDEyMi4wOSA4NTEuMDA1IDEzNy4yNzVDODY2LjQ2NCAxNTIuNDU5IDg3NC4xOTMgMTcxLjQ4NiA4NzQuMTkzIDE5NC4zNTRDODc0LjE5MyAyMTcuMjIzIDg2Ni40MTggMjM2LjI0OSA4NTAuODY3IDI1MS40MzRDODM1LjMxNyAyNjYuNjE4IDgxNS45MjUgMjc0LjIxIDc5Mi42OSAyNzQuMjFDNzY5LjQ1NiAyNzQuMjEgNzUwLjExIDI2Ni42MTggNzM0LjY1MSAyNTEuNDM0Wk03NDYuNTg4IDE5NC4zNTRDNzQ2LjU4OCAyMDguMDc1IDc1MC45MzMgMjE5LjM3MiA3NTkuNjIzIDIyOC4yNDVDNzY4LjMxMyAyMzcuMTE4IDc3OS4zMzUgMjQxLjU1NCA3OTIuNjkgMjQxLjU1NEM4MDYuMTM3IDI0MS41NTQgODE3LjIwNSAyMzcuMTE4IDgyNS44OTUgMjI4LjI0NUM4MzQuNjc3IDIxOS4zNzIgODM5LjA2NyAyMDguMTIxIDgzOS4wNjcgMTk0LjQ5MUM4MzkuMDY3IDE4MC43NyA4MzQuNjc3IDE2OS40NzMgODI1Ljg5NSAxNjAuNkM4MTcuMjA1IDE1MS42MzYgODA2LjA5MSAxNDcuMTU0IDc5Mi41NTMgMTQ3LjE1NEM3NzkuMTA3IDE0Ny4xNTQgNzY4LjA4NCAxNTEuNTQ1IDc1OS40ODYgMTYwLjMyNkM3NTAuODg3IDE2OS4xMDggNzQ2LjU4OCAxODAuNDUgNzQ2LjU4OCAxOTQuMzU0WiIgZmlsbD0iYmxhY2siPjwvcGF0aD4KPHBhdGggZD0iTTg5OS4xMzIgMTE4LjQ3N0gxMTIzLjA2VjI3MC4yMzFIMTA4OC40OFYxNDkuMDc1SDEwMjguMTFWMjcwLjIzMUg5OTQuMDgxVjE0OS4wNzVIOTMzLjcwOVYyNzAuMjMxSDg5OS4xMzJWMTE4LjQ3N1oiIGZpbGw9ImJsYWNrIj48L3BhdGg+Cjwvc3ZnPg==" alt="zetcom">
-  <span class="trenn"></span>
+  <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTA0IiBoZWlnaHQ9IjUwNCIgdmlld0JveD0iMCAwIDUwNCA1MDQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+DQo8cmVjdCB3aWR0aD0iNTA0IiBoZWlnaHQ9IjUwNCIgZmlsbD0id2hpdGUiPjwvcmVjdD4NCjxyZWN0IHg9IjIwMS42MDIiIHk9IjEwMC44IiB3aWR0aD0iMTAwLjgiIGhlaWdodD0iMTAwLjgiIHRyYW5zZm9ybT0icm90YXRlKDkwIDIwMS42MDIgMTAwLjgpIiBmaWxsPSJibGFjayI+PC9yZWN0Pg0KPHJlY3QgeD0iMzAyLjQwMiIgeT0iMTAwLjgiIHdpZHRoPSIxMDAuOCIgaGVpZ2h0PSIxMDAuOCIgdHJhbnNmb3JtPSJyb3RhdGUoOTAgMzAyLjQwMiAxMDAuOCkiIGZpbGw9ImJsYWNrIj48L3JlY3Q+DQo8cmVjdCB4PSI0MDMuMTk5IiB5PSIxMDAuOCIgd2lkdGg9IjEwMC44IiBoZWlnaHQ9IjEwMC44IiB0cmFuc2Zvcm09InJvdGF0ZSg5MCA0MDMuMTk5IDEwMC44KSIgZmlsbD0iYmxhY2siPjwvcmVjdD4NCjxyZWN0IHg9IjMwMi40MDIiIHk9IjIwMS42IiB3aWR0aD0iMTAwLjgiIGhlaWdodD0iMTAwLjgiIHRyYW5zZm9ybT0icm90YXRlKDkwIDMwMi40MDIgMjAxLjYpIiBmaWxsPSJibGFjayI+PC9yZWN0Pg0KPHJlY3QgeD0iNDAzLjE5OSIgeT0iMjAxLjYiIHdpZHRoPSIxMDAuOCIgaGVpZ2h0PSIxMDAuOCIgdHJhbnNmb3JtPSJyb3RhdGUoOTAgNDAzLjE5OSAyMDEuNikiIGZpbGw9ImJsYWNrIj48L3JlY3Q+DQo8cmVjdCB4PSIyMDEuNjAyIiB5PSIzMDIuNCIgd2lkdGg9IjEwMC44IiBoZWlnaHQ9IjEwMC44IiB0cmFuc2Zvcm09InJvdGF0ZSg5MCAyMDEuNjAyIDMwMi40KSIgZmlsbD0iYmxhY2siPjwvcmVjdD4NCjxyZWN0IHg9IjQwMy4xOTkiIHk9IjMwMi40IiB3aWR0aD0iMTAwLjgiIGhlaWdodD0iMTAwLjgiIHRyYW5zZm9ybT0icm90YXRlKDkwIDQwMy4xOTkgMzAyLjQpIiBmaWxsPSJibGFjayI+PC9yZWN0Pg0KPC9zdmc+" alt="zetcom" title="Explore Studio">
   <div class="projekt">
-    <span class="appname">Explore Studio</span>
-    <span class="zeile-projekt">
-      <input id="museum" placeholder="Unbenannter Entwurf" aria-label="Name des Museums" autocomplete="off">
-      <span class="stand" id="stand" title="Automatisch gespeichert"><svg class="i" style="width:12px;height:12px"><use href="#s-haken"/></svg><span> Gespeichert</span></span>
-    </span>
+    <input id="museum" placeholder="Unbenannter Entwurf" aria-label="Name des Entwurfs" autocomplete="off">
+    <span class="stand" id="stand" title="Automatisch gespeichert"><svg class="i" style="width:12px;height:12px"><use href="#s-haken"/></svg><span> Gespeichert</span></span>
   </div>
 
   <nav class="mitte" aria-label="Gestaltung">
-    <button class="werkzeug" data-pop="vorlage" aria-expanded="false"><svg class="i"><use href="#s-vorlage"/></svg><b id="lbl-vorlage"></b><svg class="i pfeil"><use href="#s-runter"/></svg></button>
-    <button class="werkzeug" data-pop="seite" aria-expanded="false"><svg class="i"><use href="#s-seite"/></svg><b id="lbl-seite"></b><svg class="i pfeil"><use href="#s-runter"/></svg></button>
+    <button class="werkzeug" data-pop="vorlage" aria-expanded="false" title="Template wechseln"><b id="lbl-vorlage"></b><svg class="i pfeil"><use href="#s-runter"/></svg></button>
+    <button class="werkzeug" data-pop="seite" aria-expanded="false" title="Seite wechseln"><b id="lbl-seite"></b><svg class="i pfeil"><use href="#s-runter"/></svg></button>
     <span class="trenn"></span>
-    <button class="werkzeug" data-pop="logo" aria-expanded="false"><span class="chip-logo" id="chip-logo"></span><span class="lbl">Assets</span></button>
+    <button class="werkzeug" data-pop="logo" aria-expanded="false" title="Assets: Logo und Bilder"><span class="chip-logo" id="chip-logo"></span><span class="lbl">Assets</span></button>
     <button class="werkzeug" data-pop="stil" aria-expanded="false" title="Stil: Farben und Schriften als Konzept"><svg class="i"><use href="#s-funken"/></svg><span class="lbl">Stil</span></button>
-    <button class="werkzeug" data-pop="farben" aria-expanded="false"><span class="chip-farben" id="chip-farben"></span><span class="lbl">Farben</span></button>
-    <button class="werkzeug" data-pop="schrift" aria-expanded="false"><span class="chip-aa" id="chip-schrift">Aa</span><span class="lbl">Schrift</span></button>
+    <button class="werkzeug" data-pop="farben" aria-expanded="false" title="Farben"><span class="chip-farben" id="chip-farben"></span><span class="lbl">Farben</span></button>
+    <button class="werkzeug" data-pop="schrift" aria-expanded="false" title="Schrift"><span class="chip-aa" id="chip-schrift">Aa</span><span class="lbl">Schrift</span></button>
   </nav>
 
   <div class="rechts">
     <button class="knopf knopf--leer knopf--rund" id="zurueck" title="Rückgängig (Strg+Z)" aria-label="Rückgängig"><svg class="i"><use href="#s-zurueck"/></svg></button>
     <button class="knopf knopf--leer knopf--rund" id="vor" title="Wiederholen (Strg+Y)" aria-label="Wiederholen"><svg class="i"><use href="#s-vor"/></svg></button>
+    <span class="trenn"></span>
     <span class="segment" role="group" aria-label="Gerät">
       <button data-breite="1440" title="Desktop" aria-label="Desktop"><svg class="i"><use href="#s-desktop"/></svg></button>
       <button data-breite="820" title="Tablet" aria-label="Tablet"><svg class="i"><use href="#s-tablet"/></svg></button>
       <button data-breite="390" title="Smartphone" aria-label="Smartphone"><svg class="i"><use href="#s-mobil"/></svg></button>
     </span>
-    <button class="knopf knopf--leer knopf--rund" id="dunkel" aria-pressed="false" title="Dunkelmodus (D)" aria-label="Dunkelmodus"><svg class="i"><use href="#s-mond"/></svg></button>
     <span class="segment modus" role="group" aria-label="Modus">
-      <button data-modus="bearbeiten" aria-pressed="true" title="Texte und Bilder anklicken und ändern (E)"><svg class="i"><use href="#s-stift"/></svg><span class="lbl">Bearbeiten</span></button>
-      <button data-modus="ansehen" aria-pressed="false" title="Durch die Website klicken, Links sind aktiv (E)"><svg class="i"><use href="#s-zeiger"/></svg><span class="lbl">Ansehen</span></button>
+      <button data-modus="bearbeiten" aria-pressed="true" title="Bearbeiten: Texte und Bilder anklicken und ändern (E)" aria-label="Bearbeiten"><svg class="i"><use href="#s-stift"/></svg></button>
+      <button data-modus="ansehen" aria-pressed="false" title="Ansehen: durch die Website klicken, Links sind aktiv (E)" aria-label="Ansehen"><svg class="i"><use href="#s-zeiger"/></svg></button>
     </span>
-    <button class="knopf" id="geraete-auf" title="Geräte-Vorschau: der Entwurf auf Monitor, Tablet und Smartphone (G)"><svg class="i"><use href="#s-geraete"/></svg><span class="lbl">Geräte</span></button>
-    <button class="knopf" id="vorschau-an" title="Präsentieren, ohne Leiste (P)"><svg class="i"><use href="#s-spielen"/></svg><span class="lbl">Präsentieren</span></button>
-    <button class="knopf knopf--haupt" id="export-auf"><svg class="i"><use href="#s-export"/></svg><span class="lbl">Exportieren</span></button>
+    <button class="knopf knopf--leer knopf--rund" id="dunkel" aria-pressed="false" title="Dunkelmodus (D)" aria-label="Dunkelmodus"><svg class="i"><use href="#s-mond"/></svg></button>
+    <span class="trenn"></span>
+    <button class="knopf knopf--leer knopf--rund" id="geraete-auf" title="Geräte-Vorschau: der Entwurf auf Monitor, Tablet und Smartphone (G)" aria-label="Geräte-Vorschau"><svg class="i"><use href="#s-geraete"/></svg></button>
+    <button class="knopf knopf--leer knopf--rund" id="vorschau-an" title="Präsentieren, ohne Leiste (P)" aria-label="Präsentieren"><svg class="i"><use href="#s-spielen"/></svg></button>
+    <button class="knopf knopf--haupt" id="export-auf" title="Exportieren: PDF, Geräte-Mockup, Pitch-Datei"><svg class="i"><use href="#s-export"/></svg><span class="lbl">Exportieren</span></button>
     <button class="knopf knopf--leer knopf--rund" id="menue-auf" aria-label="Mehr" title="Mehr"><svg class="i"><use href="#s-mehr"/></svg></button>
   </div>
 </header>
@@ -451,6 +457,7 @@ dialog[open] { animation: dialogauf .18s ease-out; }
   <div class="geraet" id="geraet" data-art="desktop">
     <div class="chrome"><i></i><i></i><i></i><div class="adresse"><svg class="i"><use href="#s-schloss"/></svg><span id="adresse"></span></div></div>
     <div class="schirm" id="schirm">
+      <div class="status" id="status" aria-hidden="true"><span>9:41</span><svg viewBox="0 0 68 12"><rect x="0" y="8" width="3" height="4" rx=".8"/><rect x="4.6" y="5.5" width="3" height="6.5" rx=".8"/><rect x="9.2" y="3" width="3" height="9" rx=".8"/><rect x="13.8" y="0" width="3" height="12" rx=".8"/><path d="M30.5 2.2a10.6 10.6 0 0 1 14 0l-1.4 1.5a8.5 8.5 0 0 0-11.2 0zM33 5a6.8 6.8 0 0 1 9 0l-1.5 1.5a4.6 4.6 0 0 0-6 0zM35.6 7.8a3 3 0 0 1 3.8 0L37.5 9.8z"/><rect x="47.5" y=".7" width="18" height="10.6" rx="3" fill="none" stroke="currentColor" stroke-width="1" opacity=".45"/><rect x="49.3" y="2.5" width="14.4" height="7" rx="1.6"/><path d="M66.6 4.3v3.4a1.8 1.8 0 0 0 0-3.4z" opacity=".45"/></svg></div>
       <iframe class="fenster" id="fenster" title="Vorschau der Online-Sammlung"></iframe>
       <div class="laden" id="laden"><span class="kreisel"></span></div>
     </div>
@@ -693,7 +700,7 @@ const HINWEIS = 'explore-studio-hinweis-gesehen';
 const LEER_GIF = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 const AKZENT = '#ff5a1f';
 
-const VORLAGEN = { 1: ['Template 1', 'Hell, viel Raum, Bild oben'], 2: ['Template 2', 'Großes Bild, dunkle Kopfzeile'], 3: ['Template 3', 'Lebendig, farbige Flächen'] };
+const VORLAGEN = { 1: ['V1', 'Hell, viel Raum, Bild oben'], 2: ['V2', 'Großes Bild, dunkle Kopfzeile'], 3: ['V3', 'Lebendig, farbige Flächen'] };
 const SEITEN_ICO = { start: 's-start', sammlung: 's-raster', objekt: 's-objekt', personen: 's-personen', person: 's-person', highlights: 's-stern', highlight: 's-stern', raeume: 's-raum', raum: 's-raum', portfolio: 's-mappe' };
 const SEITEN_UNTER = { start: 'Einstieg', sammlung: 'Suche und Liste', objekt: 'Detailseite', personen: 'Liste', person: 'Detailseite', highlights: 'Ausstellungen', highlight: 'Detailseite', raeume: 'Galerien', raum: 'Detailseite', portfolio: 'Sammelmappen' };
 const PFAD = { start: '/en/', sammlung: '/en/collection/', objekt: '/en/collection/item/', personen: '/en/person/', person: '/en/person/item/', highlights: '/en/highlights/', highlight: '/en/highlights/item/', raeume: '/en/rooms/', raum: '/en/rooms/item/', portfolio: '/en/portfolio/' };
@@ -1333,6 +1340,7 @@ async function setzeBild(el, e) {
 async function wende(doc, voll, export_) {
   if (!doc || !doc.getElementById('pitch-stil')) return;
   await stil(doc, export_);
+  if (doc === fenster.contentDocument) statusFarbe(doc);
   if (!voll) return;
   doc.querySelectorAll('.pitch-logo').forEach((el) => {
     if (!el._original) el._original = el.outerHTML;
@@ -1945,7 +1953,11 @@ function masse() {
   g.style.height = (schirmH + rand * 2 + kopfH) + 'px';
   g.style.marginBottom = '24px';
   const sch = $('#schirm'); sch.style.width = schirmB + 'px'; sch.style.height = schirmH + 'px';
-  fenster.style.width = P.breite + 'px'; fenster.style.height = (schirmH / s) + 'px'; fenster.style.transform = `scale(${s})`;
+  // Smartphone: die Seite beginnt unter der Dynamic Island, darueber die Statusleiste (54 von 844 wie beim iPhone)
+  const sb = artG === 'mobil' ? Math.round(54 * s) : 0;
+  sch.style.setProperty('--s', s); $('#status').style.height = sb + 'px';
+  fenster.style.top = sb + 'px';
+  fenster.style.width = P.breite + 'px'; fenster.style.height = ((schirmH - sb) / s) + 'px'; fenster.style.transform = `scale(${s})`;
   $('#zoom-regler').value = Math.round(s * 100);
   $('#zoom-wert').textContent = Math.round(s * 100) + ' %';
   $('#zoom-wert').title = zoom === 'auto' ? 'Standardansicht' : 'Zurück zur Standardansicht';
@@ -2232,6 +2244,20 @@ function mittel(c) {
   const d = x.getImageData(0, 0, 32, 20).data, s = [0, 0, 0];
   for (let i = 0; i < d.length; i += 4) { s[0] += d[i]; s[1] += d[i + 1]; s[2] += d[i + 2]; }
   return zuHex(s.map((v) => v / (d.length / 4)));
+}
+// Statusleiste der Buehne: Farbe der Kopfzeile, eine halb durchsichtige (Template 2) ueber dem Seitengrund
+function statusFarbe(doc) {
+  const w = doc.defaultView, kopf = doc.querySelector('header:not(.tify-header)');
+  const bg = [doc.body, doc.documentElement].map((e) => w.getComputedStyle(e).backgroundColor).find((c) => !/rgba\(0, 0, 0, 0\)|transparent/.test(c));
+  const grund = bg ? hex(bg) : '#ffffff';
+  let f = grund;
+  if (kopf) {
+    const m = (w.getComputedStyle(kopf).backgroundColor.match(/[\d.]+/g) || []).map(Number);
+    const a = m.length > 3 ? m[3] : m.length ? 1 : 0;
+    if (a > 0) f = zuHex(m.slice(0, 3).map((x, i) => x * a + rgb(grund)[i] * (1 - a)));
+  }
+  const st = $('#status'); st.style.background = f;
+  st.style.color = kontrast(f, '#000000') >= kontrast(f, '#ffffff') ? '#000' : '#fff';
 }
 // Farbe der Statusleiste: Mittel der obersten Zeilen, so wie Safari die Leiste einfaerbt
 function kopfFarbe(c) {

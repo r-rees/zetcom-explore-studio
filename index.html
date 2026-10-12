@@ -622,6 +622,7 @@ dialog[open] { animation: dialogauf .18s ease-out; }
 <div class="menue" id="menue" hidden>
   <button data-m="neu"><svg class="i"><use href="#s-neu"/></svg>Neuer Entwurf</button>
   <button data-m="oeffnen"><svg class="i"><use href="#s-ordner"/></svg>Entwurf öffnen <kbd>Strg+O</kbd></button>
+  <button data-m="letzter" id="m-letzter" hidden><svg class="i"><use href="#s-zurueck"/></svg>Letzten Stand laden</button>
   <button data-m="speichern"><svg class="i"><use href="#s-speichern"/></svg>Als Datei speichern <kbd>Strg+S</kbd></button>
   <hr>
   <button data-m="hinweis"><svg class="i"><use href="#s-funken"/></svg>Bedienhinweis zeigen</button>
@@ -898,8 +899,10 @@ const farbenJetzt = (d = P.vorlage) => (P.dunkel && vorgabe[d]
 // dunkel schaltet den Dunkelmodus, farbenDunkel haelt nur die Farben, die dort von Hand geaendert wurden
 const leer = () => ({ museum: '', vorlage: 1, seite: 'start', breite: 1440, dunkel: false, farben: {}, farbenDunkel: {}, titel: '', text: '', logo: null, logoHell: null, texte: {}, bilder: {} });
 let P = leer();
-let neu = true;
-try { const s = localStorage.getItem(SPEICHER) || localStorage.getItem('explore-pitch-v3'); if (s) { P = Object.assign(leer(), JSON.parse(s)); neu = false; } } catch (e) { /* ohne Speicher */ }
+// Jedes Oeffnen startet mit den Standard-Designs (Robin, 12.10.2026). Der letzte Stand bleibt im Browser
+// und laesst sich ueber „Mehr, Letzten Stand laden“ zurueckholen, bis etwas Neues gespeichert wird
+let letzter = null;
+try { letzter = localStorage.getItem(SPEICHER) || localStorage.getItem('explore-pitch-v3'); } catch (e) { /* ohne Speicher */ }
 let modus = 'bearbeiten';
 
 const verlauf = [JSON.stringify(P)];
@@ -1165,6 +1168,22 @@ function seitenHtml(d, key) {
     .replace('</head>', `<style id="pitch-mobil">${MOBIL_CSS}</style></head>`);
 }
 
+// Desktop: die Karussells tragen feste Kartenbreiten aus dem Abzug (ohne Scrollleiste gerechnet). Im Werkzeug
+// nimmt die Scrollleiste Platz weg und die letzte sichtbare Karte wurde rechts abgeschnitten (Robin, 12.10.2026).
+// Darum je Karussell die Zahl sichtbarer Karten bestimmen und die Breite als Anteil des Karussells setzen
+function karusselle(doc) {
+  if (doc.defaultView.innerWidth < 1024) return;
+  doc.querySelectorAll('.Highlights-Carousel > .swiper-wrapper').forEach((wr) => {
+    const sl = [...wr.children].filter((s) => s.classList.contains('swiper-slide'));
+    if (sl.length < 2) return;
+    const C = wr.getBoundingClientRect().width, b = sl[0].getBoundingClientRect().width;
+    if (!C || !b) return;
+    const m = parseFloat(sl[0].style.marginRight) || 0;
+    const n = Math.max(1, Math.round((C + m) / (b + m)));
+    // ohne die Breitenanimation der Demo, sonst gleitet jede Karte beim Laden in die neue Breite
+    sl.forEach((s) => { s.style.transition = 'none'; s.style.width = `calc((100% - ${(n - 1) * m}px) / ${n})`; });
+  });
+}
 // Tablet und Smartphone: Menueknopf in die Kopfzeile, Bildwand der Sammlung fuer die Breite neu anordnen
 function mobil(doc) {
   const kopf = doc.querySelector('header:not(.tify-header)');
@@ -1258,6 +1277,7 @@ async function bereite(doc, o) {
   const bilder = [...doc.querySelectorAll('img:not(.pitch-logo)')];
   await Promise.all(bilder.map((i) => (i.complete ? null : new Promise((ok) => { i.onload = i.onerror = ok; setTimeout(ok, 3000); }))));
   mobil(doc);
+  karusselle(doc);
   bilder.forEach((i) => { const r = i.getBoundingClientRect(); i._orig = { src: i.getAttribute('src'), srcset: i.getAttribute('srcset'), b: r.width, h: r.height, stil: i.getAttribute('style') || '' }; i.dataset.pitchBild = bildSchluessel(i._orig.src); });
   doc.querySelectorAll('[style*="background-image"]').forEach((el) => {
     const m = el.style.backgroundImage.match(/url\(["']?([^"')]+)/); if (!m) return;
@@ -2065,6 +2085,10 @@ $$('#menue [data-m]').forEach((b) => b.onclick = () => {
   menueZu();
   ({
     neu: () => willkommen(true),
+    letzter: () => {
+      const alt = P; P = Object.assign(leer(), JSON.parse(letzter)); merke(); alles();
+      melde('Letzter Stand geladen.', () => { P = alt; merke(); alles(); });
+    },
     oeffnen, speichern: () => speichern(),
     hinweis: () => { $('#hinweis').hidden = false; },
     reset: () => { const alt = P; P = Object.assign(leer(), { vorlage: P.vorlage, seite: P.seite, breite: P.breite, museum: P.museum }); merke(); alles(); melde('Alles auf die Demo zurückgesetzt.', () => { P = alt; merke(); alles(); }); },
@@ -2547,8 +2571,8 @@ $('#geraete-auf').onclick = () => geraeteAuf();
 // ---------- Los ----------
 function alles(halte) { kopf(); masse(); zeige(halte); if (offen) { const o = offen; offen = null; popAuf(o, $(`.werkzeug[data-pop="${o}"]`)); } }
 alles();
-if (neu) willkommen(true);
-else { try { if (!localStorage.getItem(HINWEIS)) $('#hinweis').hidden = false; } catch (e) { $('#hinweis').hidden = false; } }
+$('#m-letzter').hidden = !letzter;
+try { if (!localStorage.getItem(HINWEIS)) $('#hinweis').hidden = false; } catch (e) { $('#hinweis').hidden = false; }
 </script>
 </body>
 </html>

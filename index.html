@@ -56,7 +56,8 @@ svg.i { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor;
    Labels fallen stufenweise weg, die Leiste bleibt immer im Fenster. */
 .leiste { display: flex; align-items: center; gap: 12px; padding: 0 16px; min-width: 0; background: var(--flaeche); border-bottom: 1px solid var(--linie); position: relative; z-index: 30; }
 .marke { display: flex; align-items: center; gap: 12px; flex: none; }
-.leiste .logo { width: 40px; height: 40px; display: block; flex: none; }
+/* Die Pixelmarke fuellt nur 60 Prozent der SVG (weisser Rand). 67 px ergeben sichtbar 40 px, so hoch wie die zwei Zeilen „Explore Studio“; der negative Rand haelt die Leiste gleich hoch */
+.leiste .logo { width: 67px; height: 67px; margin: -13.5px -6px -13.5px -13.5px; display: block; flex: none; }
 .marke .trenn { height: 40px; background: var(--tinte); }
 .appname { font-weight: 700; font-size: 18px; line-height: 1.12; letter-spacing: -.01em; color: var(--tinte); }
 .trenn { width: 1px; height: 24px; background: var(--linie); flex: none; }

@@ -100,6 +100,8 @@ svg.i { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor;
 .segment button[aria-pressed="true"] { background: var(--flaeche); color: var(--tinte); box-shadow: 0 1px 3px rgba(14, 17, 22, .12); }
 .modus button { padding: 0 11px; }
 .segment--voll { display: flex; margin: 4px 0 2px; }
+.leiste .sprache { padding: 2px; border-radius: 9px; }
+.leiste .sprache button { height: 28px; min-width: 32px; padding: 0 7px; border-radius: 7px; font-size: 12px; letter-spacing: .02em; }
 .segment--voll button { flex: 1; }
 .farben-notiz { margin: 8px 0 0; font-size: 12px; line-height: 1.45; color: var(--leise); }
 #dunkel[aria-pressed="true"] { background: var(--akzent-hell); color: var(--akzent-2); }
@@ -455,6 +457,7 @@ dialog[open] { animation: dialogauf .18s ease-out; }
       <input id="museum" placeholder="Unbenannter Entwurf" aria-label="Name des Entwurfs" autocomplete="off">
       <span class="stand" id="stand" title="Automatisch gespeichert"><svg class="i" style="width:12px;height:12px"><use href="#s-haken"/></svg><span> Gespeichert</span></span>
     </div>
+    <span class="segment sprache" role="group" aria-label="Sprache"><button data-sprache="de" aria-pressed="true" title="Deutsch">DE</button><button data-sprache="en" aria-pressed="false" title="English">EN</button></span>
     <button class="knopf knopf--leer knopf--rund" id="dunkel" aria-pressed="false" title="Dunkelmodus (D)" aria-label="Dunkelmodus"><svg class="i"><use href="#s-mond"/></svg></button>
     <button class="knopf knopf--leer knopf--rund" id="geraete-auf" title="Geräte-Vorschau: der Entwurf auf Monitor, Tablet und Smartphone (G)" aria-label="Geräte-Vorschau"><svg class="i"><use href="#s-geraete"/></svg></button>
     <button class="knopf knopf--leer knopf--rund" id="vorschau-an" title="Präsentieren, ohne Leiste (P)" aria-label="Präsentieren"><svg class="i"><use href="#s-spielen"/></svg></button>
@@ -1556,6 +1559,7 @@ function verdrahte(doc) {
   w.addEventListener('scroll', () => { deck.hidden = true; deckZiel = null; }, { passive: true });
 
   layoutVerdrahten(doc);
+  sprachBeobachter(doc);
   w.addEventListener('keydown', tasten);
 }
 const textKnoten = (el) => { const r = []; const t = el.ownerDocument.createTreeWalker(el, NodeFilter.SHOW_TEXT); for (let n = t.nextNode(); n; n = t.nextNode()) r.push(n); return r; };
@@ -2307,6 +2311,268 @@ function layoutTaste(e) {
   e.preventDefault();
   return true;
 }
+// ---------- Sprache der Oberflaeche: Deutsch oder Englisch (Robin, 13.10.2026) ----------
+// Die Oberflaeche ist deutsch geschrieben. Auf Englisch uebersetzt ein Beobachter jeden Text und jedes
+// title/aria-label/placeholder/alt im Werkzeug nach EN_TEXT (exakt) oder EN_MUSTER (mit Platzhaltern).
+// In der Vorschau der Website wird nur die eigene Einblendung uebersetzt (data-pitch-ui), nie die Seite selbst.
+// Neuer Text in der Oberflaeche: hier die englische Fassung dazuschreiben, sonst bleibt er deutsch.
+const SPRACHE_SPEICHER = 'explore-studio-sprache';
+const EN_TEXT = {
+  // Kopfleiste, Dock, Modi
+  'Gestaltung': 'Design', 'Template wechseln': 'Change template', 'Seite wechseln': 'Change page', 'Assets: Logo und Bilder': 'Assets: logo and images',
+  'Stil': 'Style', 'Stil: Farben und Schriften als Konzept': 'Style: colours and fonts as one concept', 'Farben': 'Colours', 'Schrift': 'Fonts',
+  'Rückgängig': 'Undo', 'Rückgängig (Strg+Z)': 'Undo (Ctrl+Z)', 'Wiederholen': 'Redo', 'Wiederholen (Strg+Y)': 'Redo (Ctrl+Y)',
+  'Unbenannter Entwurf': 'Untitled draft', 'Name des Entwurfs': 'Draft name', 'Gespeichert': 'Saved', 'Automatisch gespeichert': 'Saved automatically',
+  'Automatisch im Browser gespeichert': 'Saved automatically in the browser', 'Als Datei speichern': 'Save as file',
+  'Zu groß für den Browser, bitte über Exportieren als Datei speichern': 'Too large for the browser, please save as a file via Export',
+  'Dunkelmodus': 'Dark mode', 'Dunkelmodus (D)': 'Dark mode (D)', 'Geräte-Vorschau': 'Device preview',
+  'Geräte-Vorschau: der Entwurf auf Monitor, Tablet und Smartphone (G)': 'Device preview: the draft on monitor, tablet and smartphone (G)',
+  'Präsentieren': 'Present', 'Präsentieren, ohne Leiste (P)': 'Present, without toolbar (P)', 'Exportieren': 'Export',
+  'Exportieren: PDF, Geräte-Mockup, Pitch-Datei': 'Export: PDF, device mock-up, draft file', 'Mehr': 'More',
+  'Gerät': 'Device', 'Modus': 'Mode', 'Bearbeiten': 'Edit', 'Ansehen': 'View',
+  'Bearbeiten: Texte und Bilder anklicken und ändern (E)': 'Edit: click texts and images to change them (E)',
+  'Ansehen: durch die Website klicken, Links sind aktiv (E)': 'View: click through the website, links are active (E)',
+  'Advanced: Bausteine verschieben und Schriftgrößen ändern (A)': 'Advanced: move blocks and change font sizes (A)',
+  'Bearbeiten: Texte und Bilder anklicken.': 'Edit: click texts and images.', 'Ansehen: Links führen durch die Website.': 'View: links lead through the website.',
+  'Advanced: Baustein anklicken und ziehen, Pfeiltasten schieben, + und − ändern die Schrift.': 'Advanced: click and drag a block, arrow keys nudge, + and − change the font size.',
+  'Kleiner': 'Smaller', 'Größer': 'Larger', 'Einpassen': 'Fit', 'Zurück zur Standardansicht': 'Back to the default view', 'Standardansicht': 'Default view',
+  'Vorschau der Online-Sammlung': 'Preview of the online collection', 'Einfach anklicken:': 'Just click:',
+  'Texte tippen, Bilder ersetzen und verschieben.': 'type texts, replace and move images.', 'Hinweis schließen': 'Close hint',
+  'Vollbild': 'Full screen', 'Beenden': 'Exit', 'Präsentation, Links sind aktiv': 'Presentation, links are active', 'Schließen': 'Close',
+  // Seiten
+  'Startseite': 'Home', 'Sammlung': 'Collection', 'Personen': 'People', 'Räume': 'Rooms', 'Objekt': 'Object', 'Raum': 'Room', 'Seite': 'Page', 'Seiten': 'Pages',
+  'Einstieg': 'Entry point', 'Suche und Liste': 'Search and list', 'Detailseite': 'Detail page', 'Liste': 'List', 'Ausstellungen': 'Exhibitions',
+  'Galerien': 'Galleries', 'Sammelmappen': 'Portfolios',
+  'Hell, viel Raum, Bild oben': 'Light, spacious, image on top', 'Großes Bild, dunkle Kopfzeile': 'Large image, dark header', 'Lebendig, farbige Flächen': 'Lively, coloured areas',
+  // Assets und Bild-Editor
+  'Logo': 'Logo', 'Helle Fassung': 'Light version', 'Helle Fassung ersetzen': 'Replace light version', 'Logo hierher ziehen': 'Drag logo here',
+  'oder klicken zum Auswählen, SVG oder PNG': 'or click to choose, SVG or PNG', 'Farben werden daraus vorgeschlagen': 'Colours are suggested from it',
+  'Entfernen': 'Remove', 'Ersetzen': 'Replace', 'Logo entfernt.': 'Logo removed.', 'Logo gesetzt.': 'Logo set.',
+  'Logo gesetzt. Farben passend dazu übernehmen?': 'Logo set. Apply matching colours?', 'Helle Fassung für dunkle Flächen gesetzt.': 'Light version for dark areas set.',
+  'Farben aus dem Logo übernehmen?': 'Apply colours from the logo?', 'Farben passend zum Logo setzen?': 'Set colours to match the logo?',
+  'Farben aus dem Logo übernommen.': 'Colours taken from the logo.', 'Im Logo ist keine kräftige Farbe zu finden.': 'No strong colour found in the logo.',
+  'Für dunkle Flächen fehlt noch eine helle Fassung des Logos, unter Assets „Helle Fassung“.': 'A light version of the logo for dark areas is still missing, see Assets, “Light version”.',
+  'Zeigt die Bilder der aktuellen Seite. Andere Seiten über „Seite“ wählen.': 'Shows the images of the current page. Choose other pages via “Page”.',
+  'Auf dieser Seite gibt es keine Bilder.': 'There are no images on this page.', 'Hero': 'Hero', 'Hauptbild': 'Main image',
+  'Bild ändern': 'Change image', 'Bild ersetzt. Ziehen verschiebt den Ausschnitt.': 'Image replaced. Drag to move the crop.',
+  'Bild übernommen. Es gilt überall, wo es vorkommt.': 'Image applied. It is used wherever it appears.',
+  'Bild ziehen, um den Ausschnitt zu wählen. Der Regler zoomt. Der Rahmen bleibt so groß wie auf der Website.': 'Drag the image to choose the crop. The slider zooms. The frame stays as large as on the website.',
+  'Zentrieren': 'Centre', 'Original': 'Original', 'Demobild und Ausschnitt wiederherstellen': 'Restore demo image and crop', 'Demobild': 'Demo image',
+  'Neues Bild hochladen': 'Upload new image', 'oder hierher ziehen, JPG, PNG, WebP': 'or drag it here, JPG, PNG, WebP', 'Ihre Bilder': 'Your images',
+  'Hochgeladene Bilder erscheinen hier und lassen sich an jeder Stelle wiederverwenden.': 'Uploaded images appear here and can be reused anywhere.',
+  'Weitere Bilder': 'More images', 'Eigenes Bild': 'Own image', 'Aus der Demo': 'From the demo', 'Abbrechen': 'Cancel', 'Übernehmen': 'Apply',
+  'Dieses Bild ließ sich nicht lesen.': 'This image could not be read.', 'Fester Rahmen': 'Fixed frame', 'px wie im Template': 'px as in the template',
+  // Stil, Farben, Schrift
+  'Farben und Schriften als ein Konzept, passend zum Template. Danach lässt sich unter Farben und Schrift alles einzeln anpassen.': 'Colours and fonts as one concept, matching the template. Afterwards everything can be adjusted individually under Colours and Fonts.',
+  'Wie Template': 'As template', 'Farben und Schriften des Templates wiederhergestellt.': 'Template colours and fonts restored.',
+  'Farben des Templates wiederhergestellt.': 'Template colours restored.', 'Schriften des Templates.': 'Template fonts.',
+  'Erscheinung': 'Appearance', 'Hell': 'Light', 'Dunkel': 'Dark', 'Farbvorschläge': 'Colour suggestions', 'Passend zu': 'Matching', 'Allgemein': 'General',
+  'Aus dem Logo': 'From the logo', 'Eigene Farben': 'Custom colours', 'Feinabstimmung': 'Fine-tuning', 'Weitere Farben': 'More colours', 'Palette': 'Palette',
+  'Automatisch': 'Automatic', 'Abgeleitet aus den hellen Farben. Was Sie hier ändern, gilt nur im Dunkelmodus.': 'Derived from the light colours. What you change here applies to dark mode only.',
+  'Dunkle Farben wieder aus den hellen abgeleitet.': 'Dark colours derived from the light ones again.', 'Heller Grund': 'Light background', 'Dunkler Grund': 'Dark background',
+  'Hauptfarbe': 'Primary colour', 'Titel, Linien, Schaltflächen': 'Titles, lines, buttons', 'Akzent': 'Accent', 'Hervorhebungen, Links': 'Highlights, links',
+  'Menüleiste': 'Menu bar', 'Kopfzeile mit Logo und Menü': 'Header with logo and menu', 'Menüleiste, Schrift': 'Menu bar, text', 'Menüpunkte in der Kopfzeile': 'Menu items in the header',
+  'Hintergrund': 'Background', 'Grund der Seite': 'Page background', 'Flächen': 'Surfaces', 'Karten und Bänder': 'Cards and bands', 'Fußzeile': 'Footer',
+  'Grund unten': 'Bottom background', 'Text': 'Text', 'Überschriften und starker Text': 'Headings and strong text', 'Zweitfarbe': 'Secondary colour',
+  'Tönung': 'Tint', 'Fließtext': 'Body text', 'Linien': 'Lines', 'Kachel 1': 'Tile 1', 'Kachel 2': 'Tile 2', 'Kachel 3': 'Tile 3', 'Kachel 4': 'Tile 4', 'Kachel 5': 'Tile 5',
+  'Kombinationen': 'Combinations', 'Überschriften': 'Headings', 'Alle': 'All', 'Empfohlen': 'Recommended', 'Keine Schrift gefunden.': 'No font found.',
+  'Serifenlos': 'Sans serif', 'Serif': 'Serif', 'Handschrift': 'Handwriting', 'Google Fonts, Open Source': 'Google Fonts, open source', 'So erscheint es': 'This is how it looks',
+  'Google Fonts ist gerade nicht erreichbar. Ohne Internet gehen nur die Explore-Schriften.': 'Google Fonts is not reachable right now. Without internet only the Explore fonts work.',
+  // Namen der Konzepte, Paletten und Schriftpaare
+  'Kunsthalle': 'Kunsthalle', 'Atelier': 'Studio', 'Naturkunde': 'Natural history', 'Forschung': 'Research', 'Grabung': 'Excavation', 'Garten': 'Garden', 'Mode': 'Fashion',
+  'Archiv': 'Archive', 'Klassik': 'Classic', 'Gemäldegalerie': 'Picture gallery', 'Residenz': 'Palace', 'Antikensammlung': 'Antiquities', 'Schatzkammer': 'Treasury',
+  'Stadtmuseum': 'City museum', 'Bibliothek': 'Library', 'Landesmuseum': 'State museum', 'Popkultur': 'Pop culture', 'Kindermuseum': 'Children’s museum',
+  'Plakat': 'Poster', 'Technik': 'Technology', 'Architektur': 'Architecture', 'Weltkulturen': 'World cultures',
+  'Kalkstein': 'Limestone', 'Flussgrün': 'River green', 'Galerie': 'Gallery', 'Nordlicht': 'Northern light', 'Ocker': 'Ochre', 'Salbei': 'Sage', 'Tinte': 'Ink',
+  'Marmor': 'Marble', 'Nachtblau': 'Midnight blue', 'Purpur': 'Purple', 'Schiefer': 'Slate', 'Pergament': 'Parchment', 'Pastell': 'Pastel', 'Nordisch': 'Nordic',
+  'Abendrot': 'Sunset', 'Ozean': 'Ocean', 'Grafit': 'Graphite', 'Graphit': 'Graphite', 'Tropen': 'Tropics', 'Kobalt': 'Cobalt', 'Terrakotta': 'Terracotta', 'Pflaume': 'Plum',
+  'Sachlich': 'Neutral', 'Weich': 'Soft', 'Geometrisch': 'Geometric', 'Schweizer': 'Swiss', 'Zeitgenössisch': 'Contemporary', 'Literarisch': 'Literary', 'Zugewandt': 'Approachable',
+  'Humanistisch': 'Humanist', 'Buchdruck': 'Letterpress', 'Barock': 'Baroque', 'Antiqua': 'Old style', 'Gelehrt': 'Scholarly', 'Klassisch': 'Classic', 'Rund': 'Rounded',
+  'Grotesk': 'Grotesque', 'Technisch': 'Technical', 'Verspielt': 'Playful', 'Breit': 'Wide', 'Freundlich': 'Friendly', 'Edel': 'Refined', 'Kräftig': 'Bold', 'Zeitgemäß': 'Modern',
+  'Kontrast': 'Contrast',
+  // Einsatz der Konzepte (Tooltips)
+  'Anthrazit und Rost mit kräftiger Serife, für Stadt und Geschichte': 'Anthracite and rust with a strong serif, for cities and history',
+  'Antike Versalien, weich gezeichnet, für Skulptur': 'Classical capitals, softly drawn, for sculpture',
+  'Braun und Siena auf Papierton, für Handschriften': 'Brown and sienna on paper tone, for manuscripts',
+  'Breit und modern, für zeitgenössische Kunst': 'Wide and modern, for contemporary art', 'Breite Versalien, für Plakat und Grafik': 'Wide capitals, for posters and graphics',
+  'Bronzegrün mit römischen Versalien, für Antike und Skulptur': 'Bronze green with Roman capitals, for antiquity and sculpture',
+  'Bronzegrün und Kupfer, für Antike und Skulptur': 'Bronze green and copper, for antiquity and sculpture',
+  'Eckig und präzise, für Technik und Medien': 'Angular and precise, for technology and media',
+  'Eigenwillig, für junge Häuser und Kunstvereine': 'Idiosyncratic, for young institutions and art societies',
+  'Eng und präzise, für Kunsthallen und Architektur': 'Tight and precise, for exhibition halls and architecture',
+  'Englische Buchschrift, für Alte Meister und Grafik': 'English book face, for Old Masters and prints',
+  'Fein und festlich, für Schlösser und Residenzen': 'Fine and festive, for castles and palaces',
+  'Freundliche Serife, für kleinere Häuser und Regionalmuseen': 'Friendly serif, for smaller institutions and regional museums',
+  'Gedämpftes Grün und Ziegel, für Gärten und Volkskunde': 'Muted green and brick, for gardens and folklore',
+  'Gedämpftes Grün und rund gesetzt, für Gärten, Volkskunde und Familien': 'Muted green, rounded type, for gardens, folklore and families',
+  'Geometrisch und freundlich, für Design und Alltag': 'Geometric and friendly, for design and everyday life',
+  'Graustufen mit einem Rot, für Architektur und Fotografie': 'Greyscale with one red, for architecture and photography',
+  'Graustufen mit einem Rot, kompakt gesetzt, für Architektur und Fotografie': 'Greyscale with one red, compact type, for architecture and photography',
+  'Grundfarben und konstruierte Schrift, für Design und Architektur': 'Primary colours and constructed type, for design and architecture',
+  'Hoher Kontrast, für Mode, Schmuck und Kunstgewerbe': 'High contrast, for fashion, jewellery and applied arts',
+  'Klar und neutral, für Wissenschaft und Technik': 'Clear and neutral, for science and technology',
+  'Kompakt und kräftig, für Industrie und Technik': 'Compact and strong, for industry and technology',
+  'Konstruiert, Zwanzigerjahre, für Design und Architektur': 'Constructed, 1920s, for design and architecture',
+  'Kräftige Serife, gut lesbar, für Geschichte und Stadt': 'Strong serif, easy to read, for history and cities',
+  'Königliches Violett und Gold, für Schatzkammern': 'Royal violet and gold, for treasuries',
+  'Kühles Anthrazit und Rost, für Stadt und Geschichte': 'Cool anthracite and rust, for cities and history',
+  'Kühles Blau mit breiter Grotesk, für Wissenschaft und Technik': 'Cool blue with a wide grotesque, for science and technology',
+  'Kühles Grau und klares Blau, für Wissenschaft und Technik': 'Cool grey and clear blue, for science and technology',
+  'Lebhaft, für Kinder-, Spiel- und Popkultur': 'Lively, for children’s, toy and pop culture', 'Lesefreundlich, für Literatur und Archive': 'Easy to read, for literature and archives',
+  'Offen und rund, für Vermittlung und Familien': 'Open and rounded, for education and families',
+  'Olivgrün und Senf mit weichen Versalien, für Kulturgeschichte': 'Olive and mustard with soft capitals, for cultural history',
+  'Olivgrün und Senf, für Landschaft und Kulturgeschichte': 'Olive and mustard, for landscape and cultural history',
+  'Orange und Pflaume mit weiter Schrift, für Grafik und Gegenwart': 'Orange and plum with wide type, for graphics and the present',
+  'Orange, Koralle und Pflaume, warm und kräftig': 'Orange, coral and plum, warm and strong',
+  'Papierton und Siena mit schlanker Lesetype, für Handschriften': 'Paper tone and sienna with a slender text face, for manuscripts',
+  'Petrol, Salbei und Senf, freundlich gesetzt, für skandinavisches Design': 'Petrol, sage and mustard, friendly type, for Scandinavian design',
+  'Petrol, Salbei und Senf, skandinavisches Design': 'Petrol, sage and mustard, Scandinavian design',
+  'Pink, Türkis und Violett, laut und fröhlich': 'Pink, turquoise and violet, loud and cheerful',
+  'Pink, Türkis und lebhafte Grotesk, für Pop, Spiel und Comic': 'Pink, turquoise and a lively grotesque, for pop, play and comics',
+  'Puder und Beere mit eigenwilliger Schrift, für Mode und Textil': 'Powder and berry with idiosyncratic type, for fashion and textiles',
+  'Puder und Beere, für Mode und Textil': 'Powder and berry, for fashion and textiles',
+  'Reines Weiß, Schwarz und Signalrot, für Kunsthallen': 'Pure white, black and signal red, for exhibition halls',
+  'Rot, Blau, Gelb, die Grundfarben': 'Red, blue, yellow, the primary colours', 'Ruhige Antiqua, für Kunst- und Kulturgeschichte': 'Calm old-style serif, for art and cultural history',
+  'Römische Inschrift, für Antike und Archäologie': 'Roman inscription, for antiquity and archaeology',
+  'Sand und Goldocker mit freundlicher Serife, für Archäologie und Regionalgeschichte': 'Sand and golden ochre with a friendly serif, for archaeology and regional history',
+  'Sand und Goldocker, für Archäologie und Geschichte': 'Sand and golden ochre, for archaeology and history',
+  'Schlanke Lesetype, für Bibliotheken und Handschriften': 'Slender text face, for libraries and manuscripts',
+  'Schlicht und rund, für Vermittlung und Familien': 'Simple and rounded, for education and families',
+  'Smaragd, Mango und Flamingo, für Natur und Welt': 'Emerald, mango and flamingo, for nature and the world',
+  'Smaragd, Mango und breite Versalien, für Natur und Welt': 'Emerald, mango and wide capitals, for nature and the world',
+  'Tiefblau und Gelb mit eckiger Grotesk, für Technik und Schifffahrt': 'Deep blue and yellow with an angular grotesque, for technology and shipping',
+  'Tiefblau, Himmelblau und Gelb, für Schifffahrt und Technik': 'Deep blue, sky blue and yellow, for shipping and technology',
+  'Tiefes Blau und Messing, für Residenzen und Schlösser': 'Deep blue and brass, for palaces and castles',
+  'Tiefes Blau, Messing und feine Garamond, für Schlösser': 'Deep blue, brass and a fine Garamond, for castles',
+  'Tiefes Grün mit Rost, für Natur und Region': 'Deep green with rust, for nature and the region',
+  'Tiefes Grün und Rost, klar gesetzt, für Natur und Region': 'Deep green and rust, clear type, for nature and the region',
+  'Tintenblau mit Messing, für Bibliotheken und Archive': 'Ink blue with brass, for libraries and archives',
+  'Tintenblau und Messing mit Leseschrift, für Bibliotheken und Archive': 'Ink blue and brass with a text face, for libraries and archives',
+  'Violett und Gold mit hohem Kontrast, für Schmuck und Kunstgewerbe': 'Violet and gold with high contrast, for jewellery and applied arts',
+  'Warmes Schwarz und Bronze, klassisch und ruhig': 'Warm black and bronze, classic and calm',
+  'Warmes Schwarz, Bronze und Antiqua, ruhig und zeitlos': 'Warm black, bronze and old-style serif, calm and timeless',
+  'Warmes Weiß und Terrakotta mit Magazin-Serife, für Kunst und Gestaltung': 'Warm white and terracotta with a magazine serif, for art and design',
+  'Warmes Weiß, Terrakotta, für Kunst und Gestaltung': 'Warm white, terracotta, for art and design',
+  'Weiche Serife wie im Magazin, für Kunst und Gestaltung': 'Soft magazine serif, for art and design',
+  'Weiche Töne und runde Schrift, für Kinder und Familien': 'Soft tones and rounded type, for children and families',
+  'Weiche Töne, für Kinder- und Spielzeugmuseen': 'Soft tones, for children’s and toy museums',
+  'Weinrot und Gold mit Buchschrift, für Alte Meister': 'Wine red and gold with a book face, for Old Masters', 'Weinrot und Gold, für Alte Meister': 'Wine red and gold, for Old Masters',
+  'Weit und laut, für Jugend und Gegenwart': 'Wide and loud, for youth and the present',
+  'Weiß, Schwarz und Signalrot mit präziser Grotesk, für zeitgenössische Kunst': 'White, black and signal red with a precise grotesque, for contemporary art',
+  // Geraete-Vorschau
+  'Der Entwurf auf Monitor, Tablet und Smartphone. Szene wählen und als Bild herunterladen.': 'The draft on monitor, tablet and smartphone. Choose a scene and download it as an image.',
+  'Szene': 'Scene', 'Herunterladen': 'Download', 'Alle Szenen herunterladen': 'Download all scenes', 'Für Monitor und Smartphone, das Tablet zeigt immer die Sammlung.': 'For monitor and smartphone, the tablet always shows the collection.',
+  'Passt zu Hintergrund und Hauptfarbe des Entwurfs': 'Matches the background and primary colour of the draft', 'passt': 'match',
+  'In diese Fassung sind keine Szenen eingebaut.': 'No scenes are built into this version.', 'Mockup heruntergeladen.': 'Mock-up downloaded.', 'Mockups heruntergeladen.': 'Mock-ups downloaded.',
+  'Die Aufnahme hat nicht geklappt. Bitte Seite noch einmal wählen.': 'The capture failed. Please choose the page again.',
+  // Export, Mehr, Willkommen
+  'Format': 'Format', 'Seiten wählen': 'Choose pages', 'Gerät im PDF': 'Device in the PDF', 'PDF herunterladen': 'Download PDF', 'Zum Verschicken an den Kunden': 'To send to the client',
+  'Einzelne Seiten als Bild': 'Single pages as images', 'Bild für Präsentationen': 'Image for presentations', 'Geräte-Mockup': 'Device mock-up',
+  'Mockup mit Monitor, Tablet und Smartphone': 'Mock-up with monitor, tablet and smartphone', 'Entwurfsdatei': 'Draft file', 'Später weiterbearbeiten': 'Continue editing later',
+  'Speichert alle Einstellungen, Texte und Bilder in einer Datei. Mit „Entwurf öffnen“ geht es genau dort weiter, auch auf einem anderen Rechner.': 'Saves all settings, texts and images in one file. “Open draft” picks up exactly where you left off, even on another computer.',
+  'Datei speichern': 'Save file', 'Entwurf als Datei gespeichert.': 'Draft saved as a file.', 'PDF heruntergeladen.': 'PDF downloaded.', 'PNG heruntergeladen.': 'PNG downloaded.',
+  'Das PDF ließ sich nicht erstellen. Bitte noch einmal versuchen.': 'The PDF could not be created. Please try again.',
+  'Das Bild ließ sich nicht erstellen. Bitte noch einmal versuchen.': 'The image could not be created. Please try again.',
+  'Neuer Entwurf': 'New draft', 'Entwurf öffnen': 'Open draft', 'Strg+O': 'Ctrl+O', 'Strg+S': 'Ctrl+S', 'Letzten Stand laden': 'Load last state', 'Letzter Stand geladen.': 'Last state loaded.',
+  'Bedienhinweis zeigen': 'Show usage hint', 'Alles zurücksetzen': 'Reset everything', 'Alles auf die Demo zurückgesetzt.': 'Everything reset to the demo.',
+  'Diese Datei ist kein Explore-Studio-Entwurf.': 'This file is not an Explore Studio draft.', 'Entwurf': 'Draft',
+  'Drei Angaben, dann steht der erste Entwurf.': 'Three details, and your first draft is ready.', 'Ihre Marke in allen drei Templates': 'Your brand in all three templates',
+  'Museum': 'Museum', 'z. B. Kunstmuseum Seeland': 'e.g. Seeland Art Museum', 'Entwurf anlegen': 'Create draft', 'Ohne Angaben': 'Skip',
+  'Werke und Objekte aus der Sammlung, offen für alle.': 'Works and objects from the collection, open to all.',
+  // In der Seite (Bearbeiten, Advanced)
+  'Tippen zum Ändern': 'Type to change', 'übernimmt': 'applies', 'verwirft': 'discards',
+  'Größeren Baustein wählen (Q)': 'Select the larger block (Q)', '⤒ Block': '⤒ Block', 'In der Reihenfolge nach oben (Alt+↑)': 'Move up in order (Alt+↑)',
+  'In der Reihenfolge nach unten (Alt+↓)': 'Move down in order (Alt+↓)', 'Schrift kleiner (−)': 'Smaller text (−)', 'Schrift größer (+)': 'Larger text (+)',
+  'Breite, an den Griffen links und rechts ziehen': 'Width, drag the handles on the left and right', 'Ausblenden': 'Hide', 'Ausblenden (Entf)': 'Hide (Del)',
+  'Diesen Baustein zurücksetzen': 'Reset this block', 'Zurücksetzen': 'Reset', 'Ganze Seite': 'Whole page', 'Layout der ganzen Seite auf diesem Gerät zurücksetzen': 'Reset the layout of the whole page on this device',
+  'Ziehen ändert die Breite (Doppelklick: ursprüngliche Breite)': 'Drag to change the width (double-click: original width)', 'Ausgeblendet.': 'Hidden.',
+  'Layout dieser Seite zurückgesetzt.': 'Layout of this page reset.', 'Auf dieser Seite ist nichts verändert.': 'Nothing has been changed on this page.',
+  'Steht schon ganz oben in seinem Block.': 'Already at the top of its block.', 'Steht schon ganz unten in seinem Block.': 'Already at the bottom of its block.',
+  'Sprache': 'Language',
+};
+const EN_MUSTER = [
+  [/^(.+) wird aufgenommen, (\d+) von (\d+)$/, (m, a, b, c) => `Capturing ${enText(a)}, ${b} of ${c}`],
+  [/^(.+) wird aufgenommen$/, (m, a) => `Capturing ${enText(a)}`],
+  [/^Stil (.+) übernommen\.$/, (m, a) => `Style ${enText(a)} applied.`],
+  [/^Palette (.+) übernommen\.$/, (m, a) => `Palette ${enText(a)} applied.`],
+  [/^Schrift: (.+)$/, (m, a) => `Fonts: ${a.split(' und ').join(' and ')}`],
+  [/^(.+) geöffnet\.$/, (m, a) => `${enText(a)} opened.`],
+  [/^(\d+) Bild(?:er)?$/, (m, n) => `${n} ${n === '1' ? 'image' : 'images'}`],
+  [/^(\S+) herunterladen(?:, (\d+) Seiten?)?$/, (m, f, n) => `Download ${f}${n ? `, ${n} ${n === '1' ? 'page' : 'pages'}` : ''}`],
+  [/^(.+) als Hex$/, (m, a) => `${enText(a)} as hex`],
+  [/^Fester Rahmen, (\d+) × (\d+) px wie im Template$/, (m, a, b) => `Fixed frame, ${a} × ${b} px as in the template`],
+];
+let sprache = 'de';
+try { sprache = localStorage.getItem(SPRACHE_SPEICHER) || (/^de/i.test(navigator.language || '') ? 'de' : 'en'); } catch (e) { /* ohne Speicher */ }
+// Text uebersetzen; Rand (Leerzeichen, Mittelpunkt, Doppelpunkt) bleibt stehen, Teile mit · oder „und“ einzeln
+function enText(t) {
+  const m = t.match(/^([\s·,:]*)([\s\S]*?)([\s·,:]*)$/);
+  const kern = m[2];
+  if (!kern) return t;
+  let neu = EN_TEXT[kern];
+  if (neu === undefined) for (const [re, fn] of EN_MUSTER) { if (re.test(kern)) { neu = kern.replace(re, fn); break; } }
+  // Zusammengesetzt: Teile mit · einzeln; „A und B“ nur, wenn beide Teile bekannt oder Eigennamen sind (Schriftpaare)
+  if (neu === undefined && kern.includes(' · ')) neu = kern.split(' · ').map(enText).join(' · ');
+  else if (neu === undefined && kern.includes(' und ')) {
+    const teile = kern.split(' und ');
+    if (teile.every((x) => EN_TEXT[x] !== undefined || /^[A-Z0-9][\w-]*( [A-Z0-9][\w-]*)*$/.test(x))) neu = teile.map((x) => EN_TEXT[x] ?? x).join(' and ');
+  }
+  return neu === undefined ? t : m[1] + neu + m[3];
+}
+const SPRACH_ATTR = ['title', 'aria-label', 'placeholder', 'alt'];
+// In der Vorschau der Website nur die eigenen Einblendungen
+const darfUebersetzen = (el) => el && (el.ownerDocument === document ? !el.closest('[data-sprache-fest]') : !!el.closest('[data-pitch-ui]'));
+function uebersetzeKnoten(n, neu) {
+  if (n.nodeType === 3) {
+    if (!darfUebersetzen(n.parentElement) || /^(STYLE|SCRIPT)$/.test(n.parentElement.tagName)) return;
+    if (!neu && n._en !== undefined && n.nodeValue === n._en) return;
+    if (n._en === undefined || n.nodeValue !== n._en) n._de = n.nodeValue;
+    const soll = sprache === 'en' ? enText(n._de) : n._de;
+    n._en = soll;
+    if (n.nodeValue !== soll) n.nodeValue = soll;
+    return;
+  }
+  if (n.nodeType !== 1) return;
+  if (darfUebersetzen(n)) uebersetzeAttr(n, null, neu);
+  if (n.tagName === 'IFRAME' || n.tagName === 'STYLE' || n.tagName === 'SCRIPT') return;
+  for (const k of n.childNodes) uebersetzeKnoten(k, neu);
+}
+function uebersetzeAttr(el, nur, neu) {
+  el._deA = el._deA || {}; el._enA = el._enA || {};
+  for (const a of nur ? [nur] : SPRACH_ATTR) {
+    const v = el.getAttribute(a); if (v === null) continue;
+    if (!neu && el._enA[a] !== undefined && v === el._enA[a]) continue;
+    if (el._enA[a] === undefined || v !== el._enA[a]) el._deA[a] = v;
+    const soll = sprache === 'en' ? enText(el._deA[a]) : el._deA[a];
+    el._enA[a] = soll;
+    if (v !== soll) el.setAttribute(a, soll);
+  }
+}
+function sprachBeobachter(doc) {
+  const wurzel = doc.body;
+  if (!wurzel || wurzel._sprachBeob) return;
+  wurzel._sprachBeob = true;
+  new MutationObserver((liste) => {
+    for (const m of liste) {
+      if (m.type === 'childList') m.addedNodes.forEach(uebersetzeKnoten);
+      else if (m.type === 'characterData') uebersetzeKnoten(m.target);
+      else if (m.type === 'attributes' && darfUebersetzen(m.target)) uebersetzeAttr(m.target, m.attributeName);
+    }
+  }).observe(wurzel, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: SPRACH_ATTR });
+  uebersetzeKnoten(wurzel);
+}
+function setzeSprache(s) {
+  sprache = s === 'en' ? 'en' : 'de';
+  try { localStorage.setItem(SPRACHE_SPEICHER, sprache); } catch (e) { /* egal */ }
+  document.documentElement.lang = sprache;
+  $$('[data-sprache]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.sprache === sprache)));
+  uebersetzeKnoten(document.body, true);
+  const doc = fenster.contentDocument;
+  if (doc && doc.body) doc.querySelectorAll('[data-pitch-ui]').forEach((el) => uebersetzeKnoten(el, true));
+}
+$$('[data-sprache]').forEach((b) => b.onclick = () => setzeSprache(b.dataset.sprache));
+sprachBeobachter(document);
+setzeSprache(sprache);
 // Drei Modi: Bearbeiten (Klick aendert Text und Bild), Ansehen (Links fuehren weiter), Advanced (Layout)
 let modusWahl = 'bearbeiten';
 function setzeModus(m) {

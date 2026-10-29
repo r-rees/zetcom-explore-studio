@@ -281,6 +281,121 @@ body.vorschau .vorschau-pille { display: flex; }
 .vorschau-pille button:hover { background: rgba(255, 255, 255, .22); }
 .vorschau-pille button.hell { background: #fff; color: var(--tinte); }
 
+/* ---------- Advanced: Ebenen links, Design rechts, Werkzeuge ueber der Buehne (29.10.2026) ---------- */
+.panel, .werkzeuge { display: none; }
+body.advanced { grid-template-columns: 240px minmax(0, 1fr) 288px; }
+body.advanced .leiste { grid-column: 1 / -1; }
+body.advanced .buehne { grid-column: 2; grid-row: 2; }
+body.advanced .panel { display: flex; flex-direction: column; grid-row: 2; min-height: 0; background: var(--flaeche); }
+body.advanced .panel--links { grid-column: 1; border-right: 1px solid var(--linie); }
+body.advanced .panel--rechts { grid-column: 3; border-left: 1px solid var(--linie); }
+body.advanced .werkzeuge { display: flex; }
+body.advanced .dock { right: 304px; }
+body.advanced .hinweis { display: none !important; }
+body.advanced .toast { bottom: 124px; }
+body.klicken .panel { opacity: .45; pointer-events: none; }
+.eig-sektion .segment--voll { margin: 0 0 8px; }
+body.advanced.vorschau { grid-template-columns: minmax(0, 1fr); }
+body.advanced.vorschau .buehne { grid-column: 1; }
+body.vorschau .panel, body.vorschau .werkzeuge { display: none !important; }
+.panel-kopf { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 16px 16px 4px; }
+.panel-kopf h3 { margin: 0; font-size: 14px; font-weight: 700; }
+#ebenen-wo { font-size: 11px; color: var(--leise); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.panel-inhalt { padding: 4px 12px 24px; overflow: auto; flex: 1; min-height: 0; }
+.panel .abschnitt { margin: 14px 4px 6px; }
+.ebenen-liste { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1px; }
+.ebene { display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 4px 0 8px; border-radius: 7px; color: var(--tinte-2); font-size: 13px; cursor: default; user-select: none; }
+.ebene:hover { background: var(--hover); }
+.ebene.an { background: var(--akzent-hell); color: var(--akzent-2); }
+.ebene.aus .ebene-name { opacity: .45; }
+.ebene > svg.i { width: 15px; height: 15px; opacity: .75; }
+.ebene-name { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ebene-name small { margin-left: 6px; color: var(--leise); font-size: 12px; }
+.ebene-name small:first-child { margin-left: 0; color: inherit; font-size: inherit; }
+.ebene button { width: 26px; height: 26px; flex: none; border: 0; background: none; border-radius: 6px; display: grid; place-items: center; color: var(--leise); opacity: 0; }
+.ebene:hover button, .ebene button.an { opacity: 1; }
+.ebene button:hover { background: var(--flaeche); color: var(--tinte); }
+.ebene button svg.i { width: 14px; height: 14px; }
+.ebene.zieht { opacity: .4; }
+.ebene.drueber { box-shadow: inset 0 2px 0 var(--akzent); }
+.ebene.drunter { box-shadow: inset 0 -2px 0 var(--akzent); }
+.ebene-feld { flex: 1; min-width: 0; height: 24px; border: 1px solid var(--akzent); border-radius: 5px; padding: 0 6px; font-size: 13px; outline: none; }
+.panel-leer { margin: 2px 4px 0; font-size: 12px; line-height: 1.45; color: var(--leise); }
+.eig-kopf { display: flex; align-items: center; gap: 8px; padding: 14px 4px 6px; }
+.eig-kopf strong { flex: 1; font-size: 14px; font-weight: 700; }
+.eig-knoepfe { display: flex; gap: 2px; }
+.eig-knoepfe button, .knopfreihe button { width: 30px; height: 30px; flex: none; border: 0; background: none; border-radius: 7px; display: grid; place-items: center; color: var(--tinte-2); }
+.eig-knoepfe button:hover, .knopfreihe button:hover { background: var(--hover); color: var(--tinte); }
+.knopfreihe button.an { background: var(--akzent-hell); color: var(--akzent-2); }
+.knopfreihe { display: flex; align-items: center; gap: 2px; margin-top: 8px; }
+.knopfreihe .trenn { height: 18px; margin: 0 4px; }
+.eig-notiz { margin: 2px 4px 10px; font-size: 12px; line-height: 1.45; color: var(--leise); overflow-wrap: anywhere; }
+.eig-sektion { padding: 14px 4px; border-top: 1px solid var(--linie); }
+.eig-sektion h4 { margin: 0 0 10px; font-size: 12px; font-weight: 650; color: var(--tinte); }
+.eig-sektion .eig-notiz { margin: 8px 0 0; }
+.feld-raster { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.feld-z { display: flex; align-items: center; height: 32px; border: 1px solid transparent; background: var(--flaeche-2); border-radius: 7px; min-width: 0; }
+.feld-z:hover { border-color: var(--linie); }
+.feld-z:focus-within { border-color: var(--akzent); background: var(--flaeche); }
+.feld-z span { width: 30px; flex: none; text-align: center; font-size: 11px; font-weight: 600; color: var(--leise); cursor: ew-resize; user-select: none; }
+.feld-z input { flex: 1; min-width: 0; height: 100%; border: 0; background: none; padding: 0 8px 0 0; font-size: 13px; font-variant-numeric: tabular-nums; outline: none; -moz-appearance: textfield; }
+.feld-z input::-webkit-inner-spin-button, .feld-z input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.feld-z input:disabled { color: var(--leise); }
+.feld-z:has(input:disabled) span { cursor: default; }
+.feld-wahl select { width: 100%; height: 32px; border: 1px solid transparent; background: var(--flaeche-2); border-radius: 7px; padding: 0 6px; font-size: 13px; min-width: 0; }
+.feld-wahl select:hover { border-color: var(--linie); }
+.feld-breit { grid-column: 1 / -1; }
+.feld-text { display: block; width: 100%; resize: vertical; border: 1px solid transparent; background: var(--flaeche-2); border-radius: 7px; padding: 7px 9px; font: inherit; font-size: 13px; margin-bottom: 6px; }
+.feld-text:focus { outline: none; border-color: var(--akzent); background: var(--flaeche); }
+.feld-zeile { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.feld-zeile .segment--voll { flex: 1; margin: 0; }
+.seg-klein button { height: 28px; min-width: 0; font-size: 12px; }
+.seg-klein svg.i { width: 15px; height: 15px; }
+.feld-schalter { display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; margin: 6px 0; white-space: nowrap; }
+.feld-schalter input { accent-color: var(--akzent); width: 15px; height: 15px; margin: 0; }
+.feld-name { font-size: 11px; font-weight: 600; color: var(--leise); margin: 14px 0 6px; }
+.farbwahl { display: flex; flex-wrap: wrap; gap: 7px; }
+.sw { position: relative; width: 24px; height: 24px; flex: none; border-radius: 50%; border: 0; padding: 0; box-shadow: inset 0 0 0 1px rgba(14, 17, 22, .16); cursor: pointer; }
+.sw.an { box-shadow: inset 0 0 0 1px rgba(14, 17, 22, .16), 0 0 0 2px var(--flaeche), 0 0 0 4px var(--akzent); }
+.sw-leer { background: linear-gradient(135deg, transparent calc(50% - 1px), #e5484d calc(50% - 1px), #e5484d calc(50% + 1px), transparent calc(50% + 1px)), var(--flaeche); }
+.sw-eigen { background: conic-gradient(#ff5a1f, #f2c94c, #3fb950, #1f6feb, #a371f7, #ff5a1f); overflow: hidden; }
+.sw-eigen input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; border: 0; padding: 0; }
+.wert-anzeige { min-width: 52px; text-align: center; font-weight: 600; font-variant-numeric: tabular-nums; }
+.knopf--klein { height: 32px; padding: 0 12px; font-size: 13px; gap: 6px; border-radius: 8px; }
+.knopf--klein svg.i { width: 15px; height: 15px; }
+.knopf--klein.knopf--rund { width: 32px; padding: 0; }
+.knopf--gefahr { color: #b42318; }
+.pfad { display: flex; flex-wrap: wrap; align-items: center; gap: 2px; margin: 0 0 10px; font-size: 12px; color: var(--leise); }
+.pfad button { border: 0; background: none; padding: 2px 5px; border-radius: 5px; color: var(--tinte-2); font-size: 12px; }
+.pfad button:hover { background: var(--hover); color: var(--akzent-2); }
+.pfad b { color: var(--tinte); font-weight: 600; padding: 2px 5px; }
+.kuerzel { display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; margin: 0; font-size: 12px; }
+.kuerzel dt { font-weight: 600; color: var(--tinte); white-space: nowrap; }
+.kuerzel dd { margin: 0; color: var(--leise); }
+.werkzeuge { position: fixed; z-index: 26; top: 76px; left: calc(240px + (100vw - 528px) / 2); transform: translateX(-50%); align-items: center; gap: 2px; padding: 4px; background: var(--flaeche); border: 1px solid var(--linie); border-radius: 12px; box-shadow: var(--schatten-l); }
+.werkzeuge button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 34px; min-width: 34px; padding: 0 9px; border: 0; background: none; border-radius: 8px; color: var(--tinte-2); font-weight: 500; font-size: 13px; white-space: nowrap; }
+.werkzeuge button:hover { background: var(--hover); color: var(--tinte); }
+.werkzeuge button[aria-pressed="true"] { background: var(--tinte); color: #fff; }
+.werkzeuge button[data-raster][aria-pressed="true"] { background: var(--akzent-hell); color: var(--akzent-2); }
+.werkzeuge .trenn { height: 20px; margin: 0 4px; }
+@media (max-width: 1480px) { .werkzeuge .lbl { display: none; } }
+.werkzeuge .wz-modus { display: flex; gap: 2px; padding: 2px; background: var(--flaeche-2); border: 1px solid var(--linie); border-radius: 10px; }
+.werkzeuge .wz-modus button { height: 30px; padding: 0 9px; }
+@media (max-width: 1280px) { .werkzeuge .wz-modus span { display: none; } .werkzeuge button { padding: 0 7px; } }
+.werkzeuge .wz-modus button[aria-pressed="true"] { background: var(--flaeche); color: var(--tinte); box-shadow: 0 1px 3px rgba(14, 17, 22, .12); }
+.block-menue { position: fixed; z-index: 45; width: 252px; padding: 8px; background: var(--flaeche); border: 1px solid var(--linie); border-radius: 14px; box-shadow: var(--schatten-l); animation: auf .14s ease-out; }
+.block-menue-titel { font-size: 12px; font-weight: 600; color: var(--leise); padding: 4px 6px 8px; }
+.block-menue-raster { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+.block-menue button { display: grid; justify-items: center; gap: 6px; padding: 10px 4px 8px; border: 0; background: none; border-radius: 10px; font-size: 12px; font-weight: 500; color: var(--tinte-2); }
+.block-menue button:hover { background: var(--akzent-hell); color: var(--akzent-2); }
+.block-menue svg.i { width: 22px; height: 22px; }
+.feld-raster.drei { grid-template-columns: repeat(3, 1fr); }
+details.eig-mehr { border-top: 1px solid var(--linie); }
+details.eig-mehr summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 14px 4px; font-size: 12px; font-weight: 650; color: var(--tinte); }
+details.eig-mehr summary::-webkit-details-marker { display: none; }
+details.eig-mehr[open] summary svg { transform: rotate(180deg); }
+details.eig-mehr .eig-sektion { border-top: 0; padding-top: 0; }
+
 /* ---------- Dialoge ---------- */
 dialog { border: 0; padding: 0; border-radius: 22px; background: var(--flaeche); box-shadow: var(--schatten-l); color: var(--tinte); max-width: calc(100vw - 32px); }
 dialog::backdrop { background: rgba(14, 17, 22, .42); backdrop-filter: blur(3px); }
@@ -372,6 +487,23 @@ dialog[open] { animation: dialogauf .18s ease-out; }
 #be-bild { position: absolute; max-width: none; user-select: none; pointer-events: none; -webkit-user-drag: none; }
 .be-maske { position: absolute; inset: 0; z-index: 1; pointer-events: none; box-shadow: 0 0 0 9999px rgba(21, 24, 29, .74); outline: 2px solid #fff; transition: background .15s; }
 .be-rahmen.zieht .be-maske { background-image: linear-gradient(to right, transparent calc(33.33% - .5px), rgba(255,255,255,.5) calc(33.33% - .5px), rgba(255,255,255,.5) calc(33.33% + .5px), transparent calc(33.33% + .5px), transparent calc(66.66% - .5px), rgba(255,255,255,.5) calc(66.66% - .5px), rgba(255,255,255,.5) calc(66.66% + .5px), transparent calc(66.66% + .5px)), linear-gradient(to bottom, transparent calc(33.33% - .5px), rgba(255,255,255,.5) calc(33.33% - .5px), rgba(255,255,255,.5) calc(33.33% + .5px), transparent calc(33.33% + .5px), transparent calc(66.66% - .5px), rgba(255,255,255,.5) calc(66.66% - .5px), rgba(255,255,255,.5) calc(66.66% + .5px), transparent calc(66.66% + .5px)); }
+#be-format-wahl button { padding: 0 4px; font-size: 12px; }
+.be-zs-leer { position: absolute; margin: 0; color: #c9ced6; font-size: 14px; }
+#be.zs-modus .be-zoom, #be.zs-modus #be-mitte, #be.zs-modus .be-maske { display: none; }
+#be.zs-modus .be-rahmen { cursor: default; }
+.be-zs { position: absolute; z-index: 2; box-shadow: 0 0 0 9999px rgba(21, 24, 29, .72); outline: 1.5px solid #fff; cursor: move; touch-action: none; }
+.be-zs-drittel { position: absolute; inset: 0; pointer-events: none; opacity: .35; transition: opacity .15s; background-image: linear-gradient(to right, transparent calc(33.33% - .5px), rgba(255,255,255,.7) calc(33.33% - .5px), rgba(255,255,255,.7) calc(33.33% + .5px), transparent calc(33.33% + .5px), transparent calc(66.66% - .5px), rgba(255,255,255,.7) calc(66.66% - .5px), rgba(255,255,255,.7) calc(66.66% + .5px), transparent calc(66.66% + .5px)), linear-gradient(to bottom, transparent calc(33.33% - .5px), rgba(255,255,255,.7) calc(33.33% - .5px), rgba(255,255,255,.7) calc(33.33% + .5px), transparent calc(33.33% + .5px), transparent calc(66.66% - .5px), rgba(255,255,255,.7) calc(66.66% - .5px), rgba(255,255,255,.7) calc(66.66% + .5px), transparent calc(66.66% + .5px)); }
+.be-zs.zieht .be-zs-drittel { opacity: 1; }
+.be-zs i { position: absolute; box-sizing: border-box; }
+.be-zs i[data-g="nw"], .be-zs i[data-g="ne"], .be-zs i[data-g="sw"], .be-zs i[data-g="se"] { width: 26px; height: 26px; border: 0 solid #fff; }
+.be-zs i[data-g="nw"] { left: -4px; top: -4px; border-width: 4px 0 0 4px; cursor: nwse-resize; }
+.be-zs i[data-g="ne"] { right: -4px; top: -4px; border-width: 4px 4px 0 0; cursor: nesw-resize; }
+.be-zs i[data-g="sw"] { left: -4px; bottom: -4px; border-width: 0 0 4px 4px; cursor: nesw-resize; }
+.be-zs i[data-g="se"] { right: -4px; bottom: -4px; border-width: 0 4px 4px 0; cursor: nwse-resize; }
+.be-zs i[data-g="n"], .be-zs i[data-g="s"] { left: 50%; width: 46px; height: 20px; margin-left: -23px; padding: 8px; background: #fff content-box; cursor: ns-resize; }
+.be-zs i[data-g="n"] { top: -12px; } .be-zs i[data-g="s"] { bottom: -12px; }
+.be-zs i[data-g="e"], .be-zs i[data-g="w"] { top: 50%; width: 20px; height: 46px; margin-top: -23px; padding: 8px; background: #fff content-box; cursor: ew-resize; }
+.be-zs i[data-g="e"] { right: -12px; } .be-zs i[data-g="w"] { left: -12px; }
 .be-steuer { display: flex; align-items: center; gap: 12px; padding: 14px 20px; color: #c9ced6; border-top: 1px solid rgba(255, 255, 255, .08); }
 .be-steuer .be-mass { font-size: 12px; color: #8c939e; margin-right: auto; }
 .be-zoom { display: flex; align-items: center; gap: 4px; padding: 4px; background: rgba(255, 255, 255, .06); border-radius: 10px; }
@@ -443,6 +575,34 @@ dialog[open] { animation: dialogauf .18s ease-out; }
   <symbol id="s-sonne" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
   <symbol id="s-stift" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></symbol>
   <symbol id="s-bewegen" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3"/></symbol>
+  <!-- Advanced: Werkzeuge, Ebenen, Design -->
+  <symbol id="s-titel" viewBox="0 0 24 24"><path d="M4 5v14M13 5v14M4 12h9M17 10l3-2v11"/></symbol>
+  <symbol id="s-text" viewBox="0 0 24 24"><path d="M5 7V4h14v3M12 4v16M9 20h6"/></symbol>
+  <symbol id="s-flaeche" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/></symbol>
+  <symbol id="s-kreis" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/></symbol>
+  <symbol id="s-linie" viewBox="0 0 24 24"><path d="M4 20 20 4"/></symbol>
+  <symbol id="s-knopf" viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="10" rx="5"/><path d="M8 12h8"/></symbol>
+  <symbol id="s-auge" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="s-auge-zu" viewBox="0 0 24 24"><path d="M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4M6.6 6.6A17 17 0 0 0 2 12s3.5 7 10 7a10 10 0 0 0 5.4-1.6M9.9 9.9a3 3 0 0 0 4.2 4.2"/></symbol>
+  <symbol id="s-schloss-auf" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.8-1.3"/></symbol>
+  <symbol id="s-kopie" viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></symbol>
+  <symbol id="s-papierkorb" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M5 7l1 13a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1l1-13M9 7V4h6v3"/></symbol>
+  <symbol id="s-ausr-links" viewBox="0 0 24 24"><path d="M4 3v18M8 7h11v4H8zM8 13h7v4H8z"/></symbol>
+  <symbol id="s-ausr-mitte" viewBox="0 0 24 24"><path d="M12 3v18M6 7h12v4H6zM8 13h8v4H8z"/></symbol>
+  <symbol id="s-ausr-rechts" viewBox="0 0 24 24"><path d="M20 3v18M5 7h11v4H5zM9 13h7v4H9z"/></symbol>
+  <symbol id="s-vorn" viewBox="0 0 24 24"><path d="M12 20V9M7 14l5-5 5 5M5 4h14"/></symbol>
+  <symbol id="s-hinten" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
+  <symbol id="s-text-links" viewBox="0 0 24 24"><path d="M4 6h16M4 10h10M4 14h16M4 18h10"/></symbol>
+  <symbol id="s-text-mitte" viewBox="0 0 24 24"><path d="M4 6h16M7 10h10M4 14h16M7 18h10"/></symbol>
+  <symbol id="s-text-rechts" viewBox="0 0 24 24"><path d="M4 6h16M10 10h10M4 14h16M10 18h10"/></symbol>
+  <symbol id="s-gitter" viewBox="0 0 24 24"><path d="M3 3h18v18H3zM9 3v18M15 3v18M3 9h18M3 15h18"/></symbol>
+  <symbol id="s-magnet" viewBox="0 0 24 24"><path d="M5 4h4v8a3 3 0 0 0 6 0V4h4v8a7 7 0 0 1-14 0zM5 8h4M15 8h4"/></symbol>
+  <symbol id="s-baustein" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="2" stroke-dasharray="3 2.6"/></symbol>
+  <symbol id="s-pfeil-hoch" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+  <symbol id="s-pfeil-runter" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
+  <symbol id="s-bloecke" viewBox="0 0 24 24"><rect x="4" y="3.5" width="16" height="5" rx="1"/><rect x="4" y="10" width="16" height="4" rx="1"/><rect x="4" y="15.5" width="16" height="5" rx="1"/></symbol>
+  <symbol id="s-einschieben" viewBox="0 0 24 24"><path d="M4 4h16M4 20h16M8 12h8M12 8v8"/></symbol>
+  <symbol id="s-eltern" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 6 6v5"/></symbol>
 </svg>
 
 <header class="leiste">
@@ -494,6 +654,50 @@ dialog[open] { animation: dialogauf .18s ease-out; }
   </div>
 </main>
 
+<!-- Advanced: Ebenen links, Design rechts, Werkzeuge ueber der Buehne -->
+<aside class="panel panel--links" aria-label="Ebenen">
+  <div class="panel-kopf"><h3>Ebenen</h3><span id="ebenen-wo"></span></div>
+  <div class="panel-inhalt">
+    <div class="abschnitt">Eigene Elemente</div>
+    <div class="ebenen-liste" id="ebenen-liste"></div>
+    <div class="abschnitt">Geänderte Bausteine der Seite</div>
+    <div class="ebenen-liste" id="bausteine-liste"></div>
+  </div>
+</aside>
+<aside class="panel panel--rechts" aria-label="Design">
+  <div class="panel-inhalt" id="eig-inhalt"></div>
+</aside>
+<div class="block-menue" id="block-menue" hidden role="menu" aria-label="Block einfügen">
+  <div class="block-menue-titel">Block einfügen</div>
+  <div class="block-menue-raster">
+    <button data-typ="titel"><svg class="i"><use href="#s-titel"/></svg>Überschrift</button>
+    <button data-typ="text"><svg class="i"><use href="#s-text"/></svg>Text</button>
+    <button data-typ="bild"><svg class="i"><use href="#s-bild"/></svg>Bild</button>
+    <button data-typ="knopf"><svg class="i"><use href="#s-knopf"/></svg>Knopf</button>
+    <button data-typ="flaeche"><svg class="i"><use href="#s-flaeche"/></svg>Fläche</button>
+    <button data-typ="linie"><svg class="i"><use href="#s-linie"/></svg>Linie</button>
+  </div>
+</div>
+<div class="werkzeuge" id="werkzeuge" role="toolbar" aria-label="Werkzeuge">
+  <button data-wz="waehlen" aria-pressed="true" title="Auswählen und verschieben (V)" aria-label="Auswählen"><svg class="i"><use href="#s-zeiger"/></svg></button>
+  <span class="trenn"></span>
+  <button data-wz="titel" aria-pressed="false" title="Überschrift (H)"><svg class="i"><use href="#s-titel"/></svg><span class="lbl">Überschrift</span></button>
+  <button data-wz="text" aria-pressed="false" title="Text (T)"><svg class="i"><use href="#s-text"/></svg><span class="lbl">Text</span></button>
+  <button data-wz="flaeche" aria-pressed="false" title="Fläche (R)"><svg class="i"><use href="#s-flaeche"/></svg><span class="lbl">Fläche</span></button>
+  <button data-wz="ellipse" aria-pressed="false" title="Kreis (O)"><svg class="i"><use href="#s-kreis"/></svg><span class="lbl">Kreis</span></button>
+  <button data-wz="linie" aria-pressed="false" title="Linie (L)"><svg class="i"><use href="#s-linie"/></svg><span class="lbl">Linie</span></button>
+  <button data-wz="bild" aria-pressed="false" title="Bild (I): Datei wählen, dann auf die Seite klicken"><svg class="i"><use href="#s-bild"/></svg><span class="lbl">Bild</span></button>
+  <button data-wz="knopf" aria-pressed="false" title="Knopf (B)"><svg class="i"><use href="#s-knopf"/></svg><span class="lbl">Knopf</span></button>
+  <span class="trenn"></span>
+  <span class="wz-modus" role="group" aria-label="Anordnung">
+    <button data-fluss="1" aria-pressed="true" title="Blöcke: alles steht untereinander und rückt nach, wie in einem Baukasten"><svg class="i"><use href="#s-bloecke"/></svg><span>Blöcke</span></button>
+    <button data-fluss="0" aria-pressed="false" title="Frei: Elemente liegen frei über der Seite, wie in Figma"><svg class="i"><use href="#s-bewegen"/></svg><span>Frei</span></button>
+  </span>
+  <span class="trenn"></span>
+  <button data-raster="zeigen" aria-pressed="true" title="Raster zeigen (Umschalt+G)" aria-label="Raster zeigen"><svg class="i"><use href="#s-gitter"/></svg></button>
+  <button data-raster="fangen" aria-pressed="true" title="Am Raster einrasten" aria-label="Am Raster einrasten"><svg class="i"><use href="#s-magnet"/></svg></button>
+</div>
+
 <div class="dock">
 <div class="dock-zeile">
   <span class="segment" role="group" aria-label="Gerät">
@@ -501,10 +705,13 @@ dialog[open] { animation: dialogauf .18s ease-out; }
     <button data-breite="820" title="Tablet" aria-label="Tablet"><svg class="i"><use href="#s-tablet"/></svg></button>
     <button data-breite="390" title="Smartphone" aria-label="Smartphone"><svg class="i"><use href="#s-mobil"/></svg></button>
   </span>
+  <span class="segment" role="group" aria-label="Bearbeiten oder klicken">
+    <button data-klick="0" aria-pressed="true" title="Bearbeiten: Texte, Bilder und Elemente anklicken und ändern (E)" aria-label="Bearbeiten"><svg class="i"><use href="#s-stift"/></svg></button>
+    <button data-klick="1" aria-pressed="false" title="Klicken: durch die Website klicken, Links sind aktiv (E)" aria-label="Klicken"><svg class="i"><use href="#s-zeiger"/></svg></button>
+  </span>
   <span class="segment modus" role="group" aria-label="Modus">
-    <button data-modus="bearbeiten" aria-pressed="true" title="Bearbeiten: Texte und Bilder anklicken und ändern (E)" aria-label="Bearbeiten"><svg class="i"><use href="#s-stift"/></svg></button>
-    <button data-modus="ansehen" aria-pressed="false" title="Ansehen: durch die Website klicken, Links sind aktiv (E)" aria-label="Ansehen"><svg class="i"><use href="#s-zeiger"/></svg></button>
-    <button data-modus="layout" aria-pressed="false" title="Advanced: Bausteine verschieben und Schriftgrößen ändern (A)" aria-label="Advanced"><svg class="i"><use href="#s-bewegen"/></svg></button>
+    <button data-modus="bearbeiten" aria-pressed="true" title="Simple: Texte, Bilder, Farben und Schrift ändern, für alle (A)">Simple</button>
+    <button data-modus="layout" aria-pressed="false" title="Advanced: frei gestalten wie in Figma, Elemente einfügen, verschieben, am Raster ausrichten (A)">Advanced</button>
   </span>
 </div>
 <div class="zoom" role="group" aria-label="Zoom">
@@ -520,7 +727,8 @@ dialog[open] { animation: dialogauf .18s ease-out; }
   <div class="be">
     <div class="be-haupt">
       <div class="be-flaeche" id="be-flaeche">
-        <div class="be-rahmen" id="be-rahmen"><img id="be-bild" alt="" draggable="false"><span class="be-maske"></span></div>
+        <div class="be-rahmen" id="be-rahmen"><img id="be-bild" alt="" draggable="false"><span class="be-maske"></span><div class="be-zs" id="be-zs" hidden><span class="be-zs-drittel"></span><i data-g="nw"></i><i data-g="n"></i><i data-g="ne"></i><i data-g="e"></i><i data-g="se"></i><i data-g="s"></i><i data-g="sw"></i><i data-g="w"></i></div></div>
+        <p class="be-zs-leer" id="be-zs-leer" hidden>Noch kein Bild. Rechts eines hochladen oder wählen.</p>
       </div>
       <div class="be-steuer">
         <span class="be-mass" id="be-mass"></span>
@@ -534,8 +742,9 @@ dialog[open] { animation: dialogauf .18s ease-out; }
       </div>
     </div>
     <aside class="be-seite">
-      <h2>Bild ändern</h2>
-      <p>Bild ziehen, um den Ausschnitt zu wählen. Der Regler zoomt. Der Rahmen bleibt so groß wie auf der Website.</p>
+      <h2 id="be-titel">Bild ändern</h2>
+      <p id="be-text">Bild ziehen, um den Ausschnitt zu wählen. Der Regler zoomt. Der Rahmen bleibt so groß wie auf der Website.</p>
+      <div id="be-format" hidden><div class="abschnitt" style="margin-top:0">Format</div><span class="segment segment--voll seg-klein" id="be-format-wahl" role="group" aria-label="Format"></span></div>
       <div class="ablage" id="be-ablage" tabindex="0" role="button">
         <svg class="i" style="width:24px;height:24px;color:var(--leise)"><use href="#s-hoch"/></svg>
         <strong>Neues Bild hochladen</strong>
@@ -544,8 +753,7 @@ dialog[open] { animation: dialogauf .18s ease-out; }
       <div class="abschnitt">Ihre Bilder</div>
       <div class="be-galerie" id="be-galerie"></div>
       <p class="be-leer" id="be-galerie-leer">Hochgeladene Bilder erscheinen hier und lassen sich an jeder Stelle wiederverwenden.</p>
-      <div class="abschnitt">Aus der Demo</div>
-      <div class="be-galerie" id="be-demo"></div>
+      <div id="be-demo-teil"><div class="abschnitt">Aus der Demo</div><div class="be-galerie" id="be-demo"></div></div>
       <div class="be-fuss">
         <button class="knopf knopf--leer links" id="be-original" title="Demobild und Ausschnitt wiederherstellen"><svg class="i"><use href="#s-reset"/></svg>Original</button>
         <button class="knopf" id="be-ab">Abbrechen</button>
@@ -1251,6 +1459,7 @@ function zeige(halteScroll) {
     $('#laden').classList.remove('an');
     if (offen === 'logo') assetsBilder();
   };
+  if (LS.el && LS.doc && LS.doc._vorlage) LS.merk = { art: LS.art, id: LS.id, k: lSchluessel(LS.doc) };
   LS.el = null;
   fenster.srcdoc = seitenHtml(d, P.seite);
   kopf();
@@ -1288,6 +1497,7 @@ async function bereite(doc, o) {
   const h = doc.querySelector('h1, h2');
   const titelFam = h ? w.getComputedStyle(h).fontFamily : '';
   const textFam = w.getComputedStyle(doc.body).fontFamily;
+  doc._fam = { t: titelFam || textFam, x: textFam };
   doc.querySelectorAll('body *').forEach((el) => {
     const cs = w.getComputedStyle(el);
     const titel = el.closest('h1,h2,h3,h4,h5,h6') || parseFloat(cs.fontSize) >= 24 || (titelFam !== textFam && cs.fontFamily === titelFam);
@@ -1350,8 +1560,16 @@ async function stil(doc, export_) {
   // Aufnahmen: Farbuebergaenge der Templates (0,3 s) aus, sonst haelt das Bild beim Dunkelmodus einen Zwischenstand fest
   if (export_) css += '*,*::before,*::after{transition:none!important}';
   css += layoutCss(doc);
-  if (!export_ && modus === 'layout') css += `.pitch-pb-hover{outline:1.5px dashed ${AKZENT}!important;outline-offset:2px;cursor:move}.pitch-pb-zieht,.pitch-pb-zieht *{cursor:grabbing!important;user-select:none}`;
+  if (!export_ && modus === 'layout') {
+    css += `.pitch-pb-hover{outline:1.5px dashed ${AKZENT}!important;outline-offset:2px;cursor:move}.pitch-pb-zieht,.pitch-pb-zieht *{cursor:grabbing!important;user-select:none}`
+      + `[data-pitch-el]{cursor:move}[data-pitch-el]:hover:not([contenteditable]){outline:1px solid ${AKZENT}}`
+      + `[contenteditable]{outline:2px solid ${AKZENT}!important;outline-offset:3px;cursor:text!important;user-select:text!important}`
+      + 'html.pitch-wz,html.pitch-wz *{cursor:crosshair!important}html.pitch-abstand,html.pitch-abstand *{cursor:ns-resize!important;user-select:none}';
+  }
   if (!export_ && modus === 'bearbeiten') {
+    // Eigene Elemente aus dem Advanced-Modus: Texte tippen, Bilder ersetzen
+    css += `[data-pitch-el][data-pf]{cursor:text}[data-pitch-el][data-pf]:hover:not([contenteditable]){outline:1.5px dashed ${AKZENT};outline-offset:3px}`
+      + `[data-pitch-el][data-typ="bild"]{cursor:pointer}[data-pitch-el][data-typ="bild"]:hover{outline:2px solid ${AKZENT};outline-offset:-2px}`;
     css += `.pitch-hover:not([contenteditable]){outline:1.5px dashed ${AKZENT};outline-offset:3px;border-radius:2px;cursor:text}`
       + `[contenteditable]{outline:2px solid ${AKZENT}!important;outline-offset:3px;cursor:text;border-radius:2px}`
       + `[data-pitch-bild]{cursor:grab}[data-pitch-bild]:hover{outline:2px solid ${AKZENT}!important;outline-offset:-2px}`
@@ -1425,7 +1643,7 @@ async function wende(doc, voll, export_) {
   const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
   for (let n = walker.nextNode(); n; n = walker.nextNode()) {
     const p = n.parentElement;
-    if (!p || /^(STYLE|SCRIPT)$/.test(p.tagName) || p.isContentEditable || p.closest('[data-pitch-ui]')) continue;
+    if (!p || /^(STYLE|SCRIPT)$/.test(p.tagName) || p.isContentEditable || p.closest('[data-pitch-ui], [data-pitch-ebene]')) continue;
     if (n._orig === undefined) { const t = n.nodeValue.trim(); if (!t) continue; n._orig = t; }
     const neu = P.texte[n._orig];
     const soll = neu !== undefined ? neu : n._orig;
@@ -1475,6 +1693,7 @@ function verdrahte(doc) {
   textTipp.style.cssText = `${UI_STIL};position:absolute;z-index:2147483646;padding:6px 10px;background:#0e1116;color:#fff;font-size:12px;font-weight:500;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.25);pointer-events:none;white-space:nowrap`;
   textTipp.innerHTML = 'Tippen zum Ändern · <b>Enter</b> übernimmt · <b>Esc</b> verwirft';
   doc.body.appendChild(textTipp);
+  doc._textTipp = textTipp;
 
   doc.addEventListener('mousedown', (ev) => {
     if (modus !== 'bearbeiten' || ev.button !== 0) return;
@@ -1484,34 +1703,15 @@ function verdrahte(doc) {
     if (logo) { ev.preventDefault(); bildWaehlen(P.logo && istDunkel(logo.parentElement) ? 'logoHell' : 'logo'); return; }
     const bildEl = ev.target.closest('[data-pitch-bild]');
     if (bildEl) { ev.preventDefault(); bildEditor(bildEl); return; }
-    const r = doc.caretRangeFromPoint && doc.caretRangeFromPoint(ev.clientX, ev.clientY);
-    const n = r && r.startContainer.nodeType === 3 && r.startContainer._orig !== undefined ? r.startContainer : null;
-    const el = n ? n.parentElement : null;
-    if (!el || el.isContentEditable) return;
-    el.contentEditable = 'plaintext-only';
-    el._davor = textKnoten(el).map((t) => [t, t.nodeValue]);
-    const rr = el.getBoundingClientRect();
-    textTipp.hidden = false;
-    textTipp.style.left = Math.max(8, rr.left + w.scrollX) + 'px';
-    textTipp.style.top = Math.max(8, rr.top + w.scrollY - 38) + 'px';
-    const fertig = (abbrechen) => {
-      el.removeEventListener('blur', blur); el.removeEventListener('keydown', taste);
-      if (abbrechen) el._davor.forEach(([t, v]) => { t.nodeValue = v; });
-      el.removeAttribute('contenteditable'); textTipp.hidden = true;
-      textKnoten(el).forEach((t) => {
-        if (t._orig === undefined) return;
-        const v = t.nodeValue.trim();
-        if (!v || v === t._orig) delete P.texte[t._orig]; else P.texte[t._orig] = v;
-      });
-      merke(); wende(doc, true);
-    };
-    const blur = () => fertig(false);
-    const taste = (e) => {
-      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); el.blur(); }
-      if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); fertig(true); }
-    };
-    el.addEventListener('blur', blur); el.addEventListener('keydown', taste);
-    $('#hinweis').hidden = true; try { localStorage.setItem(HINWEIS, '1'); } catch (e) { /* egal */ }
+    // Eigene Elemente aus dem Advanced-Modus: Text tippen, Bild ersetzen
+    const eig = ev.target.closest('[data-pitch-el]');
+    if (eig) {
+      const e = elDaten(doc, eig.dataset.pitchEl);
+      if (e && EL_TEXT.has(e.typ)) { if (!eig.isContentEditable) { ev.preventDefault(); elTextStart(doc, eig, false); } }
+      else if (e && e.typ === 'bild') { ev.preventDefault(); elBildEditor(doc, e.id); }
+      return;
+    }
+    seitenText(doc, ev.clientX, ev.clientY, false);
   }, true);
 
   doc.addEventListener('dragover', (ev) => {
@@ -1520,6 +1720,7 @@ function verdrahte(doc) {
   });
   doc.addEventListener('dragleave', (ev) => { const el = ev.target.closest && ev.target.closest('.pitch-ablage'); if (el) el.classList.remove('pitch-ablage'); });
   doc.addEventListener('drop', async (ev) => {
+    if (modus !== 'bearbeiten') return;
     const el = ev.target.closest('[data-pitch-bild], .pitch-logo'); if (!el) return;
     ev.preventDefault(); el.classList.remove('pitch-ablage');
     const f = ev.dataTransfer.files[0]; if (!f || !f.type.startsWith('image/')) return;
@@ -1575,33 +1776,80 @@ function verdrahte(doc) {
   w.addEventListener('keydown', tasten);
 }
 const textKnoten = (el) => { const r = []; const t = el.ownerDocument.createTreeWalker(el, NodeFilter.SHOW_TEXT); for (let n = t.nextNode(); n; n = t.nextNode()) r.push(n); return r; };
+// Text der Seite direkt bearbeiten; gleich lautender Text aendert sich ueberall mit. Enter uebernimmt, Esc verwirft.
+// fokus: die Schreibmarke selbst setzen (Doppelklick im Advanced-Modus, dort verhindert der Mausdruck den Fokus)
+function seitenText(doc, x, y, fokus) {
+  const w = doc.defaultView, textTipp = doc._textTipp;
+  const r = doc.caretRangeFromPoint && doc.caretRangeFromPoint(x, y);
+  const n = r && r.startContainer.nodeType === 3 && r.startContainer._orig !== undefined ? r.startContainer : null;
+  const el = n ? n.parentElement : null;
+  if (!el || el.isContentEditable) return false;
+  el.contentEditable = 'plaintext-only';
+  el._davor = textKnoten(el).map((t) => [t, t.nodeValue]);
+  const rr = el.getBoundingClientRect();
+  textTipp.hidden = false;
+  textTipp.style.left = Math.max(8, rr.left + w.scrollX) + 'px';
+  textTipp.style.top = Math.max(8, rr.top + w.scrollY - 38) + 'px';
+  const fertig = (abbrechen) => {
+    el.removeEventListener('blur', blur); el.removeEventListener('keydown', taste);
+    if (abbrechen) el._davor.forEach(([t, v]) => { t.nodeValue = v; });
+    el.removeAttribute('contenteditable'); textTipp.hidden = true;
+    textKnoten(el).forEach((t) => {
+      if (t._orig === undefined) return;
+      const v = t.nodeValue.trim();
+      if (!v || v === t._orig) delete P.texte[t._orig]; else P.texte[t._orig] = v;
+    });
+    merke(); wende(doc, true);
+  };
+  const blur = () => fertig(false);
+  const taste = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); el.blur(); }
+    if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); fertig(true); }
+  };
+  el.addEventListener('blur', blur); el.addEventListener('keydown', taste);
+  if (fokus) { el.focus(); const s = doc.getSelection(); s.removeAllRanges(); s.addRange(r); }
+  $('#hinweis').hidden = true; try { localStorage.setItem(HINWEIS, '1'); } catch (e) { /* egal */ }
+  return true;
+}
 const alleSetzen = (doc, k) => doc.querySelectorAll(`[data-pitch-bild="${CSS.escape(k)}"]`).forEach((x) => setzeBild(x, P.bilder[k]));
 
 // ---------- Bild-Editor ----------
 // Zeigt den festen Rahmen der Seite. Innen verschieben und zoomen, ausserhalb liegt der Rest des Bildes gedimmt.
 // Rechts: neues Bild hochladen, eines der schon benutzten waehlen oder das Demobild zurueckholen.
+// Dasselbe fuer Bildfelder aus dem Advanced-Modus (BE.eigen = { doc, id }), dort ohne Demobild
 const sitzung = [];
-const BE = { el: null, k: null, vorher: null, e: null, b: 0, h: 0, nat: [1, 1], k2: 1, orig: '' };
+const BE = { el: null, k: null, eigen: null, vorher: null, e: null, b: 0, h: 0, nat: [1, 1], k2: 1, orig: '' };
 function bildEditor(el) {
   const k = el.dataset.pitchBild;
   const isImg = el.tagName === 'IMG';
   const o = isImg ? el._orig : el._origBg;
   const r = el.getBoundingClientRect();
-  Object.assign(BE, { el, k, vorher: P.bilder[k] ? { ...P.bilder[k] } : null, b: (isImg && o.b) || r.width, h: (isImg && o.h) || r.height, orig: isImg ? o.src : o.url });
+  Object.assign(BE, { el, k, eigen: null, vorher: P.bilder[k] ? { ...P.bilder[k] } : null, b: (isImg && o.b) || r.width, h: (isImg && o.h) || r.height, orig: isImg ? o.src : o.url });
   BE.e = P.bilder[k] ? { x: 50, y: 50, z: 1, ...P.bilder[k] } : { src: null, x: 50, y: 50, z: 1 };
+  beAuf();
+}
+function beAuf() {
+  $('#be-demo-teil').hidden = !!BE.eigen; $('#be-original').hidden = !!BE.eigen; $('#be-format').hidden = !BE.eigen;
+  $('#be').classList.toggle('zs-modus', !!BE.eigen);
+  $('#be-titel').textContent = BE.eigen ? 'Bild zuschneiden' : 'Bild ändern';
+  $('#be-zs').hidden = true; $('#be-zs-leer').hidden = true;
+  $('#be-text').textContent = BE.eigen ? 'Den Rahmen an den Ecken und Kanten ziehen, um zuzuschneiden. Im Rahmen ziehen verschiebt den Ausschnitt. Ein Format hält das Seitenverhältnis.' : 'Bild ziehen, um den Ausschnitt zu wählen. Der Regler zoomt. Der Rahmen bleibt so groß wie auf der Website.';
+  if (BE.eigen) $('#be-format-wahl').innerHTML = BE_FORMATE.map(([k]) => `<button type="button" data-format="${k}" aria-pressed="${String(BE.format === k)}">${{ frei: 'Frei', original: 'Original' }[k] || k}</button>`).join('');
   $('#be').showModal();
   beMasse(); beBilder(); beZeichne(false);
 }
 const beQuelle = () => BE.e.src || BE.orig;
 const beUnveraendert = () => !BE.e.src && (BE.e.z || 1) === 1 && BE.e.x === 50 && BE.e.y === 50;
 function beMasse() {
+  if (BE.eigen) return;
   const flaeche = $('#be-flaeche').getBoundingClientRect();
   BE.k2 = Math.min((flaeche.width - 96) / BE.b, (flaeche.height - 96) / BE.h, 3);
   const r = $('#be-rahmen'); r.style.width = BE.b * BE.k2 + 'px'; r.style.height = BE.h * BE.k2 + 'px';
-  $('#be-mass').textContent = `Fester Rahmen, ${Math.round(BE.b)} × ${Math.round(BE.h)} px wie im Template`;
+  $('#be-mass').textContent = BE.eigen ? `Bildfeld, ${Math.round(BE.b)} × ${Math.round(BE.h)} px` : `Fester Rahmen, ${Math.round(BE.b)} × ${Math.round(BE.h)} px wie im Template`;
 }
 async function beZeichne(live = true) {
-  const src = beQuelle();
+  if (BE.eigen) { await zsZeichnen(live); return; }
+  const src = beQuelle() || LEER_GIF;
   const [nb, nh] = await natur(src); BE.nat = [nb, nh];
   const Fw = BE.b * BE.k2, Fh = BE.h * BE.k2;
   const s = Math.max(Fw / nb, Fh / nh) * (BE.e.z || 1);
@@ -1614,22 +1862,55 @@ async function beZeichne(live = true) {
   $('#be-zoom').value = Math.round((BE.e.z || 1) * 100);
   $('#be-zoom-wert').textContent = Math.round((BE.e.z || 1) * 100) + ' %';
   $('#be-original').disabled = beUnveraendert();
-  if (live) { P.bilder[BE.k] = { ...BE.e }; alleSetzen(fenster.contentDocument, BE.k); }
+  if (live && BE.eigen) elBildUebernehmen(true);
+  else if (live) { P.bilder[BE.k] = { ...BE.e }; alleSetzen(fenster.contentDocument, BE.k); }
 }
 function beBilder() {
-  const eigene = [...new Set([...sitzung, ...Object.values(P.bilder).map((e) => e && e.src).filter(Boolean)])];
+  const felder = Object.values(P.layout || {}).flatMap((L) => (L.e || []).map((e) => e.src));
+  const eigene = [...new Set([...sitzung, ...Object.values(P.bilder).map((e) => e && e.src), ...felder].filter(Boolean))];
   const aktiv = beQuelle();
   const kachel = (src, titel) => `<button class="be-kachel${aktiv === src ? ' an' : ''}" data-src="${src === BE.orig ? '' : src}" title="${titel}"><img src="${src}" alt="${titel}"></button>`;
   $('#be-demo').innerHTML = kachel(BE.orig, 'Demobild');
   $('#be-galerie').innerHTML = eigene.map((s) => kachel(s, 'Eigenes Bild')).join('');
   $('#be-galerie-leer').hidden = eigene.length > 0;
-  $$('#be .be-kachel').forEach((b) => b.onclick = () => { BE.e = { src: b.dataset.src || null, x: 50, y: 50, z: 1 }; beBilder(); beZeichne(); });
+  $$('#be .be-kachel').forEach((b) => b.onclick = () => { BE.e = { src: b.dataset.src || null, x: 50, y: 50, z: 1 }; beBilder(); beNeu(); });
+}
+// Ein neues Bild im Bildfeld beginnt ungeschnitten, im eigenen Format (wie auf dem iPhone)
+function beNeu() {
+  if (!BE.eigen) return beZeichne();
+  BE.zs = { x: 0, y: 0, w: 1, h: 1 }; BE.format = 'frei';
+  $$('#be-format-wahl button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.format === 'frei')));
+  return zsZeichnen(true);
+}
+// Zuschneiden eines Bildfelds: das ganze Bild, darueber der Rahmen mit Griffen an Ecken und Kanten. BE.zs ist der
+// Ausschnitt in Anteilen des Bildes (x, y, w, h von 0 bis 1); das Feld behaelt seine Breite, die Hoehe folgt
+async function zsZeichnen(live) {
+  const src = beQuelle(), bild = $('#be-bild'), zs = $('#be-zs'), rahmen = $('#be-rahmen');
+  zs.hidden = !src; $('#be-zs-leer').hidden = !!src;
+  if (!src) { Object.assign(rahmen.style, { width: '0px', height: '0px' }); $('#be-mass').textContent = ''; return; }
+  const [nb, nh] = await natur(src); BE.nat = [nb, nh];
+  const fl = $('#be-flaeche').getBoundingClientRect(), k = Math.min((fl.width - 96) / nb, (fl.height - 96) / nh, 4);
+  const W = nb * k, H = nh * k, z = BE.zs; BE.zsMass = [W, H];
+  Object.assign(rahmen.style, { width: W + 'px', height: H + 'px' });
+  if (bild.getAttribute('src') !== src) bild.src = src;
+  Object.assign(bild.style, { width: W + 'px', height: H + 'px', left: '0px', top: '0px' });
+  Object.assign(zs.style, { left: z.x * W + 'px', top: z.y * H + 'px', width: z.w * W + 'px', height: z.h * H + 'px' });
+  $('#be-mass').textContent = `Ausschnitt, ${Math.round(z.w * nb)} × ${Math.round(z.h * nh)} px`;
+  if (live) elBildUebernehmen(true);
 }
 async function beHochladen(f) {
-  try { const src = await liesBild(f); sitzung.unshift(src); BE.e = { src, x: 50, y: 50, z: 1 }; beBilder(); beZeichne(); }
+  try { const src = await liesBild(f); sitzung.unshift(src); BE.e = { src, x: 50, y: 50, z: 1 }; beBilder(); beNeu(); }
   catch (err) { melde('Dieses Bild ließ sich nicht lesen.'); }
 }
 function beZu(uebernehmen) {
+  if (BE.eigen) {
+    const { doc, id } = BE.eigen, v = BE.vorher;
+    if (uebernehmen) elBildUebernehmen(false);
+    else elAendern(doc, id, (x) => { for (const [k, w] of Object.entries(v)) { if (w == null) delete x[k]; else x[k] = w; } }, true);
+    BE.eigen = null; $('#be').close(); advPanel();
+    if (uebernehmen) melde('Bild übernommen.');
+    return;
+  }
   if (!uebernehmen) { if (BE.vorher) P.bilder[BE.k] = BE.vorher; else delete P.bilder[BE.k]; }
   else if (beUnveraendert()) delete P.bilder[BE.k];
   else P.bilder[BE.k] = { ...BE.e };
@@ -1642,6 +1923,7 @@ function beZu(uebernehmen) {
   const rahmen = $('#be-rahmen');
   let zug = null;
   rahmen.addEventListener('pointerdown', (ev) => {
+    if (BE.eigen) return;
     zug = { x: ev.clientX, y: ev.clientY, sx: BE.e.x ?? 50, sy: BE.e.y ?? 50 };
     rahmen.setPointerCapture(ev.pointerId); rahmen.classList.add('zieht');
   });
@@ -1656,13 +1938,52 @@ function beZu(uebernehmen) {
   });
   const los = () => { zug = null; rahmen.classList.remove('zieht'); };
   rahmen.addEventListener('pointerup', los); rahmen.addEventListener('pointercancel', los);
-  $('#be-flaeche').addEventListener('wheel', (ev) => { ev.preventDefault(); BE.e.z = Math.min(4, Math.max(1, (BE.e.z || 1) * (ev.deltaY < 0 ? 1.06 : 1 / 1.06))); beZeichne(); }, { passive: false });
+  $('#be-flaeche').addEventListener('wheel', (ev) => { ev.preventDefault(); if (BE.eigen) return; BE.e.z = Math.min(4, Math.max(1, (BE.e.z || 1) * (ev.deltaY < 0 ? 1.06 : 1 / 1.06))); beZeichne(); }, { passive: false });
   $('#be-zoom').oninput = () => { BE.e.z = $('#be-zoom').value / 100; beZeichne(); };
   $('#be-kleiner').onclick = () => { BE.e.z = Math.max(1, (BE.e.z || 1) - 0.1); beZeichne(); };
   $('#be-groesser').onclick = () => { BE.e.z = Math.min(4, (BE.e.z || 1) + 0.1); beZeichne(); };
   $('#be-mitte').onclick = () => { BE.e.x = 50; BE.e.y = 50; BE.e.z = 1; beZeichne(); };
   $('#be-original').onclick = () => { BE.e = { src: null, x: 50, y: 50, z: 1 }; beBilder(); beZeichne(); };
   $('#be-ok').onclick = () => beZu(true);
+  $('#be-format-wahl').addEventListener('click', (ev) => { const b = ev.target.closest('[data-format]'); if (b) beFormat(b.dataset.format); });
+  // Rahmen zum Zuschneiden: im Rahmen ziehen verschiebt, an Ecken und Kanten ziehen aendert den Ausschnitt.
+  // Mit einem Format bleibt das Seitenverhaeltnis, am Bildrand bleibt der Rahmen stehen
+  const zs = $('#be-zs'); let zz = null;
+  zs.addEventListener('pointerdown', (ev) => {
+    ev.preventDefault(); ev.stopPropagation();
+    const g = ev.target.closest('[data-g]');
+    zz = { g: g ? g.dataset.g : '', x: ev.clientX, y: ev.clientY, s: { ...BE.zs } };
+    zs.setPointerCapture(ev.pointerId); zs.classList.add('zieht');
+  });
+  zs.addEventListener('pointermove', (ev) => {
+    if (!zz) return;
+    const [W, H] = BE.zsMass, dx = (ev.clientX - zz.x) / W, dy = (ev.clientY - zz.y) / H, s = zz.s, d = zz.g;
+    let { x, y, w, h } = s;
+    const auf01 = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+    if (!d) { x = auf01(s.x + dx, 0, 1 - s.w); y = auf01(s.y + dy, 0, 1 - s.h); }
+    else {
+      if (d.includes('e')) w = s.w + dx;
+      if (d.includes('w')) { x = s.x + dx; w = s.w - dx; }
+      if (d.includes('s')) h = s.h + dy;
+      if (d.includes('n')) { y = s.y + dy; h = s.h - dy; }
+      const q = zsVerh(BE.format), [nb, nh] = BE.nat;
+      if (q) {
+        const hAus = (b) => b * nb / (nh * q), wAus = (c) => c * nh * q / nb;
+        if (d.length === 2) { const h2 = hAus(w); if (d.includes('n')) y = s.y + s.h - h2; h = h2; }
+        else if (d === 'e' || d === 'w') { const h2 = hAus(w); y = s.y + (s.h - h2) / 2; h = h2; }
+        else { const w2 = wAus(h); x = s.x + (s.w - w2) / 2; w = w2; }
+        if (x < -1e-4 || y < -1e-4 || x + w > 1 + 1e-4 || y + h > 1 + 1e-4) return;
+      } else {
+        if (x < 0) { w += x; x = 0; } if (y < 0) { h += y; y = 0; }
+        if (x + w > 1) w = 1 - x; if (y + h > 1) h = 1 - y;
+      }
+      if (w * W < 24 || h * H < 24) return;
+    }
+    BE.zs = { x: Math.max(0, x), y: Math.max(0, y), w: Math.min(1, w), h: Math.min(1, h) };
+    zsZeichnen(false);
+  });
+  const zsLos = () => { if (!zz) return; zz = null; zs.classList.remove('zieht'); zsZeichnen(true); };
+  zs.addEventListener('pointerup', zsLos); zs.addEventListener('pointercancel', zsLos);
   $('#be-ab').onclick = () => beZu(false);
   $('#be').addEventListener('cancel', (ev) => { ev.preventDefault(); beZu(false); });
   ablage($('#be-ablage'), (f) => {
@@ -1759,6 +2080,7 @@ function popZu() {
 }
 $$('.werkzeug').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); menueZu(); popAuf(b.dataset.pop, b); }));
 document.addEventListener('mousedown', (e) => {
+  if (!e.target.closest('#block-menue')) blockMenueZu();
   if (offen && !e.target.closest('.pop') && !e.target.closest('.werkzeug')) popZu();
   if (!$('#menue').hidden && !e.target.closest('#menue') && !e.target.closest('#menue-auf')) menueZu();
 });
@@ -2018,7 +2340,8 @@ function masse() {
   const rand = artG === 'desktop' ? 0 : artG === 'tablet' ? 12 : 11;
   const kopfH = artG === 'desktop' ? 41 : 0;
   const vorschau = document.body.classList.contains('vorschau');
-  const oben = vorschau ? 64 : 24, unten = 72;
+  // Advanced: Platz fuer die Werkzeugleiste ueber dem Geraet
+  const oben = vorschau ? 64 : document.body.classList.contains('advanced') ? 72 : 24, unten = 72;
   const avB = B - 48 - rand * 2, avH = H - oben - unten - rand * 2 - kopfH;
   zoomPassend = artG === 'desktop' ? Math.min(1, avB / P.breite) : Math.min(1, avB / P.breite, avH / hoch);
   let s = zoom === 'auto' ? (artG === 'desktop' ? Math.min(zoomPassend, 0.6) : zoomPassend) : zoom;
@@ -2041,6 +2364,7 @@ function masse() {
   $('#zoom-regler').value = Math.round(s * 100);
   $('#zoom-wert').textContent = Math.round(s * 100) + ' %';
   $('#zoom-wert').title = zoom === 'auto' ? 'Standardansicht' : 'Zurück zur Standardansicht';
+  if (modus === 'layout' && LS.doc && LS.doc.body) { lRahmen(); rasterZeichnen(LS.doc); }
 }
 function setzeZoom(z) { zoom = z === 'auto' ? 'auto' : Math.min(1.5, Math.max(0.25, z)); masse(); }
 const aktZoom = () => +$('#zoom-regler').value / 100;
@@ -2052,10 +2376,15 @@ $('#buehne').addEventListener('wheel', (ev) => { if (!ev.ctrlKey) return; ev.pre
 new ResizeObserver(masse).observe($('#buehne'));
 $$('[data-breite]').forEach((b) => b.addEventListener('click', () => { if (P.breite === +b.dataset.breite) return; P.breite = +b.dataset.breite; zoom = 'auto'; merke(); masse(); zeige(true); }));
 
-// ---------- Advanced: Bausteine verschieben, umordnen, ausblenden, Schrift groesser oder kleiner ----------
-// Jedes Element der Seite bekommt beim Laden eine feste Nummer (data-pb), der Abzug ist statisch, also bleibt
-// sie von Laden zu Laden gleich. Gespeichert wird je Template, Seite und Geraet in P.layout:
-// b = { nummer: { x, y, f, h } } (Versatz in px, Schriftfaktor, ausgeblendet), r = { eltern: [nummern] } (Reihenfolge)
+// ---------- Advanced: frei gestalten wie in Figma (Robin, 29.10.2026; Grundstock 13.10.2026) ----------
+// Fuer eigene Loesungen, die Jenny umsetzt. Zwei Arten von Ebenen auf einer Seite: die Bausteine der Seite
+// (data-pb, beim Laden durchnummeriert, der Abzug ist statisch, also bleibt die Nummer von Laden zu Laden gleich)
+// lassen sich verschieben, in Breite und Hoehe aendern, umordnen, ausblenden und einfaerben; eigene Elemente
+// (Text, Ueberschrift, Flaeche, Kreis, Linie, Bild, Knopf) liegen frei ueber der Seite. Alles rastet am Raster und an
+// den Kanten der eigenen Elemente ein. Gespeichert wird je Template, Seite und Geraet in P.layout:
+// b = { nummer: { x, y, w, hoe, f, h, bg, fg, rad, deck, mt, mb } } (Versatz, Breite, Hoehe, Schriftfaktor, ausgeblendet,
+// Fuellung, Textfarbe, Ecken, Deckkraft, Abstand oben und unten), r = { eltern: [nummern] } (Reihenfolge),
+// v = { nummer: { p, vor } } (Baustein an eine andere Stelle der Seite gezogen), e = [eigene Elemente, unten zuerst]
 function bausteineZaehlen(doc) {
   let n = 0;
   doc.body.querySelectorAll('*').forEach((el) => {
@@ -2067,30 +2396,49 @@ const lGeraet = (doc) => { const b = doc.defaultView.innerWidth; return b >= 102
 const lSchluessel = (doc) => `${doc._vorlage}/${(doc.querySelector('meta[name="pitch-seite"]') || {}).content || P.seite}/${lGeraet(doc)}`;
 function lDaten(doc, anlegen) {
   const k = lSchluessel(doc);
-  if (!anlegen) return (P.layout || {})[k] || { b: {}, r: {} };
+  if (!anlegen) return (P.layout || {})[k] || { b: {}, r: {}, e: [] };
   P.layout = P.layout || {};
-  return P.layout[k] || (P.layout[k] = { b: {}, r: {} });
+  const L = P.layout[k] || (P.layout[k] = { b: {}, r: {} });
+  if (!L.e) L.e = [];
+  return L;
 }
 const lEintrag = (doc, id) => { const L = lDaten(doc, true); return L.b[id] || (L.b[id] = {}); };
 function lAufraeumen(doc) {
   const k = lSchluessel(doc), L = (P.layout || {})[k]; if (!L) return;
   for (const [id, e] of Object.entries(L.b)) {
-    if (!e.x) delete e.x; if (!e.y) delete e.y; if (!e.f || Math.abs(e.f - 1) < 0.001) delete e.f; if (!e.h) delete e.h; if (!e.w) delete e.w;
+    for (const f of ['x', 'y', 'h', 'w', 'hoe', 'bg', 'fg']) if (!e[f]) delete e[f];
+    if (!e.f || Math.abs(e.f - 1) < 0.001) delete e.f;
+    if (e.rad == null || e.rad === '') delete e.rad;
+    if (e.deck == null || e.deck === '' || e.deck >= 100) delete e.deck;
+    for (const f of ['mt', 'mb']) if (e[f] == null || e[f] === '') delete e[f];
     if (!Object.keys(e).length) delete L.b[id];
   }
-  if (!Object.keys(L.b).length && !Object.keys(L.r).length) delete P.layout[k];
+  if (L.e && !L.e.length) delete L.e;
+  if (L.v && !Object.keys(L.v).length) delete L.v;
+  if (!Object.keys(L.b).length && !Object.keys(L.r).length && !L.e && !L.v) delete P.layout[k];
 }
 
-// Versatz und Ausblenden als CSS, gilt auch fuer Aufnahmen und Export
+// Farben der eigenen Elemente: eine Rolle der Palette (folgt Farben und Dunkelmodus) oder ein fester Hexwert
+const EL_ROLLEN = [['primary', 'Hauptfarbe'], ['accent', 'Akzent'], ['secondary', 'Zweitfarbe'], ['text-strong', 'Text'], ['text-default', 'Fließtext'], ['bg-default', 'Hintergrund'], ['bg-container', 'Flächen'], ['bg-footer', 'Fußzeile']];
+const farbeCss = (v) => (!v ? 'transparent' : v[0] === '#' ? v : `var(--color-${v}${v === 'bg-container' ? ',var(--color-bg-default)' : ''})`);
+
+// Versatz, Masse, Farben und Ausblenden der Bausteine als CSS, gilt auch fuer Aufnahmen und Export
 function layoutCss(doc) {
   const L = lDaten(doc);
   return Object.entries(L.b).map(([id, e]) => {
+    const s = `[data-pb="${id}"]`;
     let r = '';
     if (e.x || e.y) r += `translate:${e.x || 0}px ${e.y || 0}px!important;`;
     if (e.h) r += 'display:none!important;';
-    // Breite fest, auch gegen max-width und Schrumpfen im Flex-Layout
+    // Breite und Hoehe fest, auch gegen max-width und Schrumpfen im Flex-Layout
     if (e.w) r += `width:${e.w}px!important;max-width:none!important;min-width:0!important;flex-basis:auto!important;flex-shrink:0!important;box-sizing:border-box!important;`;
-    return r ? `[data-pb="${id}"]{${r}}` : '';
+    if (e.hoe) r += `height:${e.hoe}px!important;min-height:0!important;max-height:none!important;box-sizing:border-box!important;`;
+    if (e.bg) r += `background-color:${farbeCss(e.bg)}!important;`;
+    if (e.rad != null) r += `border-radius:${e.rad}px!important;`;
+    if (e.deck != null) r += `opacity:${e.deck / 100}!important;`;
+    if (e.mt != null) r += `margin-top:${e.mt}px!important;`;
+    if (e.mb != null) r += `margin-bottom:${e.mb}px!important;`;
+    return (r ? `${s}{${r}}` : '') + (e.fg ? `${s},${s} *{color:${farbeCss(e.fg)}!important}` : '');
   }).join('');
 }
 
@@ -2105,6 +2453,12 @@ function layoutAnwenden(doc) {
     if (kinder.length < 2) continue;
     const marke = doc.createComment(''); pe.insertBefore(marke, kinder.reduce((a, b) => (a.compareDocumentPosition(b) & 4 ? a : b)));
     kinder.forEach((k) => pe.insertBefore(k, marke)); marke.remove();
+  }
+  // Bausteine, die im Block-Modus an eine andere Stelle gezogen wurden
+  for (const [id, z] of Object.entries(L.v || {})) {
+    const el = doc.querySelector(`[data-pb="${id}"]`), c = flussEltern(doc, z.p); if (!el || !c || c === el || el.contains(c)) continue;
+    const vor = z.vor ? c.querySelector(`:scope > [data-pb="${z.vor}"]`) : null;
+    if (el.parentNode !== c || el.nextElementSibling !== vor) c.insertBefore(el, vor);
   }
   const w = doc.defaultView;
   const ziel = new Set(doc._pbSchrift || []);
@@ -2125,12 +2479,312 @@ function layoutAnwenden(doc) {
     if (x._fs[1]) x.style.setProperty('line-height', (x._fs[1] * f).toFixed(2) + 'px', 'important');
   });
   doc._pbSchrift = [...ziel];
+  elementeAnwenden(doc);
   lRahmen();
+  if (doc === LS.doc) rasterZeichnen(doc);
 }
 
-// Auswahl und Werkzeugleiste in der Seite
-const LS = { el: null, doc: null, box: null, leiste: null };
-const L_KNOPF = 'display:inline-flex;align-items:center;justify-content:center;gap:4px;height:30px;min-width:30px;padding:0 8px;border:0;border-radius:7px;background:none;color:#fff;font:inherit;font-size:12px;font-weight:600;cursor:pointer';
+// ---------- Eigene Elemente ----------
+// Sie liegen in einer Ebene in der Breite des Geraets (Desktop 1440, Tablet 820, Smartphone 390), mittig auf der
+// Seite wie deren Inhalt: so bleiben sie bei ihm, mit oder ohne Scrollleiste und in breiteren Aufnahmen (Monitor 1920).
+// Die Ebene selbst ist 0 px breit, damit sie keine waagrechte Scrollleiste erzeugt. x, y in px der Ebene.
+const EL_TEXT = new Set(['text', 'titel', 'knopf']);
+const EL_AUTOHOCH = new Set(['text', 'titel']);
+const EL_TYPEN = {
+  titel: { name: 'Überschrift', ico: 's-titel', taste: 'h', w: 560, h: 0, neu: (m) => ({ text: 'Your heading', schrift: 't', groesse: m ? 32 : 48, gewicht: 400, zeile: 1.1, farbe: 'text-strong', ausr: 'left' }) },
+  text: { name: 'Text', ico: 's-text', taste: 't', w: 400, h: 0, neu: (m) => ({ text: 'Your text', schrift: 'x', groesse: m ? 16 : 18, gewicht: 400, zeile: 1.5, farbe: 'text-default', ausr: 'left' }) },
+  flaeche: { name: 'Fläche', ico: 's-flaeche', taste: 'r', w: 320, h: 200, neu: () => ({ fill: 'bg-container' }) },
+  ellipse: { name: 'Kreis', ico: 's-kreis', taste: 'o', w: 160, h: 160, neu: () => ({ fill: 'accent' }) },
+  linie: { name: 'Linie', ico: 's-linie', taste: 'l', w: 320, h: 2, neu: () => ({ fill: 'text-strong' }) },
+  bild: { name: 'Bild', ico: 's-bild', taste: 'i', w: 400, h: 280, neu: () => ({ src: null, fit: 'cover' }) },
+  knopf: { name: 'Knopf', ico: 's-knopf', taste: 'b', w: 200, h: 52, neu: (m) => ({ text: 'Learn more', schrift: 'x', groesse: m ? 15 : 16, gewicht: 600, zeile: 1.2, farbe: '#ffffff', fill: 'primary', radius: 4, ausr: 'center' }) },
+};
+const EL_DRAG = 'application/x-explore-element';
+const BREITE_JE = { desktop: 1440, tablet: 820, mobil: 390 };
+const designBreite = (doc) => BREITE_JE[lGeraet(doc)];
+const elListe = (doc) => lDaten(doc).e || [];
+const elDaten = (doc, id) => elListe(doc).find((e) => e.id === id);
+const elKnoten = (doc, id) => doc.querySelector(`[data-pitch-el="${CSS.escape(id)}"]`);
+const neueId = () => 'e' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const elName = (e) => e.name || (EL_TEXT.has(e.typ) && e.text ? e.text.replace(/\s+/g, ' ').slice(0, 32) : EL_TYPEN[e.typ].name);
+function ebene(doc) {
+  let eb = doc.querySelector('[data-pitch-ebene]');
+  if (!eb) { eb = doc.createElement('div'); eb.dataset.pitchEbene = ''; doc.body.appendChild(eb); }
+  const B = designBreite(doc);
+  if (eb._B !== B) { eb._B = B; eb.style.cssText = `position:absolute;display:block;left:calc(50% - ${B / 2}px);top:0;width:0;height:0;margin:0;padding:0;z-index:1000;pointer-events:none`; }
+  return eb;
+}
+// Ursprung der Ebene im Fenster und ein Rechteck in px der Ebene
+const ebUrsprung = (doc) => { const r = ebene(doc).getBoundingClientRect(); return { x: r.left, y: r.top }; };
+function ebRechteck(doc, el) { const r = el.getBoundingClientRect(), o = ebUrsprung(doc); return { x: r.left - o.x, y: r.top - o.y, w: r.width, h: r.height }; }
+
+// Frei: absolut in der Ebene. Im Fluss: ein Block in der Seite, x ist der Einzug im Block, abstand der Rand oben und unten
+function elStil(doc, e) {
+  const t = e.typ, ao = e.abstandOben ?? e.abstand ?? 16, au = e.abstandUnten ?? e.abstand ?? 16;
+  let s = (e.fluss
+    ? `position:relative;display:${t === 'knopf' ? 'flex' : 'block'};width:${e.w}px;max-width:100%;${e.h ? `height:${e.h}px;` : ''}margin:${ao}px 0 ${au}px ${e.x || 0}px;flex:none;align-self:flex-start;justify-self:start;`
+    : `position:absolute;display:${t === 'knopf' ? 'flex' : 'block'};left:${e.x}px;top:${e.y}px;width:${e.w}px;${e.h ? `height:${e.h}px;` : ''}margin:0;`)
+    + `box-sizing:border-box;pointer-events:${e.fest ? 'none' : 'auto'};`;
+  if (e.fill) s += `background-color:${farbeCss(e.fill)};`;
+  if (t === 'bild' && !e.src) s += 'background-image:repeating-linear-gradient(45deg,rgba(128,128,128,.16) 0 10px,rgba(128,128,128,.28) 10px 20px);';
+  if (t === 'bild' && e.src) {
+    // Ausschnitt wie im Bild-Editor: das Bild fuellt das Feld, bx/by verschieben es, bz zoomt hinein
+    let gr = e.fit === 'contain' ? 'contain' : 'cover', lage = 'center';
+    if (e.fit !== 'contain' && e.nb && e.nh && e.h && e.zs) {
+      // Ausschnitt: er fuellt das Feld, steht das Feld in einem anderen Format, bleibt er mittig
+      const cw = e.zs.w * e.nb, ch = e.zs.h * e.nh, k = Math.max(e.w / cw, e.h / ch), z2 = (v) => Math.round(v * 100) / 100;
+      gr = `${z2(e.nb * k)}px ${z2(e.nh * k)}px`; lage = `${z2(-e.zs.x * e.nb * k + (e.w - cw * k) / 2)}px ${z2(-e.zs.y * e.nh * k + (e.h - ch * k) / 2)}px`;
+    } else if (e.fit !== 'contain' && e.nb && e.nh && e.h) { const k = Math.max(e.w / e.nb, e.h / e.nh) * (e.bz || 1); gr = `${Math.ceil(e.nb * k)}px ${Math.ceil(e.nh * k)}px`; lage = `${e.bx ?? 50}% ${e.by ?? 50}%`; }
+    s += `background-image:url("${e.src}");background-size:${gr};background-position:${lage};background-repeat:no-repeat;`;
+  }
+  if (e.randB) s += `border:${e.randB}px solid ${farbeCss(e.rand || 'text-strong')};`;
+  if (t === 'ellipse') s += 'border-radius:50%;'; else if (e.radius) s += `border-radius:${e.radius}px;`;
+  if (e.deck != null && e.deck < 100) s += `opacity:${e.deck / 100};`;
+  if (e.schatten) s += 'box-shadow:0 12px 32px rgba(0,0,0,.18);';
+  if (EL_TEXT.has(t)) {
+    const fam = (doc._fam || {})[e.schrift === 't' ? 't' : 'x'] || 'inherit';
+    s += `font-family:${fam};font-size:${e.groesse}px;font-weight:${e.gewicht};line-height:${e.zeile};letter-spacing:${(e.sperr || 0) / 100}em;color:${farbeCss(e.farbe)};text-align:${e.ausr || 'left'};white-space:pre-wrap;overflow-wrap:break-word;${e.gross ? 'text-transform:uppercase;' : ''}`;
+    if (t === 'knopf') s += `align-items:center;justify-content:${{ left: 'flex-start', right: 'flex-end' }[e.ausr] || 'center'};padding:0 20px;overflow:hidden;`;
+  }
+  if (e.aus) s += 'display:none;';
+  return s;
+}
+// Eigene Elemente an die Seite bringen; Knoten bleiben erhalten (Auswahl und Bearbeitung laufen weiter)
+function elementeAnwenden(doc) {
+  if (!doc || !doc.body) return;
+  const liste = elListe(doc);
+  const da = new Map([...doc.querySelectorAll('[data-pitch-el]')].map((n) => [n.dataset.pitchEl, n]));
+  if (!liste.length && !da.size) return;
+  const knoten = (e) => {
+    let n = da.get(e.id); da.delete(e.id);
+    if (!n) { n = doc.createElement('div'); n.dataset.pitchEl = e.id; }
+    n.dataset.typ = e.typ;
+    if (EL_TEXT.has(e.typ)) n.dataset.pf = e.schrift === 't' ? 't' : 'x'; else delete n.dataset.pf;
+    n.style.cssText = elStil(doc, e);
+    if (EL_TEXT.has(e.typ) && !n.isContentEditable && n.textContent !== e.text) n.textContent = e.text;
+    return n;
+  };
+  // Frei: in der Ebene ueber der Seite, oben liegt, was in L.e hinten steht
+  const frei = liste.filter((e) => !e.fluss);
+  if (frei.length || doc.querySelector('[data-pitch-ebene]')) {
+    const eb = ebene(doc);
+    frei.forEach((e, i) => { const n = knoten(e); if (eb.children[i] !== n) eb.insertBefore(n, eb.children[i] || null); });
+  }
+  // Im Fluss: vor dem Baustein, an dem es haengt, mehrere an derselben Stelle in der Reihenfolge von L.e
+  const fluss = liste.filter((e) => e.fluss), naechst = new Map();
+  for (let i = fluss.length - 1; i >= 0; i--) {
+    const e = fluss[i], n = knoten(e), c = flussEltern(doc, e.fluss.p);
+    if (!c) { n.style.setProperty('display', 'none', 'important'); if (!n.isConnected) ebene(doc).appendChild(n); continue; }
+    const k = `${e.fluss.p}|${e.fluss.vor}`;
+    const vor = naechst.has(k) ? naechst.get(k) : (e.fluss.vor && c.querySelector(`:scope > [data-pb="${e.fluss.vor}"]`)) || null;
+    if (n.parentNode !== c || n.nextSibling !== vor) c.insertBefore(n, vor);
+    naechst.set(k, n);
+  }
+  da.forEach((n) => n.remove());
+}
+
+// ---------- Platz schaffen: eigene Elemente im Fluss der Seite (Robin, 29.10.2026) ----------
+// Ein Element im Fluss steht zwischen den Bausteinen der Seite und schiebt, was darunter kommt, nach unten.
+// fluss = { p: Eltern-Baustein (Nummer oder 'body'), vor: Baustein, vor dem es steht, null am Ende }. Vorgabe beim
+// Einfuegen, abschaltbar (RASTER.fluss); dann liegt ein neues Element frei ueber der Seite wie bisher
+const flussEltern = (doc, p) => (p === 'body' ? doc.body : doc.querySelector(`[data-pb="${p}"]`));
+const TEXT_TAGS = /^(P|H[1-6]|SPAN|A|BUTTON|LABEL|STRONG|EM|B|I|SMALL|SVG|IMG|INPUT|TEXTAREA|SELECT|PICTURE|VIDEO)$/i;
+function flussKinder(c, selbst) {
+  const w = c.ownerDocument.defaultView;
+  return [...c.children].filter((k) => {
+    if (k === selbst || k.matches('[data-pitch-ui], [data-pitch-ebene], script, style, link, meta, template')) return false;
+    const cs = w.getComputedStyle(k);
+    return cs.display !== 'none' && cs.display !== 'contents' && !cs.display.startsWith('inline') && !/absolute|fixed/.test(cs.position);
+  });
+}
+// Waechst der Block mit, wenn etwas hineinkommt? Hero und Karten haben oft eine feste Hoehe, dort hilft Einschieben nicht
+const WAECHST = new WeakMap();
+function waechst(c) {
+  if (WAECHST.has(c)) return WAECHST.get(c);
+  const probe = c.ownerDocument.createElement('div');
+  probe.style.cssText = 'display:block!important;width:1px;height:40px;margin:0;padding:0;border:0;flex:none;visibility:hidden';
+  const h0 = c.getBoundingClientRect().height; c.appendChild(probe);
+  const ja = c.getBoundingClientRect().height - h0 > 30; probe.remove();
+  WAECHST.set(c, ja); return ja;
+}
+const blockInnen = (c) => { const cs = c.ownerDocument.defaultView.getComputedStyle(c), r = c.getBoundingClientRect(); return { x: r.left + parseFloat(cs.paddingLeft), w: Math.max(40, r.width - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight)) }; };
+// Wo ein Element an der Stelle x, y (Fenster der Seite) in den Fluss kaeme: im innersten Block, der seine Kinder
+// untereinander stapelt und mitwaechst, an der Luecke zwischen zwei Kindern
+function flussOrt(doc, x, y, selbst) {
+  const w = doc.defaultView;
+  const t = doc.elementsFromPoint(x, y).find((n) => !n.closest('[data-pitch-ui], [data-pitch-ebene]') && !(selbst && selbst.contains(n))) || doc.body;
+  for (let c = t; c && c !== doc.documentElement; c = c.parentElement) {
+    if (c !== doc.body && (!c.dataset.pb || TEXT_TAGS.test(c.tagName))) continue;
+    const cs = w.getComputedStyle(c);
+    if (cs.display.startsWith('inline') || /fixed|sticky/.test(cs.position) || c.closest('header')) continue;
+    const kinder = flussKinder(c, selbst); if (!kinder.length) continue;
+    const r = kinder.map((k) => k.getBoundingClientRect());
+    if (r.some((b, i) => i && b.top < r[i - 1].bottom - 2)) continue;
+    if (c !== doc.body && !waechst(c)) continue;
+    let i = r.findIndex((b) => y < b.top + b.height / 2); if (i < 0) i = kinder.length;
+    return { c, kinder, r, i };
+  }
+  return null;
+}
+// Die orange Einfuegelinie an der Luecke; leise: duenner, fuer das Plus beim Darueberfahren
+const luckeY = ({ r, i }) => (i === 0 ? r[0].top : i === r.length ? r[r.length - 1].bottom : (r[i - 1].bottom + r[i].top) / 2);
+function zeigeEinfuege(doc, ort, leise) {
+  const l = LS.einfuege; if (!l || l.ownerDocument !== doc) return;
+  if (!ort) { l.style.setProperty('display', 'none', 'important'); return; }
+  if (ort.reihe) {
+    // In einer Reihe: senkrechte Linie zwischen zwei Karten, so hoch wie die Karte daneben
+    const { r, i } = ort, w = doc.defaultView, d = 3 / (aktZoom() || 1), n = r[Math.min(i, r.length - 1)];
+    const neueZeile = i > 0 && i < r.length && r[i].top >= r[i - 1].bottom - 2;
+    const x = i === 0 || neueZeile ? n.left - 6 : i === r.length ? r[i - 1].right + 6 : (r[i - 1].right + r[i].left) / 2;
+    Object.assign(l.style, { left: x + w.scrollX - d / 2 + 'px', top: n.top + w.scrollY + 'px', width: d + 'px', height: n.height + 'px', borderRadius: d + 'px', opacity: '1' });
+    l.style.setProperty('display', 'block', 'important');
+    return;
+  }
+  const w = doc.defaultView, innen = blockInnen(ort.c), d = (leise ? 2 : 3) / (aktZoom() || 1), y = luckeY(ort);
+  Object.assign(l.style, { left: innen.x + w.scrollX + 'px', top: y + w.scrollY - d / 2 + 'px', width: innen.w + 'px', height: d + 'px', borderRadius: d + 'px', opacity: leise ? '.6' : '1' });
+  l.style.setProperty('display', 'block', 'important');
+}
+// Plus mitten auf der Luecke; ein Klick oeffnet die Auswahl der Bloecke
+function zeigePlus(doc, ort) {
+  const p = LS.plus; if (!p || p.ownerDocument !== doc) return;
+  if (!ort) { if (LS.plusOrt) zeigeEinfuege(doc, null); LS.plusOrt = null; p.style.setProperty('display', 'none', 'important'); return; }
+  LS.plusOrt = ort; zeigeEinfuege(doc, ort, true);
+  const w = doc.defaultView, innen = blockInnen(ort.c), z = 1 / (aktZoom() || 1), s = 24 * z;
+  Object.assign(p.style, { left: innen.x + innen.w / 2 + w.scrollX - s / 2 + 'px', top: luckeY(ort) + w.scrollY - s / 2 + 'px', width: s + 'px', height: s + 'px', fontSize: 18 * z + 'px' });
+  p.style.setProperty('display', 'grid', 'important');
+}
+function blockMenue(doc, ort, plus) {
+  if (!ort) return;
+  const m = $('#block-menue'), fr = fenster.getBoundingClientRect(), s = aktZoom() || 1, pr = plus.getBoundingClientRect();
+  m._ort = ort; m._doc = doc; m.hidden = false;
+  const x = fr.left + (pr.left + pr.width / 2) * s, y = fr.top + pr.bottom * s + 8;
+  m.style.left = Math.max(12, Math.min(x - m.offsetWidth / 2, innerWidth - m.offsetWidth - 12)) + 'px';
+  m.style.top = Math.max(12, Math.min(y, innerHeight - m.offsetHeight - 12)) + 'px';
+}
+function blockMenueZu() { const m = $('#block-menue'); if (m.hidden) return; m.hidden = true; if (m._doc) zeigePlus(m._doc, null); }
+// Element e an die Stelle ort setzen: Anker (Eltern und der naechste Baustein) und Platz in L.e.
+// e steht dabei noch nicht oder nicht mehr in L.e
+function flussEinordnen(doc, e, ort) {
+  const L = lDaten(doc, true), { c, kinder, i } = ort;
+  let vor = null, eigen = null;
+  for (let j = i; j < kinder.length; j++) {
+    const k = kinder[j];
+    if (k.dataset.pitchEl !== undefined) { eigen = eigen || k.dataset.pitchEl; continue; }
+    if (k.dataset.pb) { vor = k.dataset.pb; break; }
+  }
+  e.fluss = { p: c === doc.body ? 'body' : c.dataset.pb, vor };
+  delete e.y;
+  const j = eigen ? L.e.findIndex((x) => x.id === eigen) : -1;
+  if (j >= 0) L.e.splice(j, 0, e); else L.e.push(e);
+}
+// Groesse eines neuen Elements im Fluss: Text, Flaeche und Linie so breit wie der Block, der Rest in Standardgroesse
+function flussMass(doc, typ, ort) {
+  const cw = Math.round(blockInnen(ort.c).w);
+  if (EL_AUTOHOCH.has(typ)) return { w: cw, h: 0 };
+  if (typ === 'linie') return { w: cw, h: 2 };
+  if (typ === 'flaeche') return { w: cw, h: 200 };
+  const m = standardMass(doc, typ), w = Math.min(m.w, cw);
+  return { w, h: Math.round(m.h * w / m.w) };
+}
+// Eine Stelle nach oben (-1) oder unten (+1) im selben Block
+function flussSchritt(doc, id, dir) {
+  const n = elKnoten(doc, id), e = elDaten(doc, id); if (!n || !e || !e.fluss) return;
+  const c = n.parentElement, kinder = flussKinder(c, n);
+  const i = kinder.filter((k) => k.compareDocumentPosition(n) & 4).length + dir;
+  if (i < 0 || i > kinder.length) { melde(dir < 0 ? 'Steht schon ganz oben in seinem Block.' : 'Steht schon ganz unten in seinem Block.'); return; }
+  const L = lDaten(doc, true); L.e.splice(L.e.findIndex((x) => x.id === id), 1);
+  flussEinordnen(doc, e, { c, kinder, i }); elementeAnwenden(doc); merke(); lRahmen(); advLinks(); rasterZeichnen(doc);
+}
+// Frei oder im Fluss: das Element bleibt, wo es auf dem Bildschirm steht
+function lageWechseln(doc, id, lage) {
+  const e = elDaten(doc, id), n = elKnoten(doc, id); if (!e || !n || (lage === 'fluss') === !!e.fluss) return;
+  if (lage === 'frei') {
+    const r = ebRechteck(doc, n);
+    elAendern(doc, id, (x) => { delete x.fluss; delete x.abstand; x.x = Math.round(r.x); x.y = Math.round(r.y); x.w = Math.round(r.w); if (x.h) x.h = Math.round(r.h); });
+  } else {
+    n.scrollIntoView({ block: 'nearest' });
+    const b = n.getBoundingClientRect(), ort = flussOrt(doc, b.left + Math.min(20, b.width / 2), b.top + 2, n);
+    if (!ort) { melde('Hier lässt sich nichts einschieben. Das Element über einen Block der Seite ziehen.'); advPanel(); return; }
+    const L = lDaten(doc, true); L.e.splice(L.e.findIndex((x) => x.id === id), 1);
+    e.x = Math.max(0, Math.round(b.left - blockInnen(ort.c).x));
+    flussEinordnen(doc, e, ort); elementeAnwenden(doc); merke(); lRahmen(); advLinks(); rasterZeichnen(doc);
+  }
+  advPanel();
+}
+
+// ---------- Raster ----------
+// Gilt fuer den Rechner, nicht fuer den Entwurf: Groesse, Sichtbarkeit, Einrasten und Spalten je Geraet
+const RASTER_SPEICHER = 'explore-studio-raster';
+const RASTER = { zeigen: true, fangen: true, fluss: true, groesse: 8, spalten: { desktop: 12, tablet: 8, mobil: 4 }, rand: { desktop: 80, tablet: 32, mobil: 16 }, abstand: { desktop: 24, tablet: 16, mobil: 12 } };
+try { Object.assign(RASTER, JSON.parse(localStorage.getItem(RASTER_SPEICHER) || '{}')); } catch (e) { /* Vorgabe */ }
+const rasterMerken = () => { try { localStorage.setItem(RASTER_SPEICHER, JSON.stringify(RASTER)); } catch (e) { /* egal */ } };
+function spaltenKanten(doc) {
+  const g = lGeraet(doc), n = +RASTER.spalten[g] || 0; if (!n) return [];
+  const B = designBreite(doc), m = +RASTER.rand[g] || 0, ab = +RASTER.abstand[g] || 0, sb = (B - 2 * m - (n - 1) * ab) / n, k = [];
+  for (let i = 0; i < n; i++) { const x = m + i * (sb + ab); k.push(x, x + sb); }
+  return k;
+}
+function rasterZeichnen(doc) {
+  const g = LS.raster; if (!g || g.ownerDocument !== doc) return;
+  const an = modus === 'layout' && RASTER.zeigen;
+  g.style.setProperty('display', an ? 'block' : 'none', 'important');
+  if (!an) return;
+  const B = designBreite(doc), ger = lGeraet(doc), z = aktZoom() || 1, bg = [];
+  // Das Raster liegt ueber der ganzen Breite, sein Ursprung ist der der Ebene (mittig, wie der Inhalt)
+  const off = (doc.documentElement.clientWidth - B) / 2;
+  const n = +RASTER.spalten[ger] || 0;
+  if (n) {
+    const m = +RASTER.rand[ger] || 0, ab = +RASTER.abstand[ger] || 0, sb = (B - 2 * m - (n - 1) * ab) / n;
+    bg.push(`repeating-linear-gradient(90deg,rgba(255,90,31,.08) 0 ${sb}px,transparent ${sb}px ${sb + ab}px) ${off + m}px 0/${B - 2 * m}px 100% no-repeat`);
+  }
+  // Feines Raster nur, solange die Linien auf dem Bildschirm mindestens 6 px auseinander liegen
+  const s = +RASTER.groesse || 8;
+  if (s * z >= 6) { const f = 'rgba(14,17,22,.07)', d = Math.max(1, 1 / z); bg.push(`linear-gradient(90deg,${f} ${d}px,transparent ${d}px) ${off}px 0/${s}px ${s}px`, `linear-gradient(${f} ${d}px,transparent ${d}px) 0 0/${s}px ${s}px`); }
+  g.style.left = '0px'; g.style.width = '100%';
+  g.style.height = '0px';
+  g.style.height = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight) + 'px';
+  g.style.background = bg.join(',') || 'none';
+}
+// Einrasten: die bewegten Kanten (px der Ebene) an Kanten und Mitten der eigenen Elemente, an Seitenmitte und
+// Spalten, sonst ans Raster. Gibt die Verschiebung und die Hilfslinien zurueck. frei: Strg gehalten, nichts rastet
+function fang(doc, punkte, ausser, frei, extraX) {
+  const z = { x: 0, y: 0, linien: [] };
+  if (frei) return z;
+  const T = 6 / (aktZoom() || 1), B = designBreite(doc);
+  const ziele = { x: [0, B / 2, B, ...spaltenKanten(doc), ...(extraX || [])], y: [] };
+  for (const e of elListe(doc)) {
+    if (e.id === ausser || e.aus) continue;
+    const n = elKnoten(doc, e.id); if (!n || !n.getClientRects().length) continue;
+    const r = ebRechteck(doc, n);
+    ziele.x.push(r.x, r.x + r.w / 2, r.x + r.w); ziele.y.push(r.y, r.y + r.h / 2, r.y + r.h);
+  }
+  for (const a of ['x', 'y']) {
+    if (!punkte[a].length) continue;
+    let best = null;
+    for (const p of punkte[a]) for (const t of ziele[a]) { const d = t - p; if (Math.abs(d) <= T && (!best || Math.abs(d) < Math.abs(best.d))) best = { d, t }; }
+    if (best) { z[a] = best.d; z.linien.push([a, best.t]); }
+    else if (RASTER.fangen) { const s = +RASTER.groesse || 8; z[a] = Math.round(punkte[a][0] / s) * s - punkte[a][0]; }
+  }
+  return z;
+}
+function zeigeLinien(doc, linien) {
+  const c = LS.linien; if (!c || c.ownerDocument !== doc) return;
+  c.innerHTML = '';
+  if (!linien || !linien.length) return;
+  const o = ebUrsprung(doc), w = doc.defaultView, d = 1 / (aktZoom() || 1);
+  const H = doc.documentElement.scrollHeight, W = doc.documentElement.scrollWidth;
+  linien.forEach(([a, wert]) => {
+    const l = doc.createElement('div');
+    l.style.cssText = a === 'x'
+      ? `position:absolute;display:block!important;left:${o.x + w.scrollX + wert - d / 2}px;top:0;width:${d}px;height:${H}px;background:${AKZENT}`
+      : `position:absolute;display:block!important;top:${o.y + w.scrollY + wert - d / 2}px;left:0;height:${d}px;width:${W}px;background:${AKZENT}`;
+    c.appendChild(l);
+  });
+}
+
+// ---------- Auswahl, Rahmen und Griffe in der Seite ----------
+const LS = { el: null, doc: null, art: null, id: null, merk: null, wz: 'waehlen', box: null, mass: null, linien: null, raster: null, zieh: null, einfuege: null,
+  abstand: null, leiste: null, plus: null, plusOrt: null, platz: null };
 function lWaehlbar(t) {
   let el = t && t.closest && t.closest('[data-pb]');
   if (!el) return null;
@@ -2140,41 +2794,99 @@ function lWaehlbar(t) {
   while (el.parentElement && el.parentElement.dataset.pb && w.getComputedStyle(el).display === 'inline') el = el.parentElement;
   return el;
 }
-function waehle(el) {
-  if (LS.el && LS.el !== el) LS.el.classList.remove('pitch-pb-hover');
-  LS.el = el;
-  if (LS.box) { LS.box.hidden = !el; LS.leiste.hidden = !el; }
-  lRahmen();
+function waehle(el, art) {
+  if (LS.el && LS.el !== el && LS.el.classList) LS.el.classList.remove('pitch-pb-hover');
+  LS.el = el || null;
+  LS.art = el ? (art || (el.dataset.pitchEl ? 'el' : 'pb')) : null;
+  LS.id = el ? (LS.art === 'el' ? el.dataset.pitchEl : el.dataset.pb) : null;
+  lRahmen(); advPanel(); advLinks();
 }
 function lRahmen() {
   const el = LS.el, doc = LS.doc;
-  if (!el || !doc || !LS.box || el.ownerDocument !== doc || !el.isConnected) { if (LS.box) { LS.box.hidden = true; LS.leiste.hidden = true; } return; }
+  if (!LS.box || LS.box.ownerDocument !== doc) return;
+  const zeig = modus === 'layout' && el && el.ownerDocument === doc && el.isConnected && el.getClientRects().length > 0;
+  LS.box.hidden = !zeig; LS.mass.hidden = !zeig;
+  const aus = (n, an) => n.style.setProperty('display', an ? 'none' : '', 'important');
+  if (!zeig) { aus(LS.leiste, true); Object.values(LS.abstand).forEach((o) => { aus(o.band, true); aus(o.griff, true); }); return; }
   const w = doc.defaultView, r = el.getBoundingClientRect();
-  Object.assign(LS.box.style, { left: (r.left + w.scrollX) + 'px', top: (r.top + w.scrollY) + 'px', width: r.width + 'px', height: r.height + 'px' });
-  const e = lDaten(doc).b[el.dataset.pb] || {};
-  LS.leiste.querySelector('[data-l="wert"]').textContent = Math.round((e.f || 1) * 100) + ' %';
-  LS.leiste.querySelector('[data-l="breite"]').textContent = Math.round(r.width) + ' px';
-  LS.leiste.querySelector('[data-l="name"]').textContent = el.tagName.toLowerCase() + (el.classList[0] && !/^pitch-/.test(el.classList[0]) ? '.' + el.classList[0] : '');
-  // Leiste und Griffe gleich gross auf dem Bildschirm, egal wie weit die Buehne gezoomt ist
+  // Rahmen, Griffe und Massangabe gleich gross auf dem Bildschirm, egal wie weit die Buehne gezoomt ist
   const z = 1 / ((fenster.contentDocument === doc && aktZoom()) || 1);
-  LS.leiste.style.zoom = z;
+  Object.assign(LS.box.style, { left: r.left + w.scrollX + 'px', top: r.top + w.scrollY + 'px', width: r.width + 'px', height: r.height + 'px', outlineWidth: 2 * z + 'px' });
+  const e = LS.art === 'el' ? elDaten(doc, LS.id) : null;
+  // Text nur links und rechts (die Hoehe waechst mit), im Block keine Griffe oben (die Lage gibt der Fluss vor)
+  const nurBreite = e && EL_AUTOHOCH.has(e.typ), fest = e && e.fest, fluss = e && e.fluss;
   LS.box.querySelectorAll('[data-griff]').forEach((g) => {
-    Object.assign(g.style, { width: 12 * z + 'px', height: 40 * z + 'px', marginTop: -20 * z + 'px', [g.dataset.griff === 'l' ? 'left' : 'right']: -7 * z + 'px', borderWidth: 2 * z + 'px', borderRadius: 6 * z + 'px' });
+    const d = g.dataset.griff, s = 9 * z;
+    g.style.setProperty('display', fest || (nurBreite && d !== 'e' && d !== 'w') || (fluss && d.includes('n')) ? 'none' : 'block', 'important');
+    Object.assign(g.style, { width: s + 'px', height: s + 'px', borderWidth: 1.5 * z + 'px',
+      left: (d.includes('w') ? 0 : d.includes('e') ? r.width : r.width / 2) - s / 2 + 'px',
+      top: (d.includes('n') ? 0 : d.includes('s') ? r.height : r.height / 2) - s / 2 + 'px' });
   });
-  const lr = LS.leiste.getBoundingClientRect(), lb = lr.width || 420, lh = lr.height || 40;
-  const oben = r.top - lh - 8 > 0 ? r.top - lh - 8 : Math.min(r.bottom + 8, w.innerHeight - lh - 8);
-  LS.leiste.style.left = (Math.max(8, Math.min(r.left, w.innerWidth - lb - 24)) + w.scrollX) / z + 'px';
-  LS.leiste.style.top = (Math.max(8, oben) + w.scrollY) / z + 'px';
+  // Abstand oben und unten: Streifen ueber dem Rand, der Griff sitzt auf der Kante, die sich beim Ziehen bewegt
+  const block = RASTER.fluss && !fest && (LS.art === 'pb' || fluss);
+  const cs = w.getComputedStyle(el), mt = parseFloat(cs.marginTop) || 0, mb = parseFloat(cs.marginBottom) || 0;
+  for (const [s, o] of Object.entries(LS.abstand)) {
+    aus(o.band, !block); o.griff.style.setProperty('display', block ? 'flex' : 'none', 'important');
+    if (!block) continue;
+    const m = s === 'o' ? mt : mb, h = Math.max(0, m);
+    Object.assign(o.band.style, { left: r.left + w.scrollX + 'px', top: (s === 'o' ? r.top - h : r.bottom) + w.scrollY + 'px', width: r.width + 'px', height: h + 'px' });
+    o.band.style.setProperty('display', 'block', 'important');
+    o.griff.textContent = `↕ ${Math.round(m)}`;
+    o.griff.style.zoom = z;
+    o.griff.style.transform = 'translate(-50%,-50%)';
+    o.griff.style.left = (r.left + r.width * 0.25 + w.scrollX) / z + 'px';
+    o.griff.style.top = ((s === 'o' ? r.top : r.bottom + h) + w.scrollY) / z + 'px';
+  }
+  LS.mass.textContent = `${Math.round(r.width)} × ${Math.round(r.height)}`;
+  LS.mass.style.zoom = z;
+  LS.mass.style.left = (r.left + w.scrollX + r.width / 2) / z + 'px';
+  LS.mass.style.top = (r.bottom + (block ? Math.max(0, mb) : 0) + w.scrollY) / z + 8 + 'px';
+  // Block-Leiste ueber der Auswahl (unter ihr, wenn oben kein Platz ist); weg, solange gezogen oder getippt wird
+  const leiste = LS.leiste, still = doc.documentElement.classList.contains('pitch-pb-zieht') || doc.documentElement.classList.contains('pitch-abstand') || el.isContentEditable;
+  if (still) { aus(leiste, true); return; }
+  const lk = `${LS.art}|${LS.id}|${!!fluss}|${RASTER.fluss}|${e ? e.typ : ''}|${sprache}`;
+  if (leiste._fuer !== lk) { leiste._fuer = lk; leiste.innerHTML = leisteHtml(e); }
+  leiste.style.setProperty('display', 'flex', 'important'); leiste.style.zoom = z;
+  const lr = leiste.getBoundingClientRect(), lh = lr.height || 36 * z, lb = lr.width || 200 * z;
+  let ly = r.top - (block ? Math.max(0, mt) : 0) - lh - 10 * z;
+  if (ly < 4) ly = r.bottom + (block ? Math.max(0, mb) : 0) + 34 * z;
+  leiste.style.left = (Math.max(4, Math.min(r.left, w.innerWidth - lb - 4)) + w.scrollX) / z + 'px';
+  leiste.style.top = (ly + w.scrollY) / z + 'px';
 }
-function lAendern(fn) {
-  const doc = LS.doc, el = LS.el; if (!doc || !el) return;
+// Knoepfe der Block-Leiste je nach Auswahl
+const LEISTE_ICON = { ziehen: 'M9 6h.01M9 12h.01M9 18h.01M15 6h.01M15 12h.01M15 18h.01', hoch: 'M12 19V5M6 11l6-6 6 6', runter: 'M12 5v14M6 13l6 6 6-6', dup: 'M8 8h13v13H8zM16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3', del: 'M4 7h16M10 11v6M14 11v6M5 7l1 13a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1l1-13M9 7V4h6v3', bild: 'M6 2v14a2 2 0 0 0 2 2h14M18 22V8a2 2 0 0 0-2-2H2', text: 'M4 20h4L19 9l-4-4L4 16z', vorn: 'M12 20V9M7 14l5-5 5 5M5 4h14', hinten: 'M12 4v11M7 10l5 5 5-5M5 20h14', eltern: 'M9 14 4 9l5-5M4 9h10a6 6 0 0 1 6 6v5', aus: 'M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4M6.6 6.6A17 17 0 0 0 2 12s3.5 7 10 7a10 10 0 0 0 5.4-1.6M9.9 9.9a3 3 0 0 0 4.2 4.2', reset: 'M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5' };
+const LEISTE_KNOPF = 'display:inline-flex;align-items:center;justify-content:center;gap:5px;height:30px;min-width:30px;padding:0 7px;border:0;border-radius:7px;background:none;color:#fff;font:inherit;font-size:12px;font-weight:600;cursor:pointer';
+function leisteHtml(e) {
+  const k = (a, titel, text) => `<button type="button" data-l="${a}" title="${titel}" aria-label="${titel}" style="${LEISTE_KNOPF}${a === 'ziehen' ? ';cursor:grab' : ''}"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="${a === 'ziehen' ? 3 : 1.8}" stroke-linecap="round" stroke-linejoin="round"><path d="${LEISTE_ICON[a]}"/></svg>${text ? `<span>${text}</span>` : ''}</button>`;
+  const t = '<span style="width:1px;height:18px;background:rgba(255,255,255,.22);margin:0 3px"></span>';
+  const griff = k('ziehen', 'Hier anfassen und ziehen, um den Block zu verschieben') + t;
+  if (!e) return griff + k('hoch', 'In der Reihenfolge nach oben (Alt+↑)') + k('runter', 'In der Reihenfolge nach unten (Alt+↓)') + k('eltern', 'Größeren Baustein wählen (Q)') + t + k('aus', 'Ausblenden (Entf)') + k('reset', 'Zurücksetzen');
+  let h = griff + (e.fluss ? k('hoch', 'Eine Stelle nach oben (↑)') + k('runter', 'Eine Stelle nach unten (↓)') : k('vorn', 'Nach vorn (Strg+])') + k('hinten', 'Nach hinten (Strg+[)'));
+  if (e.typ === 'bild') h += t + k('bild', 'Bild und Ausschnitt', 'Zuschneiden');
+  else if (EL_TEXT.has(e.typ)) h += t + k('text', 'Text bearbeiten (Enter)', 'Text');
+  return h + t + k('dup', 'Duplizieren (Strg+D)') + k('del', 'Löschen (Entf)');
+}
+function blockAktion(doc, a) {
+  const id = LS.id, e = LS.art === 'el' ? elDaten(doc, id) : null;
+  ({
+    hoch: () => (e ? flussSchritt(doc, id, -1) : lUmordnen(-1)), runter: () => (e ? flussSchritt(doc, id, 1) : lUmordnen(1)),
+    vorn: () => elEbene(doc, id, 1), hinten: () => elEbene(doc, id, -1),
+    dup: () => elDuplizieren(doc, id), del: () => elLoeschen(doc, id),
+    bild: () => elBildEditor(doc, id), text: () => elTextStart(doc, LS.el, true),
+    eltern: () => { const p = lWaehlbar(LS.el.parentElement); if (p && p !== doc.body) waehle(p, 'pb'); },
+    aus: () => pbAusblenden(id, true), reset: () => lZuruecksetzen(false),
+  })[a]?.();
+}
+// Eine Aenderung an einem Baustein der Seite; still: ohne Eintrag im Verlauf (waehrend getippt oder gezogen wird)
+function lAendern(fn, still) {
+  const doc = LS.doc, el = LS.el; if (!doc || !el || LS.art !== 'pb') return;
   fn(lEintrag(doc, el.dataset.pb), el);
-  lAufraeumen(doc); merke(); stil(doc).then(() => layoutAnwenden(doc));
+  lAufraeumen(doc); if (!still) merke();
+  stil(doc).then(() => { layoutAnwenden(doc); eigWerte(); advLinks(); });
 }
 const lSchrift = (schritt) => lAendern((e) => { e.f = Math.min(4, Math.max(0.3, Math.round(((e.f || 1) + schritt) * 100) / 100)); });
-const lSchiebe = (dx, dy) => lAendern((e) => { e.x = (e.x || 0) + dx; e.y = (e.y || 0) + dy; });
 function lUmordnen(richtung) {
-  const doc = LS.doc, el = LS.el; if (!el || !el.parentElement || !el.parentElement.dataset.pb) return;
+  const doc = LS.doc, el = LS.el; if (!el || LS.art !== 'pb' || !el.parentElement || !el.parentElement.dataset.pb) return;
   const geschw = (x) => x && x.dataset && x.dataset.pb && !x.hasAttribute('data-pitch-ui');
   let n = richtung < 0 ? el.previousElementSibling : el.nextElementSibling;
   while (n && !geschw(n)) n = richtung < 0 ? n.previousElementSibling : n.nextElementSibling;
@@ -2182,146 +2894,918 @@ function lUmordnen(richtung) {
   const pe = el.parentElement;
   pe.insertBefore(el, richtung < 0 ? n : n.nextSibling);
   lDaten(doc, true).r[pe.dataset.pb] = [...pe.children].filter(geschw).map((x) => x.dataset.pb);
-  merke(); lRahmen();
+  merke(); lRahmen(); advLinks();
 }
 function lZuruecksetzen(alle) {
   const doc = LS.doc; if (!doc) return;
   if (alle) {
     const k = lSchluessel(doc); if (!P.layout || !P.layout[k]) { melde('Auf dieser Seite ist nichts verändert.'); return; }
-    delete P.layout[k]; waehle(null); merke(); zeige(true); melde('Layout dieser Seite zurückgesetzt.'); return;
+    delete P.layout[k]; waehle(null); merke(); zeige(true); melde('Layout dieser Seite zurückgesetzt. Strg+Z holt es zurück.'); return;
   }
-  const el = LS.el; if (!el) return;
-  const L = lDaten(doc, true); delete L.b[el.dataset.pb];
-  const pe = el.parentElement; const neuLaden = pe && L.r[pe.dataset.pb];
-  if (neuLaden) delete L.r[pe.dataset.pb];
+  const el = LS.el; if (!el || LS.art !== 'pb') return;
+  const L = lDaten(doc, true), id = el.dataset.pb; delete L.b[id];
+  const pe = el.parentElement, umgesetzt = L.v && L.v[id], neuLaden = (pe && L.r[pe.dataset.pb]) || umgesetzt;
+  if (pe && L.r[pe.dataset.pb]) delete L.r[pe.dataset.pb];
+  if (umgesetzt) delete L.v[id];
   lAufraeumen(doc); merke();
-  if (neuLaden) zeige(true); else stil(doc).then(() => layoutAnwenden(doc));
+  if (neuLaden) zeige(true); else stil(doc).then(() => { layoutAnwenden(doc); advPanel(); advLinks(); });
 }
+function pbAusblenden(id, aus) {
+  const doc = LS.doc; if (!doc) return;
+  const e = lEintrag(doc, id); if (aus) e.h = true; else delete e.h;
+  if (aus && LS.art === 'pb' && LS.id === id) waehle(null);
+  lAufraeumen(doc); merke(); stil(doc).then(() => { layoutAnwenden(doc); advLinks(); });
+  if (aus) melde('Ausgeblendet. In der Ebenenliste links wieder einblenden.');
+}
+
+// Ein eigenes Element aendern, neu zeichnen und Rahmen, Ebenen und Felder nachziehen
+function elAendern(doc, id, fn, still) {
+  const e = (lDaten(doc, true).e || []).find((x) => x.id === id); if (!e) return;
+  fn(e); elementeAnwenden(doc);
+  if (!still) merke();
+  lRahmen(); advLinks(); eigWerte(); rasterZeichnen(doc);
+}
+function standardMass(doc, typ) {
+  const T = EL_TYPEN[typ], w = Math.min(T.w, designBreite(doc) - 32);
+  return { w, h: typ === 'linie' ? T.h : Math.round(T.h * w / T.w) };
+}
+// Ein neues Element: frei an r (px der Ebene) oder, mit ort, im Fluss an dieser Stelle (r.x ist dann der Einzug)
+async function elEinfuegen(doc, typ, r, zusatz, ort) {
+  const e = { id: neueId(), typ, x: Math.round(r.x || 0), y: Math.round(r.y || 0), w: Math.round(r.w), h: EL_AUTOHOCH.has(typ) ? 0 : Math.round(r.h), ...EL_TYPEN[typ].neu(lGeraet(doc) === 'mobil'), ...(zusatz || {}) };
+  if (ort) flussEinordnen(doc, e, ort); else lDaten(doc, true).e.push(e);
+  setzeWz('waehlen'); zeigeEinfuege(doc, null);
+  elementeAnwenden(doc); merke(); rasterZeichnen(doc);
+  const n = elKnoten(doc, e.id); waehle(n, 'el');
+  if (EL_AUTOHOCH.has(typ)) elTextStart(doc, n, true);
+  else if (typ === 'bild' && !e.src) elBildEditor(doc, e.id);
+  return e;
+}
+function elLoeschen(doc, id) {
+  const L = lDaten(doc, true), i = L.e.findIndex((e) => e.id === id); if (i < 0) return;
+  L.e.splice(i, 1); waehle(null); elementeAnwenden(doc); lAufraeumen(doc); merke(); advLinks();
+  melde('Gelöscht. Strg+Z holt es zurück.');
+}
+function elKopie(doc, e, versatz) {
+  const L = lDaten(doc, true), neu = { ...JSON.parse(JSON.stringify(e)), id: neueId() };
+  // Im Fluss steht die Kopie direkt darunter, frei liegt sie leicht versetzt
+  if (!e.fluss) { neu.x = e.x + versatz; neu.y = e.y + versatz; }
+  const i = L.e.findIndex((x) => x.id === e.id);
+  L.e.splice(i < 0 ? L.e.length : i + 1, 0, neu);
+  elementeAnwenden(doc);
+  return neu;
+}
+function elDuplizieren(doc, id) {
+  const e = elDaten(doc, id); if (!e) return;
+  const neu = elKopie(doc, e, +RASTER.groesse || 8); merke(); waehle(elKnoten(doc, neu.id), 'el');
+}
+// Reihenfolge der eigenen Elemente: +1 nach vorn, -1 nach hinten, 'oben' und 'unten' ganz
+function elEbene(doc, id, wohin) {
+  const L = lDaten(doc, true), i = L.e.findIndex((e) => e.id === id); if (i < 0) return;
+  const j = wohin === 'oben' ? L.e.length - 1 : wohin === 'unten' ? 0 : Math.max(0, Math.min(L.e.length - 1, i + wohin));
+  if (i === j) { melde(j ? 'Liegt schon ganz vorn.' : 'Liegt schon ganz hinten.'); return; }
+  L.e.splice(j, 0, L.e.splice(i, 1)[0]); elementeAnwenden(doc); merke(); advLinks();
+}
+let ablageEl = null;
+function elEinsetzen(doc) {
+  if (!ablageEl) return;
+  const da = elDaten(doc, ablageEl.id), L = lDaten(doc, true);
+  const { _k, _r, ...roh } = JSON.parse(JSON.stringify(ablageEl)), neu = { ...roh, id: neueId() };
+  // Im Fluss auf derselben Seite direkt unter das Original; auf einer anderen Seite gilt der Anker nicht, dort frei
+  if (neu.fluss && _k !== lSchluessel(doc)) { delete neu.fluss; delete neu.abstand; Object.assign(neu, { x: Math.round(_r.x), y: Math.round(_r.y) }); }
+  if (!neu.fluss && da) { neu.x += +RASTER.groesse || 8; neu.y += +RASTER.groesse || 8; }
+  const i = neu.fluss && da ? L.e.findIndex((x) => x.id === da.id) : -1;
+  if (i >= 0) L.e.splice(i + 1, 0, neu); else L.e.push(neu);
+  elementeAnwenden(doc); merke(); waehle(elKnoten(doc, neu.id), 'el');
+  ablageEl = { ...neu, _k: lSchluessel(doc), _r: ebRechteck(doc, elKnoten(doc, neu.id)) };
+}
+// Bildfeld: derselbe Bild-Editor wie fuer die Bilder der Seite. Das Feld bleibt fest, das Bild darin laesst sich
+// verschieben und zoomen (bx, by in Prozent, bz ab 1; nb, nh das natuerliche Mass fuer die Berechnung)
+function elBildEditor(doc, id) {
+  const e = elDaten(doc, id), n = elKnoten(doc, id); if (!e || !n) return;
+  Object.assign(BE, { el: null, k: null, eigen: { doc, id }, b: e.w, h: e.h || 1, orig: '', format: 'frei',
+    vorher: { src: e.src ?? null, nb: e.nb ?? null, nh: e.nh ?? null, bx: e.bx ?? null, by: e.by ?? null, bz: e.bz ?? null, zs: e.zs ? { ...e.zs } : null, h: e.h } });
+  BE.e = { src: e.src || null, x: 50, y: 50, z: 1 };
+  // Ausschnitt: gespeichert, aus dem frueheren Verschieben und Zoomen errechnet, oder das ganze Bild
+  let zs = e.zs ? { ...e.zs } : { x: 0, y: 0, w: 1, h: 1 };
+  if (!e.zs && e.src && e.nb && e.nh && e.h && e.fit !== 'contain' && (e.bx != null || e.by != null || e.bz != null)) {
+    const k = Math.max(e.w / e.nb, e.h / e.nh) * (e.bz || 1), w = Math.min(1, e.w / (e.nb * k)), h = Math.min(1, e.h / (e.nh * k));
+    zs = { w, h, x: (1 - w) * (e.bx ?? 50) / 100, y: (1 - h) * (e.by ?? 50) / 100 };
+  }
+  BE.zs = zs;
+  // Welches Format der Ausschnitt hat (auf 1 Prozent genau), sonst Frei
+  if (e.nb && !(zs.w > 0.999 && zs.h > 0.999)) { const v = zs.w * e.nb / (zs.h * e.nh); BE.format = (BE_FORMATE.find(([k, q]) => q && Math.abs(v - q) / v < 0.01) || ['frei'])[0]; }
+  beAuf();
+}
+// Formate zum Zuschneiden: Frei, das ganze Bild, feste Seitenverhaeltnisse
+const BE_FORMATE = [['frei', 0], ['original', 0], ['16:9', 16 / 9], ['4:3', 4 / 3], ['1:1', 1], ['3:4', 3 / 4], ['9:16', 9 / 16]];
+// Original haelt das Seitenverhaeltnis des Bildes, Frei keines
+const zsVerh = (f) => (f === 'original' ? BE.nat[0] / BE.nat[1] : (BE_FORMATE.find(([k]) => k === f) || [])[1] || 0);
+// Ein Format waehlen: der groesste Ausschnitt dieses Formats um die Mitte des bisherigen
+async function beFormat(f) {
+  if (!BE.eigen || !beQuelle()) return;
+  BE.format = f;
+  $$('#be-format-wahl button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.format === f)));
+  const q = zsVerh(f), [nb, nh] = await natur(beQuelle());
+  if (f === 'original') BE.zs = { x: 0, y: 0, w: 1, h: 1 };
+  else if (q) {
+    let w = 1, h = nb / (nh * q); if (h > 1) { h = 1; w = nh * q / nb; }
+    const cx = BE.zs.x + BE.zs.w / 2, cy = BE.zs.y + BE.zs.h / 2;
+    BE.zs = { w, h, x: Math.min(1 - w, Math.max(0, cx - w / 2)), y: Math.min(1 - h, Math.max(0, cy - h / 2)) };
+  }
+  await zsZeichnen(true);
+}
+// Ausschnitt ins Bildfeld: Breite bleibt, Hoehe nach dem Seitenverhaeltnis des Ausschnitts
+function elBildUebernehmen(still) {
+  const { doc, id } = BE.eigen, z = BE.zs, [nb, nh] = BE.nat, r4 = (v) => Math.round(v * 10000) / 10000;
+  elAendern(doc, id, (x) => {
+    x.src = BE.e.src || null;
+    delete x.bx; delete x.by; delete x.bz;
+    if (!x.src) { delete x.nb; delete x.nh; delete x.zs; return; }
+    x.nb = nb; x.nh = nh;
+    if (z.x > 0.0001 || z.y > 0.0001 || z.w < 0.9999 || z.h < 0.9999) x.zs = { x: r4(z.x), y: r4(z.y), w: r4(z.w), h: r4(z.h) }; else delete x.zs;
+    x.h = Math.max(8, Math.round(x.w * (z.h * nh) / (z.w * nb)));
+  }, still);
+}
+// Text eines eigenen Elements direkt auf der Seite: Esc oder Klick daneben beendet, beim Knopf auch Enter.
+// Ein leerer Text loescht das Element
+function elTextStart(doc, n, alles) {
+  if (!n || n.isContentEditable) return;
+  const id = n.dataset.pitchEl, e = elDaten(doc, id); if (!e || !EL_TEXT.has(e.typ)) return;
+  const davor = e.text;
+  n.contentEditable = 'plaintext-only'; n.style.cursor = 'text'; n.focus();
+  const s = doc.getSelection(), r = doc.createRange(); r.selectNodeContents(n); if (!alles) r.collapse(false);
+  s.removeAllRanges(); s.addRange(r);
+  const nach = () => lRahmen();
+  const fertig = (abbrechen) => {
+    n.removeEventListener('blur', blur); n.removeEventListener('keydown', taste); n.removeEventListener('input', nach);
+    n.removeAttribute('contenteditable');
+    const text = abbrechen ? davor : n.innerText.replace(/\n$/, '');
+    if (!text.trim() && e.typ !== 'knopf') { elLoeschen(doc, id); return; }
+    if (text === davor) { n.textContent = davor; elementeAnwenden(doc); lRahmen(); return; }
+    elAendern(doc, id, (x) => { x.text = text; });
+  };
+  const blur = () => fertig(false);
+  const taste = (ev) => {
+    ev.stopPropagation();
+    if (ev.key === 'Escape') { ev.preventDefault(); n.blur(); }
+    else if (ev.key === 'Enter' && e.typ === 'knopf') { ev.preventDefault(); n.blur(); }
+  };
+  n.addEventListener('blur', blur); n.addEventListener('keydown', taste); n.addEventListener('input', nach);
+}
+
+// Werkzeug: auswaehlen oder ein Element einfuegen (Klick setzt es in Standardgroesse, Ziehen zieht es auf).
+// Bild: zuerst die Datei waehlen, dann auf die Seite klicken; es kommt im Format des Bildes (LS.platz)
+function setzeWz(wz) {
+  if (EL_TYPEN[wz] && klicken) setzeKlicken(false);
+  if (wz === 'bild' && !LS.platz) { bildAuswaehlen(); return; }
+  if (wz !== 'bild') LS.platz = null;
+  LS.wz = EL_TYPEN[wz] ? wz : 'waehlen';
+  $$('[data-wz]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.wz === LS.wz)));
+  const doc = LS.doc;
+  if (doc && doc.documentElement) doc.documentElement.classList.toggle('pitch-wz', LS.wz !== 'waehlen');
+  if (LS.wz === 'waehlen' && doc && doc.body) zeigeEinfuege(doc, null);
+  if (LS.wz !== 'waehlen') melde(RASTER.fluss ? `${EL_TYPEN[LS.wz].name}: auf die Seite klicken, die Linie zeigt, wo es hinkommt.` : `${EL_TYPEN[LS.wz].name}: auf die Seite klicken oder einen Rahmen aufziehen.`);
+}
+function dateiWaehlen() {
+  return new Promise((ok) => {
+    const i = $('#datei-bild'); bildZiel = null; i.value = '';
+    const ende = (f) => { i.removeEventListener('change', wahl, true); i.removeEventListener('cancel', ab); ok(f); };
+    const wahl = () => ende(i.files[0] || null), ab = () => ende(null);
+    i.addEventListener('change', wahl, true); i.addEventListener('cancel', ab); i.click();
+  });
+}
+async function bildLesen(f) {
+  try { const src = await liesBild(f), [nb, nh] = await natur(src); sitzung.unshift(src); return { src, nb, nh }; }
+  catch (err) { melde('Dieses Bild ließ sich nicht lesen.'); return null; }
+}
+async function bildAuswaehlen() {
+  const f = await dateiWaehlen(); if (!f) return;
+  const b = await bildLesen(f); if (!b) return;
+  LS.platz = b; setzeWz('bild');
+}
+// Groesse eines Bildes im eigenen Format: so breit wie moeglich bis zur Grenze, die Hoehe folgt
+const bildMass = (b, max) => { const w = Math.round(Math.min(b.nb, max)); return { w, h: Math.round(w * b.nh / b.nb) }; };
+
+// Beim Ziehen am oberen oder unteren Rand der Seite rollt sie mit; weiter() rechnet die Lage danach neu
+function randRollen(doc, m, weiter) {
+  const w = doc.defaultView, rand = Math.max(40, 40 / (aktZoom() || 1));
+  clearInterval(doc._rollen);
+  const dy = m.clientY < rand ? -1 : m.clientY > w.innerHeight - rand ? 1 : 0;
+  if (dy) doc._rollen = setInterval(() => { w.scrollBy(0, dy * 20); weiter(); }, 30);
+}
+// Verschieben: Baustein per Versatz, eigenes Element per Lage. Umschalt haelt die Achse, Alt zieht eine Kopie,
+// Strg rastet nicht ein
+function bewege(doc, ev) {
+  const el0 = LS.el, art = LS.art, sx = ev.clientX, sy = ev.clientY;
+  let e = art === 'el' ? elDaten(doc, LS.id) : null;
+  if (art === 'el' && (!e || e.fest)) return;
+  if (e && e.fluss) { bewegeFluss(doc, ev, e); return; }
+  if (art === 'pb' && RASTER.fluss) { bewegeBlock(doc, ev); return; }
+  const pb = art === 'pb' ? (lDaten(doc).b[el0.dataset.pb] || {}) : null;
+  const t0 = pb ? { x: pb.x || 0, y: pb.y || 0 } : null;
+  const stil0 = el0.getAttribute('style');
+  const r0 = ebRechteck(doc, el0), w = doc.defaultView, rollen0 = w.scrollY;
+  let zieht = false, d = { x: 0, y: 0 }, x0 = e ? e.x : 0, y0 = e ? e.y : 0;
+  const mm = (m) => {
+    if (!(m.buttons & 1)) { mu(); return; }
+    let ax = m.clientX - sx, ay = m.clientY - sy + w.scrollY - rollen0;
+    if (!zieht) {
+      if (Math.hypot(ax, ay) < 3) return;
+      zieht = true; doc.documentElement.classList.add('pitch-pb-zieht');
+      if (art === 'el' && m.altKey) { e = elKopie(doc, e, 0); LS.el = elKnoten(doc, e.id); LS.id = e.id; }
+    }
+    if (m.shiftKey) { if (Math.abs(ax) > Math.abs(ay)) ay = 0; else ax = 0; }
+    const x = r0.x + ax, y = r0.y + ay;
+    const f = fang(doc, { x: m.shiftKey && !ax ? [] : [x, x + r0.w / 2, x + r0.w], y: m.shiftKey && !ay ? [] : [y, y + r0.h / 2, y + r0.h] }, e && e.id, m.ctrlKey || m.metaKey);
+    d = { x: Math.round(ax + f.x), y: Math.round(ay + f.y) };
+    if (art === 'el') { LS.el.style.left = x0 + d.x + 'px'; LS.el.style.top = y0 + d.y + 'px'; }
+    else el0.style.setProperty('translate', `${t0.x + d.x}px ${t0.y + d.y}px`, 'important');
+    zeigeLinien(doc, f.linien); lRahmen();
+    randRollen(doc, m, () => mm(m));
+  };
+  const mu = () => {
+    doc.removeEventListener('mousemove', mm); doc.removeEventListener('mouseup', mu);
+    clearInterval(doc._rollen);
+    doc.documentElement.classList.remove('pitch-pb-zieht'); zeigeLinien(doc, null);
+    if (!zieht) return;
+    if (art === 'el') elAendern(doc, e.id, (x) => { x.x = x0 + d.x; x.y = y0 + d.y; });
+    else { if (stil0 === null) el0.removeAttribute('style'); else el0.setAttribute('style', stil0); lAendern((x) => { x.x = t0.x + d.x; x.y = t0.y + d.y; }); }
+  };
+  doc.addEventListener('mousemove', mm); doc.addEventListener('mouseup', mu);
+}
+// Stelle eines Kindes in seinem Block (ohne sich selbst gezaehlt), damit die Linie nicht an der eigenen Stelle erscheint
+const stelleIm = (c, n) => flussKinder(c, n).filter((k) => k.compareDocumentPosition(n) & 4).length;
+// Einen eigenen Block ziehen: seitlich folgt er der Maus (rastet am Blockrand, an der Blockmitte, an Spalten und am
+// Raster), nach oben oder unten zeigt die Linie die neue Stelle, beim Loslassen rueckt er dorthin. Alt zieht eine Kopie
+function bewegeFluss(doc, ev, e) {
+  const sx = ev.clientX, sy = ev.clientY, w = doc.defaultView;
+  let n = LS.el, zieht = false, ort = null, kopie = false, x = e.x || 0, r0 = null, cl0 = 0, c0 = null;
+  const mm = (m) => {
+    if (!(m.buttons & 1)) { mu(); return; }
+    if (!zieht) {
+      if (Math.hypot(m.clientX - sx, m.clientY - sy) < 3) return;
+      zieht = true; doc.documentElement.classList.add('pitch-pb-zieht');
+      if (m.altKey) { e = elKopie(doc, e, 0); n = LS.el = elKnoten(doc, e.id); LS.id = e.id; kopie = true; }
+      n.style.opacity = '.45';
+      c0 = n.parentElement; r0 = ebRechteck(doc, n); cl0 = blockInnen(c0).x - ebUrsprung(doc).x;
+    }
+    // Nach oben oder unten an eine neue Stelle: der Einzug bleibt. An der eigenen Stelle: seitlich verschieben
+    ort = flussOrt(doc, m.clientX, m.clientY, n);
+    if (ort && ort.c === c0 && ort.i === stelleIm(c0, n)) ort = null;
+    const links = r0.x + m.clientX - sx, bw = blockInnen(c0).w;
+    const f = ort ? { x: 0, linien: [] } : fang(doc, { x: [links, links + r0.w / 2, links + r0.w], y: [] }, e.id, m.ctrlKey || m.metaKey, [cl0, cl0 + bw / 2, cl0 + bw, r0.x]);
+    x = ort ? e.x || 0 : Math.max(0, Math.round(links + f.x - cl0));
+    n.style.marginLeft = x + 'px';
+    zeigeLinien(doc, f.linien);
+    zeigeEinfuege(doc, ort); lRahmen();
+    randRollen(doc, m, () => mm(m));
+  };
+  const mu = () => {
+    doc.removeEventListener('mousemove', mm); doc.removeEventListener('mouseup', mu);
+    clearInterval(doc._rollen);
+    doc.documentElement.classList.remove('pitch-pb-zieht'); zeigeEinfuege(doc, null); zeigeLinien(doc, null);
+    if (!zieht) return;
+    if (ort) {
+      // Auf dem Bildschirm bleibt der Abstand zum linken Rand, auch in einem anderen Block
+      const abs = cl0 + x, L = lDaten(doc, true);
+      L.e.splice(L.e.findIndex((q) => q.id === e.id), 1); flussEinordnen(doc, e, ort);
+      e.x = Math.max(0, Math.round(abs - (blockInnen(ort.c).x - ebUrsprung(doc).x)));
+    } else e.x = x;
+    elementeAnwenden(doc); merke(); lRahmen(); advLinks(); eigWerte(); rasterZeichnen(doc);
+  };
+  doc.addEventListener('mousemove', mm); doc.addEventListener('mouseup', mu);
+}
+// Wo ein Baustein der Seite in seinem eigenen Block hinkaeme: in einer Reihe (Karten nebeneinander) nach der
+// Leserichtung, in einem Stapel nach oben oder unten
+function geschwisterOrt(el, x, y) {
+  const c = el.parentElement; if (!c || !c.dataset.pb) return null;
+  const kinder = flussKinder(c, el); if (!kinder.length) return null;
+  const r = kinder.map((k) => k.getBoundingClientRect()), alle = [el.getBoundingClientRect(), ...r];
+  const reihe = alle.some((a, i) => alle.some((b, j) => i !== j && a.top < b.bottom - 2 && b.top < a.bottom - 2 && (a.right <= b.left + 2 || b.right <= a.left + 2)));
+  let i = reihe ? r.findIndex((b) => y < b.top || (y <= b.bottom && x < b.left + b.width / 2)) : r.findIndex((b) => y < b.top + b.height / 2);
+  if (i < 0) i = kinder.length;
+  return { c, kinder, r, i, reihe };
+}
+// Einen Baustein der Seite im Block-Modus ziehen: er bleibt in seinem Block und tauscht dort die Stelle (in einer
+// Reihe nach links oder rechts, in einem Stapel nach oben oder unten, gespeichert in L.r). In einem Stapel
+// verschiebt seitliches Ziehen an der eigenen Stelle ihn per Versatz
+function bewegeBlock(doc, ev) {
+  const el = LS.el, id = el.dataset.pb, sx = ev.clientX, sy = ev.clientY;
+  const b0 = lDaten(doc).b[id] || {}, t0 = { x: b0.x || 0, y: b0.y || 0 }, stil0 = el.getAttribute('style'), c0 = el.parentElement;
+  const g0 = geschwisterOrt(el, sx, sy), reihe = !!(g0 && g0.reihe);
+  let zieht = false, ort = null, dx = 0, r0 = null;
+  const mm = (m) => {
+    if (!(m.buttons & 1)) { mu(); return; }
+    if (!zieht) {
+      if (Math.hypot(m.clientX - sx, m.clientY - sy) < 3) return;
+      zieht = true; doc.documentElement.classList.add('pitch-pb-zieht');
+      el.style.setProperty('opacity', '.45', 'important'); r0 = ebRechteck(doc, el);
+    }
+    ort = geschwisterOrt(el, m.clientX, m.clientY);
+    if (ort && ort.i === stelleIm(c0, el)) ort = null;
+    const links = r0.x + m.clientX - sx, quer = !ort && !reihe;
+    const f = quer ? fang(doc, { x: [links, links + r0.w / 2, links + r0.w], y: [] }, null, m.ctrlKey || m.metaKey, [r0.x]) : { x: 0, linien: [] };
+    dx = quer ? Math.round(m.clientX - sx + f.x) : 0;
+    el.style.setProperty('translate', `${t0.x + dx}px ${t0.y}px`, 'important');
+    zeigeLinien(doc, f.linien);
+    zeigeEinfuege(doc, ort); lRahmen();
+    randRollen(doc, m, () => mm(m));
+  };
+  const mu = () => {
+    doc.removeEventListener('mousemove', mm); doc.removeEventListener('mouseup', mu);
+    clearInterval(doc._rollen);
+    doc.documentElement.classList.remove('pitch-pb-zieht'); zeigeEinfuege(doc, null); zeigeLinien(doc, null);
+    if (stil0 === null) el.removeAttribute('style'); else el.setAttribute('style', stil0);
+    if (!zieht) return;
+    if (ort) {
+      const { c, kinder, i } = ort, L = lDaten(doc, true);
+      c.insertBefore(el, i < kinder.length ? kinder[i] : kinder[kinder.length - 1].nextSibling);
+      L.r[c.dataset.pb] = [...c.children].filter((x) => x.dataset && x.dataset.pb && !x.hasAttribute('data-pitch-ui')).map((x) => x.dataset.pb);
+      if (L.v) delete L.v[id];
+    }
+    lAendern((x) => { x.x = t0.x + dx; });
+  };
+  doc.addEventListener('mousemove', mm); doc.addEventListener('mouseup', mu);
+}
+// Abstand oben oder unten an den Griffen ziehen: der Griff folgt der Maus, nach unten wird es mehr. 4er-Schritte,
+// Strg frei. Eigene Bloecke ab 0, Bausteine der Seite auch negativ (zieht den Inhalt darunter heran)
+function abstandZiehen(doc, ev, seite) {
+  const el = LS.el, art = LS.art, sy = ev.clientY, w = doc.defaultView; if (!el) return;
+  const e = art === 'el' ? elDaten(doc, LS.id) : null;
+  const cs = w.getComputedStyle(el), v0 = Math.round(parseFloat(seite === 'o' ? cs.marginTop : cs.marginBottom) || 0);
+  const stil0 = el.getAttribute('style'), prop = seite === 'o' ? 'margin-top' : 'margin-bottom';
+  let v = v0;
+  doc.documentElement.classList.add('pitch-abstand');
+  const mm = (m) => {
+    if (!(m.buttons & 1)) { mu(); return; }
+    v = v0 + m.clientY - sy;
+    if (!(m.ctrlKey || m.metaKey)) v = Math.round(v / 4) * 4;
+    v = Math.max(e ? 0 : -400, Math.round(v));
+    el.style.setProperty(prop, v + 'px', 'important'); lRahmen();
+  };
+  const mu = () => {
+    doc.removeEventListener('mousemove', mm); doc.removeEventListener('mouseup', mu);
+    doc.documentElement.classList.remove('pitch-abstand');
+    if (art === 'pb') { if (stil0 === null) el.removeAttribute('style'); else el.setAttribute('style', stil0); }
+    if (v === v0) { if (e) elementeAnwenden(doc); lRahmen(); return; }
+    if (e) elAendern(doc, e.id, (x) => {
+      if (x.abstand != null) { x.abstandOben = x.abstandOben ?? x.abstand; x.abstandUnten = x.abstandUnten ?? x.abstand; delete x.abstand; }
+      x[seite === 'o' ? 'abstandOben' : 'abstandUnten'] = v;
+    });
+    else lAendern((x) => { x[seite === 'o' ? 'mt' : 'mb'] = v; });
+  };
+  doc.addEventListener('mousemove', mm); doc.addEventListener('mouseup', mu);
+}
+// Baustein auf ein Zielrechteck (px der Ebene) bringen: Breite oder Hoehe fest, der Versatz gleicht die Lage aus
+function pbMass(doc, el, r, t0, dir) {
+  const st = (k, v) => el.style.setProperty(k, v, 'important');
+  if (/[ew]/.test(dir)) { st('width', r.w + 'px'); st('max-width', 'none'); st('min-width', '0'); st('flex-basis', 'auto'); st('flex-shrink', '0'); st('box-sizing', 'border-box'); }
+  if (/[ns]/.test(dir)) { st('height', r.h + 'px'); st('min-height', '0'); st('max-height', 'none'); st('box-sizing', 'border-box'); }
+  st('translate', `${t0.x}px ${t0.y}px`);
+  const ist = ebRechteck(doc, el);
+  const t = { x: Math.round(t0.x + (/[ew]/.test(dir) ? r.x - ist.x : 0)), y: Math.round(t0.y + (/[ns]/.test(dir) ? r.y - ist.y : 0)) };
+  st('translate', `${t.x}px ${t.y}px`);
+  return t;
+}
+// Groesse an einem der acht Griffe. Umschalt an einer Ecke haelt das Seitenverhaeltnis, Strg rastet nicht ein
+function groesse(doc, ev, dir) {
+  const el = LS.el, art = LS.art; if (!el) return;
+  const e = art === 'el' ? elDaten(doc, LS.id) : null;
+  if (art === 'el' && (!e || e.fest)) return;
+  const sx = ev.clientX, sy = ev.clientY, r0 = ebRechteck(doc, el), verh = r0.w / (r0.h || 1);
+  const pb = art === 'pb' ? (lDaten(doc).b[el.dataset.pb] || {}) : null;
+  const t0 = pb ? { x: pb.x || 0, y: pb.y || 0 } : null, stil0 = el.getAttribute('style');
+  const autoH = e && EL_AUTOHOCH.has(e.typ), min = e && e.typ === 'linie' ? 1 : 8, fl = e && e.fluss, x0 = e ? e.x || 0 : 0;
+  let r = { ...r0 }, t = t0, bewegt = false;
+  doc.documentElement.classList.add('pitch-pb-zieht');
+  const mm = (m) => {
+    if (!(m.buttons & 1)) { mu(); return; }
+    const dx = m.clientX - sx, dy = m.clientY - sy;
+    bewegt = bewegt || Math.hypot(dx, dy) >= 2;
+    r = { ...r0 };
+    if (dir.includes('e')) r.w = r0.w + dx;
+    if (dir.includes('w')) { r.x = r0.x + dx; r.w = r0.w - dx; }
+    if (dir.includes('s')) r.h = r0.h + dy;
+    if (dir.includes('n')) { r.y = r0.y + dy; r.h = r0.h - dy; }
+    const f = fang(doc, { x: dir.includes('e') ? [r.x + r.w] : dir.includes('w') ? [r.x] : [], y: dir.includes('s') ? [r.y + r.h] : dir.includes('n') ? [r.y] : [] }, e && e.id, m.ctrlKey || m.metaKey);
+    if (dir.includes('e')) r.w += f.x;
+    if (dir.includes('w')) { r.x += f.x; r.w -= f.x; }
+    if (dir.includes('s')) r.h += f.y;
+    if (dir.includes('n')) { r.y += f.y; r.h -= f.y; }
+    if (m.shiftKey && dir.length === 2 && !autoH) { const h = r.w / verh; if (dir.includes('n')) r.y += r.h - h; r.h = h; }
+    if (r.w < min) { if (dir.includes('w')) r.x -= min - r.w; r.w = min; }
+    if (r.h < min) { if (dir.includes('n')) r.y -= min - r.h; r.h = min; }
+    r = { x: Math.round(r.x), y: Math.round(r.y), w: Math.round(r.w), h: Math.round(r.h) };
+    if (art === 'el') {
+      if (fl) el.style.marginLeft = Math.max(0, x0 + r.x - r0.x) + 'px'; else Object.assign(el.style, { left: r.x + 'px', top: r.y + 'px' });
+      el.style.width = r.w + 'px'; if (!autoH) el.style.height = r.h + 'px';
+    } else t = pbMass(doc, el, r, t0, dir);
+    zeigeLinien(doc, f.linien); lRahmen();
+  };
+  const mu = () => {
+    doc.removeEventListener('mousemove', mm); doc.removeEventListener('mouseup', mu);
+    doc.documentElement.classList.remove('pitch-pb-zieht'); zeigeLinien(doc, null);
+    if (art === 'pb') { if (stil0 === null) el.removeAttribute('style'); else el.setAttribute('style', stil0); }
+    if (!bewegt) { lRahmen(); return; }
+    if (art === 'el') elAendern(doc, e.id, (x) => { if (fl) x.x = Math.max(0, x0 + r.x - r0.x); else { x.x = r.x; x.y = r.y; } x.w = r.w; if (!autoH) x.h = r.h; });
+    else lAendern((x) => { if (/[ew]/.test(dir)) x.w = r.w; if (/[ns]/.test(dir)) x.hoe = r.h; x.x = t.x; x.y = t.y; });
+  };
+  doc.addEventListener('mousemove', mm); doc.addEventListener('mouseup', mu);
+}
+// Mit einem Werkzeug: Klick setzt das Element in Standardgroesse, Ziehen zieht den Rahmen auf (Umschalt: Quadrat)
+function zeichne(doc, ev) {
+  const typ = LS.wz, o = ebUrsprung(doc), w = doc.defaultView;
+  const punkt = (m) => { const x = m.clientX - o.x, y = m.clientY - o.y, f = fang(doc, { x: [x], y: [y] }, null, m.ctrlKey || m.metaKey); return { x: Math.round(x + f.x), y: Math.round(y + f.y), linien: f.linien }; };
+  const a = punkt(ev); let b = a, zieht = false;
+  const ort = RASTER.fluss ? flussOrt(doc, ev.clientX, ev.clientY) : null;
+  zeigeEinfuege(doc, ort);
+  const mm = (m) => {
+    if (!(m.buttons & 1)) { mu(); return; }
+    b = punkt(m);
+    if (!zieht && Math.hypot(b.x - a.x, b.y - a.y) < 4) return;
+    zieht = true;
+    if (m.shiftKey) { const s = Math.max(Math.abs(b.x - a.x), Math.abs(b.y - a.y)); b = { ...b, x: a.x + (b.x < a.x ? -s : s), y: a.y + (b.y < a.y ? -s : s) }; }
+    LS.zieh.hidden = false;
+    Object.assign(LS.zieh.style, { left: o.x + w.scrollX + Math.min(a.x, b.x) + 'px', top: o.y + w.scrollY + Math.min(a.y, b.y) + 'px', width: Math.abs(b.x - a.x) + 'px', height: Math.abs(b.y - a.y) + 'px' });
+    zeigeLinien(doc, b.linien);
+  };
+  const mu = () => {
+    doc.removeEventListener('mousemove', mm); doc.removeEventListener('mouseup', mu);
+    LS.zieh.hidden = true; zeigeLinien(doc, null);
+    let r = { x: Math.min(a.x, b.x), y: Math.min(a.y, b.y), w: Math.abs(b.x - a.x), h: Math.abs(b.y - a.y) };
+    const bild = typ === 'bild' && LS.platz;
+    if (bild) r = { ...r, ...bildMass(bild, zieht ? Math.max(24, r.w) : ort ? blockInnen(ort.c).w : Math.min(480, designBreite(doc) - 32)) };
+    else if (!zieht) r = { x: a.x, y: a.y, ...(ort ? flussMass(doc, typ, ort) : standardMass(doc, typ)) };
+    else if (typ === 'linie') r = Math.abs(b.x - a.x) >= Math.abs(b.y - a.y) ? { ...r, h: 2 } : { ...r, w: 2 };
+    else { r.w = Math.max(8, r.w); r.h = Math.max(8, r.h); }
+    if (bild && !zieht) { r.x = a.x; r.y = a.y; }
+    // Im Fluss: ein Klick setzt es buendig in den Block, ein aufgezogener Rahmen behaelt seinen Einzug
+    if (ort) r.x = zieht ? Math.max(0, r.x + o.x - blockInnen(ort.c).x) : 0;
+    elEinfuegen(doc, typ, r, bild ? { src: bild.src, nb: bild.nb, nh: bild.nh } : null, ort);
+  };
+  doc.addEventListener('mousemove', mm); doc.addEventListener('mouseup', mu);
+}
+
 function layoutVerdrahten(doc) {
   const w = doc.defaultView;
   LS.doc = doc;
-  const box = doc.createElement('div');
-  box.dataset.pitchUi = ''; box.hidden = true;
-  box.style.cssText = `position:absolute;z-index:2147483645;pointer-events:none;outline:2px solid ${AKZENT};outline-offset:0;box-shadow:0 0 0 9999px rgba(14,17,22,.08)`;
-  const leiste = doc.createElement('div');
-  leiste.dataset.pitchUi = ''; leiste.hidden = true;
-  leiste.style.cssText = `${UI_STIL};position:absolute;z-index:2147483646;display:flex;align-items:center;gap:2px;padding:4px;background:#0e1116;color:#fff;font-size:12px;border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,.3);white-space:nowrap`;
-  const k = (l, titel, inhalt) => `<button type="button" data-l="${l}" title="${titel}" style="${L_KNOPF}">${inhalt}</button>`;
-  const t = '<span style="width:1px;height:18px;background:rgba(255,255,255,.2);margin:0 3px"></span>';
-  leiste.innerHTML = `<span data-l="name" style="padding:0 8px;color:rgba(255,255,255,.6);font-weight:500;max-width:120px;overflow:hidden;text-overflow:ellipsis"></span>${t}`
-    + k('eltern', 'Größeren Baustein wählen (Q)', '⤒ Block')
-    + k('hoch', 'In der Reihenfolge nach oben (Alt+↑)', '↑') + k('runter', 'In der Reihenfolge nach unten (Alt+↓)', '↓') + t
-    + k('kleiner', 'Schrift kleiner (−)', 'A−') + '<span data-l="wert" style="min-width:42px;text-align:center;font-variant-numeric:tabular-nums"></span>' + k('groesser', 'Schrift größer (+)', 'A+') + t
-    + '<span data-l="breite" title="Breite, an den Griffen links und rechts ziehen" style="padding:0 6px;color:rgba(255,255,255,.6);font-variant-numeric:tabular-nums"></span>' + t
-    + k('weg', 'Ausblenden (Entf)', 'Ausblenden') + k('reset', 'Diesen Baustein zurücksetzen', 'Zurücksetzen') + k('alle', 'Layout der ganzen Seite auf diesem Gerät zurücksetzen', 'Ganze Seite');
-  // Griffe links und rechts aendern die Breite; die gegenueberliegende Kante bleibt stehen
-  ['l', 'r'].forEach((seite) => {
-    const g = doc.createElement('div');
-    g.dataset.pitchUi = ''; g.dataset.griff = seite; g.title = 'Ziehen ändert die Breite (Doppelklick: ursprüngliche Breite)';
-    g.style.cssText = `position:absolute;top:50%;${seite === 'l' ? 'left' : 'right'}:-6px;width:10px;height:34px;margin-top:-17px;border-radius:5px;background:#fff;border:2px solid ${AKZENT};box-shadow:0 2px 8px rgba(0,0,0,.25);pointer-events:auto;cursor:ew-resize`;
-    g.addEventListener('dblclick', (ev) => { ev.preventDefault(); ev.stopPropagation(); lAendern((e) => { delete e.w; }); });
-    g.addEventListener('mousedown', (ev) => {
-      if (ev.button !== 0 || !LS.el) return;
-      ev.preventDefault(); ev.stopPropagation();
-      const el = LS.el, r0 = el.getBoundingClientRect(), sx = ev.clientX;
-      const e0 = lDaten(doc).b[el.dataset.pb] || {};
-      let x = e0.x || 0; const y = e0.y || 0;
-      doc.documentElement.classList.add('pitch-pb-zieht');
-      const bewege = (m) => {
-        const d = m.clientX - sx;
-        const breite = Math.max(40, Math.round(r0.width + (seite === 'r' ? d : -d)));
-        el.style.setProperty('width', breite + 'px', 'important');
-        el.style.setProperty('max-width', 'none', 'important');
-        el.style.setProperty('flex-basis', 'auto', 'important');
-        el.style.setProperty('flex-shrink', '0', 'important');
-        el.style.setProperty('box-sizing', 'border-box', 'important');
-        const r = el.getBoundingClientRect();
-        x += seite === 'r' ? r0.left - r.left : r0.right - r.right;
-        el.style.setProperty('translate', `${Math.round(x)}px ${y}px`, 'important');
-        lRahmen();
-      };
-      const los = () => {
-        doc.removeEventListener('mousemove', bewege); doc.removeEventListener('mouseup', los);
-        doc.documentElement.classList.remove('pitch-pb-zieht');
-        const breite = Math.round(el.getBoundingClientRect().width);
-        ['width', 'max-width', 'flex-basis', 'flex-shrink', 'box-sizing', 'translate'].forEach((k) => el.style.removeProperty(k));
-        lAendern((e) => { e.w = breite; e.x = Math.round(x); e.y = y; });
-      };
-      doc.addEventListener('mousemove', bewege); doc.addEventListener('mouseup', los);
-    });
-    // Die Templates blenden leere div aus, darum display fest
-    g.style.setProperty('display', 'block', 'important');
-    box.appendChild(g);
+  const ui = (css) => { const d = doc.createElement('div'); d.dataset.pitchUi = ''; d.style.cssText = css; return d; };
+  const box = ui(`position:absolute;z-index:2147483645;pointer-events:none;outline:2px solid ${AKZENT};outline-offset:0`);
+  ['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'].forEach((d) => {
+    const g = ui(`position:absolute;display:block;box-sizing:border-box;background:#fff;border:1.5px solid ${AKZENT};border-radius:1px;pointer-events:auto;cursor:${d}-resize`);
+    g.dataset.griff = d; box.appendChild(g);
   });
-  doc.body.append(box, leiste);
-  LS.box = box; LS.leiste = leiste;
-  const aktion = {
-    eltern: () => { const p = LS.el && lWaehlbar(LS.el.parentElement); if (p && p !== doc.body) waehle(p); },
-    hoch: () => lUmordnen(-1), runter: () => lUmordnen(1),
-    kleiner: () => lSchrift(-0.05), groesser: () => lSchrift(0.05),
-    weg: () => { lAendern((e) => { e.h = true; }); const el = LS.el; waehle(null); melde('Ausgeblendet.', () => { LS.el = el; lZuruecksetzen(false); }); },
-    reset: () => lZuruecksetzen(false), alle: () => lZuruecksetzen(true),
-  };
-  leiste.addEventListener('mousedown', (ev) => { ev.preventDefault(); ev.stopPropagation(); }, true);
-  leiste.addEventListener('click', (ev) => { const b = ev.target.closest('[data-l]'); ev.preventDefault(); ev.stopPropagation(); if (b && aktion[b.dataset.l]) aktion[b.dataset.l](); }, true);
+  const mass = ui(`${UI_STIL};position:absolute;z-index:2147483646;transform:translateX(-50%);padding:2px 6px;border-radius:4px;background:${AKZENT};color:#fff;font-size:11px;font-weight:600;line-height:1.4;font-variant-numeric:tabular-nums;white-space:nowrap;pointer-events:none`);
+  const linien = ui('position:absolute;left:0;top:0;width:0;height:0;display:block!important;z-index:2147483644;pointer-events:none');
+  const raster = ui('position:absolute;top:0;z-index:999;pointer-events:none');
+  const zieh = ui(`position:absolute;z-index:2147483645;pointer-events:none;outline:1px dashed ${AKZENT};background:rgba(255,90,31,.06)`);
+  const einfuege = ui(`position:absolute;z-index:2147483646;pointer-events:none;display:none;background:${AKZENT};box-shadow:0 0 0 2px rgba(255,255,255,.8)`);
+  // Abstand oben und unten: ein heller Streifen ueber dem Rand und ein Griff mit dem Wert
+  const abstand = {};
+  ['o', 'u'].forEach((s) => {
+    const band = ui('position:absolute;z-index:2147483644;pointer-events:none;background:rgba(255,90,31,.13);display:none');
+    const griff = ui(`${UI_STIL};position:absolute;z-index:2147483646;display:none;align-items:center;gap:3px;padding:1px 7px;border-radius:99px;background:#fff;color:${AKZENT};border:1.5px solid ${AKZENT};font-size:11px;font-weight:700;line-height:1.5;font-variant-numeric:tabular-nums;white-space:nowrap;cursor:ns-resize;pointer-events:auto;box-shadow:0 2px 6px rgba(0,0,0,.15)`);
+    griff.title = s === 'o' ? 'Abstand oben: ziehen' : 'Abstand unten: ziehen';
+    griff.addEventListener('mousedown', (ev) => { if (ev.button) return; ev.preventDefault(); ev.stopPropagation(); abstandZiehen(doc, ev, s); });
+    abstand[s] = { band, griff }; doc.body.append(band, griff);
+  });
+  // Block-Leiste ueber der Auswahl: die haeufigsten Handgriffe einen Klick entfernt
+  const leiste = ui(`${UI_STIL};position:absolute;z-index:2147483646;display:none;align-items:center;gap:2px;padding:3px;background:#0e1116;color:#fff;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.28);white-space:nowrap`);
+  leiste.addEventListener('mousedown', (ev) => {
+    ev.preventDefault(); ev.stopPropagation();
+    if (ev.button === 0 && ev.target.closest('[data-l="ziehen"]') && LS.el) bewege(doc, ev);
+  }, true);
+  leiste.addEventListener('click', (ev) => { const b = ev.target.closest('[data-l]'); ev.preventDefault(); ev.stopPropagation(); if (b) blockAktion(doc, b.dataset.l); });
+  // Plus zwischen zwei Bloecken: fuegt dort einen neuen Block ein
+  const plus = ui(`${UI_STIL};position:absolute;z-index:2147483646;display:none;place-items:center;border-radius:50%;background:${AKZENT};color:#fff;font-weight:600;line-height:1;cursor:pointer;pointer-events:auto;box-shadow:0 0 0 3px #fff,0 4px 12px rgba(0,0,0,.2)`);
+  plus.textContent = '+'; plus.title = 'Block hier einfügen';
+  plus.addEventListener('mousedown', (ev) => { if (ev.button) return; ev.preventDefault(); ev.stopPropagation(); blockMenue(doc, LS.plusOrt, plus); });
+  box.hidden = true; mass.hidden = true; zieh.hidden = true;
+  doc.body.append(raster, linien, box, mass, zieh, einfuege, leiste, plus);
+  Object.assign(LS, { box, mass, linien, raster, zieh, einfuege, abstand, leiste, plus });
+  ebene(doc);
+  doc.documentElement.classList.toggle('pitch-wz', LS.wz !== 'waehlen');
 
   let schwebt = null;
   doc.addEventListener('mouseover', (ev) => {
     if (schwebt) schwebt.classList.remove('pitch-pb-hover');
-    schwebt = modus === 'layout' && !ev.target.closest('[data-pitch-ui]') ? lWaehlbar(ev.target) : null;
-    if (schwebt && schwebt !== LS.el) schwebt.classList.add('pitch-pb-hover'); else schwebt = null;
+    schwebt = null;
+    if (modus !== 'layout' || LS.wz !== 'waehlen' || ev.target.closest('[data-pitch-ui], [data-pitch-el], [contenteditable]')) return;
+    const el = lWaehlbar(ev.target);
+    if (el && el !== LS.el) { schwebt = el; el.classList.add('pitch-pb-hover'); }
   });
-  // Klick waehlt, Ziehen verschiebt (erst ab 3 px, damit ein Klick nichts verrueckt)
+  // Klick waehlt, was unter der Maus liegt, Ziehen verschiebt es (erst ab 3 px, damit ein Klick nichts verrueckt).
+  // Einen grossen Block waehlt man ueber Q, die Block-Leiste oder den Pfad im Panel und zieht ihn am Griff der Leiste
   doc.addEventListener('mousedown', (ev) => {
-    if (modus !== 'layout' || ev.button !== 0 || ev.target.closest('[data-pitch-ui]')) return;
+    if (modus !== 'layout' || ev.button !== 0) return;
+    const t = ev.target;
+    if (t.closest('[contenteditable]')) return;
+    const griff = t.closest('[data-griff]');
+    if (griff) { ev.preventDefault(); ev.stopPropagation(); groesse(doc, ev, griff.dataset.griff); return; }
+    if (t.closest('[data-pitch-ui]')) return;
     ev.preventDefault(); ev.stopPropagation();
     popZu(); menueZu();
-    const el = (LS.el && LS.el.contains(ev.target)) ? LS.el : lWaehlbar(ev.target);
+    if (doc.activeElement && doc.activeElement.isContentEditable) doc.activeElement.blur();
+    blockMenueZu(); zeigePlus(doc, null);
+    if (LS.wz !== 'waehlen') { zeichne(doc, ev); return; }
+    const eig = t.closest('[data-pitch-el]');
+    if (eig) { waehle(eig, 'el'); bewege(doc, ev); return; }
+    const el = lWaehlbar(t);
     if (!el || el === doc.body) { waehle(null); return; }
     el.classList.remove('pitch-pb-hover');
-    waehle(el);
-    const e0 = lDaten(doc).b[el.dataset.pb] || {};
-    const x0 = e0.x || 0, y0 = e0.y || 0, sx = ev.clientX, sy = ev.clientY;
-    let zieht = false;
-    const bewege = (m) => {
-      const dx = m.clientX - sx, dy = m.clientY - sy;
-      if (!zieht && Math.hypot(dx, dy) < 3) return;
-      zieht = true; doc.documentElement.classList.add('pitch-pb-zieht');
-      // Shift haelt die Achse
-      const ax = m.shiftKey && Math.abs(dy) > Math.abs(dx) ? 0 : dx, ay = m.shiftKey && Math.abs(dx) >= Math.abs(dy) ? 0 : dy;
-      el.style.setProperty('translate', `${Math.round(x0 + ax)}px ${Math.round(y0 + ay)}px`, 'important');
-      lRahmen();
-    };
-    const los = (m) => {
-      doc.removeEventListener('mousemove', bewege); doc.removeEventListener('mouseup', los);
-      doc.documentElement.classList.remove('pitch-pb-zieht');
-      if (!zieht) return;
-      const tr = (el.style.getPropertyValue('translate') || '0px 0px').split(' ').map(parseFloat);
-      el.style.removeProperty('translate');
-      lAendern((e) => { e.x = tr[0] || 0; e.y = tr[1] || 0; });
-    };
-    doc.addEventListener('mousemove', bewege); doc.addEventListener('mouseup', los);
+    if (el !== LS.el) waehle(el, 'pb');
+    bewege(doc, ev);
   }, true);
+  // Doppelklick: Text bearbeiten (eigenes Element oder Text der Seite), Bild waehlen, sonst eine Ebene tiefer
+  doc.addEventListener('dblclick', (ev) => {
+    if (modus !== 'layout' || LS.wz !== 'waehlen' || ev.target.closest('[data-pitch-ui], [contenteditable]')) return;
+    ev.preventDefault();
+    const eig = ev.target.closest('[data-pitch-el]');
+    if (eig) {
+      const e = elDaten(doc, eig.dataset.pitchEl); if (!e || e.fest) return;
+      if (EL_TEXT.has(e.typ)) elTextStart(doc, eig, false); else if (e.typ === 'bild') elBildEditor(doc, e.id);
+      return;
+    }
+    if (seitenText(doc, ev.clientX, ev.clientY, true)) { waehle(null); return; }
+    const tief = lWaehlbar(ev.target); if (tief && tief !== LS.el) waehle(tief, 'pb');
+  });
+  // Mit einem Werkzeug und Platz schaffen zeigt die Linie schon vor dem Klick, wohin das Element kaeme.
+  // Ohne Werkzeug erscheint nahe einer Luecke zwischen zwei Bloecken das Plus
+  let bild = 0;
+  const vorschauOrt = (x, y) => { w.cancelAnimationFrame(bild); bild = w.requestAnimationFrame(() => zeigeEinfuege(doc, flussOrt(doc, x, y))); };
+  doc.addEventListener('mousemove', (ev) => {
+    if (modus !== 'layout' || !RASTER.fluss || ev.buttons) return;
+    if (LS.wz !== 'waehlen') { vorschauOrt(ev.clientX, ev.clientY); return; }
+    if ($('#block-menue').hidden === false) return;
+    const { clientX: x, clientY: y } = ev;
+    w.cancelAnimationFrame(bild);
+    bild = w.requestAnimationFrame(() => {
+      const ort = doc.querySelector('[contenteditable]') ? null : flussOrt(doc, x, y), ly = ort && luckeY(ort);
+      zeigePlus(doc, ort && Math.abs(y - ly) <= 14 / (aktZoom() || 1) ? ort : null, x);
+    });
+  });
+  doc.documentElement.addEventListener('mouseleave', () => { w.cancelAnimationFrame(bild); zeigeEinfuege(doc, null); if ($('#block-menue').hidden) zeigePlus(doc, null); });
+  // Werkzeug aus der Leiste auf die Seite ziehen, oder ein Bild vom Rechner
+  doc.addEventListener('dragover', (ev) => {
+    if (modus !== 'layout') return;
+    const typen = [...ev.dataTransfer.types];
+    if (typen.includes(EL_DRAG) || typen.includes('Files')) {
+      ev.preventDefault(); ev.dataTransfer.dropEffect = 'copy';
+      if (RASTER.fluss) vorschauOrt(ev.clientX, ev.clientY);
+    }
+  });
+  doc.addEventListener('dragleave', (ev) => { if (!ev.relatedTarget) { w.cancelAnimationFrame(bild); zeigeEinfuege(doc, null); } });
+  doc.addEventListener('drop', async (ev) => {
+    if (modus !== 'layout') return;
+    const typ = ev.dataTransfer.getData(EL_DRAG), f = ev.dataTransfer.files[0];
+    if (!EL_TYPEN[typ] && !(f && f.type.startsWith('image/'))) return;
+    ev.preventDefault(); ev.stopPropagation();
+    w.cancelAnimationFrame(bild);
+    const o = ebUrsprung(doc), px = ev.clientX - o.x, py = ev.clientY - o.y;
+    const ort = RASTER.fluss ? flussOrt(doc, ev.clientX, ev.clientY) : null;
+    let m = EL_TYPEN[typ] ? (ort ? flussMass(doc, typ, ort) : standardMass(doc, typ)) : null, src = null, zusatz = null;
+    if (!m) {
+      try { src = await liesBild(f); } catch (err) { melde('Dieses Bild ließ sich nicht lesen.'); zeigeEinfuege(doc, null); return; }
+      const [nb, nh] = await natur(src), b = Math.min(nb, ort ? Math.min(560, blockInnen(ort.c).w) : 480, designBreite(doc) - 32);
+      m = { w: Math.round(b), h: Math.round(b * nh / nb) }; sitzung.unshift(src); zusatz = { src, nb, nh };
+    }
+    if (ort) { elEinfuegen(doc, src ? 'bild' : typ, { x: 0, ...m }, zusatz, ort); return; }
+    const x = px - m.w / 2, y = py - (m.h || 40) / 2, fx = fang(doc, { x: [x], y: [y] }, null, false);
+    elEinfuegen(doc, src ? 'bild' : typ, { x: x + fx.x, y: y + fx.y, ...m }, zusatz);
+  });
   w.addEventListener('scroll', lRahmen, { passive: true });
-  w.addEventListener('resize', lRahmen);
+  w.addEventListener('resize', () => { lRahmen(); rasterZeichnen(doc); });
+  // Nach dem Neuladen (Rueckgaengig, Geraet, Farben) dieselbe Auswahl wieder herstellen
+  const m = LS.merk; LS.merk = null;
+  if (m && m.k === lSchluessel(doc)) {
+    const el = m.art === 'el' ? elKnoten(doc, m.id) : doc.querySelector(`[data-pb="${m.id}"]`);
+    if (el) { LS.el = el; LS.art = m.art; LS.id = m.id; }
+  }
+  rasterZeichnen(doc); lRahmen(); advPanel(); advLinks();
 }
-// Tasten im Advanced-Modus, solange ein Baustein gewaehlt ist
+
+// Tasten im Advanced-Modus. Werkzeuge: V, H, T, R, O, L, I, B; Umschalt+G Raster
 function layoutTaste(e) {
-  if (modus !== 'layout' || !LS.el) return false;
+  if (modus !== 'layout') return false;
   const t = e.target; if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return false;
-  if (e.ctrlKey || e.metaKey) return false;
+  if ($('#export').open || $('#willkommen').open || $('#be').open || $('#geraete').open) return false;
+  const doc = LS.doc, strg = e.ctrlKey || e.metaKey, k = e.key.toLowerCase();
+  const wz = Object.entries(EL_TYPEN).find(([, T]) => T.taste === k);
+  if (!strg && !e.altKey && !e.shiftKey && (k === 'v' || wz)) { setzeWz(k === 'v' ? 'waehlen' : wz[0]); e.preventDefault(); return true; }
+  if (!strg && e.shiftKey && k === 'g') { RASTER.zeigen = !RASTER.zeigen; rasterMerken(); advSync(); e.preventDefault(); return true; }
+  if (e.key === 'Escape' && LS.wz !== 'waehlen') { setzeWz('waehlen'); e.preventDefault(); return true; }
+  if (strg && k === 'v' && ablageEl && doc) { elEinsetzen(doc); e.preventDefault(); return true; }
+  if (!LS.el || !doc) return false;
   const s = e.shiftKey ? 10 : 1;
   const pfeil = { ArrowLeft: [-s, 0], ArrowRight: [s, 0], ArrowUp: [0, -s], ArrowDown: [0, s] }[e.key];
-  if (pfeil && e.altKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) lUmordnen(e.key === 'ArrowUp' ? -1 : 1);
-  else if (pfeil) lSchiebe(...pfeil);
-  else if (e.key === '+' || e.key === '=') lSchrift(0.05);
-  else if (e.key === '-' || e.key === '_') lSchrift(-0.05);
-  else if (e.key === 'Delete' || e.key === 'Backspace') LS.leiste.querySelector('[data-l="weg"]').click();
-  else if (e.key.toLowerCase() === 'q') LS.leiste.querySelector('[data-l="eltern"]').click();
-  else if (e.key === 'Escape') waehle(null);
-  else return false;
+  if (LS.art === 'el') {
+    const id = LS.id, el = elDaten(doc, id); if (!el) return false;
+    if (pfeil && !strg && !e.altKey && el.fluss && pfeil[1]) flussSchritt(doc, id, Math.sign(pfeil[1]));
+    else if (pfeil && !strg && !e.altKey && el.fluss) elAendern(doc, id, (x) => { x.x = Math.max(0, (x.x || 0) + pfeil[0]); });
+    else if (pfeil && !strg && !e.altKey) elAendern(doc, id, (x) => { x.x += pfeil[0]; x.y += pfeil[1]; });
+    else if (e.key === 'Delete' || e.key === 'Backspace') elLoeschen(doc, id);
+    else if (strg && k === 'd') elDuplizieren(doc, id);
+    else if (strg && k === 'c') { ablageEl = { ...JSON.parse(JSON.stringify(el)), _k: lSchluessel(doc), _r: ebRechteck(doc, LS.el) }; melde('Kopiert. Strg+V setzt es ein, auch auf anderen Seiten.'); }
+    else if (strg && (e.key === ']' || e.key === '}')) elEbene(doc, id, e.shiftKey ? 'oben' : 1);
+    else if (strg && (e.key === '[' || e.key === '{')) elEbene(doc, id, e.shiftKey ? 'unten' : -1);
+    else if (e.key === 'Enter' && EL_TEXT.has(el.typ)) elTextStart(doc, LS.el, true);
+    else if ((e.key === '+' || e.key === '=') && EL_TEXT.has(el.typ)) elAendern(doc, id, (x) => { x.groesse += 1; });
+    else if ((e.key === '-' || e.key === '_') && EL_TEXT.has(el.typ)) elAendern(doc, id, (x) => { x.groesse = Math.max(6, x.groesse - 1); });
+    else if (e.key === 'Escape') waehle(null);
+    else return false;
+  } else {
+    if (pfeil && e.altKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) lUmordnen(e.key === 'ArrowUp' ? -1 : 1);
+    else if (pfeil && !strg) lAendern((x) => { x.x = (x.x || 0) + pfeil[0]; x.y = (x.y || 0) + pfeil[1]; });
+    else if (e.key === '+' || e.key === '=') lSchrift(0.05);
+    else if (e.key === '-' || e.key === '_') lSchrift(-0.05);
+    else if (e.key === 'Delete' || e.key === 'Backspace') pbAusblenden(LS.id, true);
+    else if (k === 'q' && !strg) { const p = lWaehlbar(LS.el.parentElement); if (p && p !== doc.body) waehle(p, 'pb'); }
+    else if (e.key === 'Escape') waehle(null);
+    else return false;
+  }
   e.preventDefault();
   return true;
+}
+
+// ---------- Advanced: Ebenen links, Design rechts, Werkzeugleiste oben ----------
+const GERAET_NAME = { desktop: 'Desktop', tablet: 'Tablet', mobil: 'Smartphone' };
+const PB_ART = { H1: 'Überschrift', H2: 'Überschrift', H3: 'Überschrift', H4: 'Überschrift', H5: 'Überschrift', H6: 'Überschrift', P: 'Text', SPAN: 'Text', A: 'Link', BUTTON: 'Knopf', IMG: 'Bild', svg: 'Grafik', UL: 'Liste', OL: 'Liste', LI: 'Eintrag', HEADER: 'Kopfzeile', FOOTER: 'Fußzeile', NAV: 'Menü', SECTION: 'Bereich', MAIN: 'Bereich', FORM: 'Formular', INPUT: 'Feld', LABEL: 'Text' };
+function pbName(el) {
+  const art = PB_ART[el.tagName] || 'Block';
+  const t = (el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 30);
+  return [art, t];
+}
+const ebeneZeile = (attr, ico, name, inhalt, an, aus, knoepfe) => `<div class="ebene${an ? ' an' : ''}${aus ? ' aus' : ''}" ${attr}><svg class="i"><use href="#${ico}"/></svg><span class="ebene-name">${name ? `<span>${name}</span>` : ''}${inhalt ?`<small data-sprache-fest>${esc(inhalt)}</small>` : ''}</span>${knoepfe}</div>`;
+const ebeneKnopf = (a, titel, ico, an) => `<button type="button" data-e="${a}" title="${titel}" aria-label="${titel}"${an ? ' class="an"' : ''}><svg class="i"><use href="#${ico}"/></svg></button>`;
+function advLinks() {
+  if (modus !== 'layout') return;
+  const doc = LS.doc; if (!doc || !doc.body || !doc._vorlage) return;
+  const L = lDaten(doc), S = D.demos[P.vorlage].seiten;
+  $('#ebenen-wo').textContent = `${(S[P.seite] || S.start).name} · ${GERAET_NAME[lGeraet(doc)]}`;
+  const eig = [...(L.e || [])].reverse();
+  $('#ebenen-liste').innerHTML = eig.length ? eig.map((e) => {
+    const eigenName = e.name || (EL_TEXT.has(e.typ) && e.text);
+    return ebeneZeile(`data-id="${e.id}" draggable="true"`, EL_TYPEN[e.typ].ico, eigenName ? '' : EL_TYPEN[e.typ].name, eigenName ? elName(e) : '', LS.art === 'el' && LS.id === e.id, e.aus,
+      ebeneKnopf('loeschen', 'Löschen', 's-papierkorb') + ebeneKnopf('fest', e.fest ? 'Entsperren' : 'Sperren', e.fest ? 's-schloss' : 's-schloss-auf', e.fest) + ebeneKnopf('aus', e.aus ? 'Einblenden' : 'Ausblenden', e.aus ? 's-auge-zu' : 's-auge', e.aus));
+  }).join('') : '<p class="panel-leer">Noch keine eigenen Elemente. Oben ein Werkzeug wählen und auf die Seite klicken, oder es auf die Seite ziehen.</p>';
+  const b = [...new Set([...Object.keys(L.b), ...Object.keys(L.v || {})])].map((id) => [id, L.b[id] || {}]);
+  $('#bausteine-liste').innerHTML = b.length ? b.map(([id, x]) => {
+    const el = doc.querySelector(`[data-pb="${id}"]`); const [art, t] = el ? pbName(el) : ['Block', ''];
+    return ebeneZeile(`data-pb="${id}"`, 's-baustein', art, t, LS.art === 'pb' && LS.id === id, x.h,
+      ebeneKnopf('pb-aus', x.h ? 'Einblenden' : 'Ausblenden', x.h ? 's-auge-zu' : 's-auge', x.h) + ebeneKnopf('pb-reset', 'Zurücksetzen', 's-reset'));
+  }).join('') : '<p class="panel-leer">Noch nichts geändert. Einen Baustein der Seite anklicken, ziehen oder an den Griffen ändern.</p>';
+}
+{
+  const liste = $('#ebenen-liste');
+  liste.addEventListener('click', (ev) => {
+    const z = ev.target.closest('.ebene'); const doc = LS.doc; if (!z || !doc) return;
+    const id = z.dataset.id, b = ev.target.closest('[data-e]');
+    if (b && b.dataset.e === 'loeschen') { elLoeschen(doc, id); return; }
+    if (b) { elAendern(doc, id, (x) => { x[b.dataset.e] = !x[b.dataset.e]; if (!x[b.dataset.e]) delete x[b.dataset.e]; }); if (LS.id === id) { lRahmen(); advPanel(); } return; }
+    const n = elKnoten(doc, id); if (!n) return;
+    waehle(n, 'el'); if (!elDaten(doc, id).aus) n.scrollIntoView({ block: 'nearest' });
+  });
+  // Doppelklick auf den Namen benennt das Element um
+  liste.addEventListener('dblclick', (ev) => {
+    const z = ev.target.closest('.ebene'); const doc = LS.doc; if (!z || !doc || ev.target.closest('[data-e]')) return;
+    const e = elDaten(doc, z.dataset.id); if (!e) return;
+    const name = z.querySelector('.ebene-name'), feld = document.createElement('input');
+    feld.className = 'ebene-feld'; feld.value = elName(e); name.replaceWith(feld); feld.focus(); feld.select();
+    const fertig = (ok) => { feld.onblur = null; if (ok) elAendern(doc, e.id, (x) => { const v = feld.value.trim(); if (v && v !== EL_TYPEN[x.typ].name) x.name = v; else delete x.name; }); else advLinks(); };
+    feld.onblur = () => fertig(true);
+    feld.onkeydown = (k) => { if (k.key === 'Enter') feld.blur(); if (k.key === 'Escape') { k.stopPropagation(); fertig(false); } };
+  });
+  // Ziehen in der Liste ordnet um: oben liegt vorn
+  let gezogen = null;
+  liste.addEventListener('dragstart', (ev) => { const z = ev.target.closest('.ebene'); if (!z) return; gezogen = z.dataset.id; ev.dataTransfer.effectAllowed = 'move'; ev.dataTransfer.setData('text/plain', gezogen); z.classList.add('zieht'); });
+  liste.addEventListener('dragend', () => { gezogen = null; $$('#ebenen-liste .ebene').forEach((z) => z.classList.remove('zieht', 'drueber', 'drunter')); });
+  liste.addEventListener('dragover', (ev) => {
+    const z = ev.target.closest('.ebene'); if (!gezogen || !z) return;
+    ev.preventDefault(); const r = z.getBoundingClientRect(), oben = ev.clientY < r.top + r.height / 2;
+    $$('#ebenen-liste .ebene').forEach((x) => x.classList.remove('drueber', 'drunter')); z.classList.add(oben ? 'drueber' : 'drunter');
+  });
+  liste.addEventListener('drop', (ev) => {
+    const z = ev.target.closest('.ebene'), doc = LS.doc; if (!gezogen || !z || !doc || z.dataset.id === gezogen) return;
+    ev.preventDefault();
+    const L = lDaten(doc, true), r = z.getBoundingClientRect(), oben = ev.clientY < r.top + r.height / 2;
+    const e = L.e.splice(L.e.findIndex((x) => x.id === gezogen), 1)[0];
+    const j = L.e.findIndex((x) => x.id === z.dataset.id);
+    L.e.splice(oben ? j + 1 : j, 0, e);
+    elementeAnwenden(doc); merke(); advLinks();
+  });
+  $('#bausteine-liste').addEventListener('click', (ev) => {
+    const z = ev.target.closest('.ebene'), doc = LS.doc; if (!z || !doc) return;
+    const id = z.dataset.pb, b = ev.target.closest('[data-e]'), el = doc.querySelector(`[data-pb="${id}"]`);
+    if (b && b.dataset.e === 'pb-aus') { pbAusblenden(id, !(lDaten(doc).b[id] || {}).h); return; }
+    if (b && b.dataset.e === 'pb-reset') { if (!el) return; LS.el = el; LS.art = 'pb'; LS.id = id; lZuruecksetzen(false); return; }
+    if (!el || !el.getClientRects().length) return;
+    waehle(el, 'pb'); el.scrollIntoView({ block: 'center' });
+  });
+}
+
+// Felder im Design-Panel. Zahlen lassen sich auch am Kuerzel davor ziehen (wie in Figma)
+const fZahl = (f, kurz, titel, wert, o = {}) => `<label class="feld-z" title="${titel}"><span data-zieh="${f}" data-sprache-fest>${kurz}</span><input type="number" data-f="${f}" value="${wert ?? ''}"${o.ph ? ` placeholder="${o.ph}"` : ''} step="${o.step || 1}"${o.min != null ? ` min="${o.min}"` : ''}${o.max != null ? ` max="${o.max}"` : ''}${o.aus ? ' disabled' : ''}></label>`;
+const fSegment = (f, wert, optionen) => `<span class="segment segment--voll seg-klein">${optionen.map(([v, titel, ico]) => `<button type="button" data-f="${f}" data-v="${v}" aria-pressed="${String(wert === v)}" title="${titel}" aria-label="${titel}">${ico ? `<svg class="i"><use href="#${ico}"/></svg>` : titel}</button>`).join('')}</span>`;
+const fSchalter = (f, text, an) => `<label class="feld-schalter"><input type="checkbox" data-f="${f}"${an ? ' checked' : ''}><span>${text}</span></label>`;
+function fFarbe(f, wert, leer) {
+  const doc = LS.doc, cs = doc.defaultView.getComputedStyle(doc.documentElement);
+  const echt = (k) => cs.getPropertyValue('--color-' + k).trim() || (k === 'bg-container' ? cs.getPropertyValue('--color-bg-default').trim() : '');
+  const sw = (v, farbe, titel) => `<button type="button" class="sw${wert === v ? ' an' : ''}" data-f="${f}" data-v="${v}" title="${titel}" aria-label="${titel}" style="background:${farbe}"></button>`;
+  const eigen = wert && wert[0] === '#';
+  return `<div class="farbwahl">${leer ? `<button type="button" class="sw sw-leer${!wert ? ' an' : ''}" data-f="${f}" data-v="" title="${leer}" aria-label="${leer}"></button>` : ''}`
+    + EL_ROLLEN.filter(([k]) => echt(k)).map(([k, n]) => sw(k, hex(echt(k)), n)).join('') + sw('#ffffff', '#ffffff', 'Weiß') + sw('#000000', '#000000', 'Schwarz')
+    + `<label class="sw sw-eigen${eigen && !/^#(f{6}|0{6})$/i.test(wert) ? ' an' : ''}" title="Eigene Farbe" style="${eigen && !/^#(f{6}|0{6})$/i.test(wert) ? `background:${wert}` : ''}"><input type="color" data-f="${f}" value="${eigen ? wert : '#ff5a1f'}"></label></div>`;
+}
+const sektion = (titel, inhalt, extra) => `<section class="eig-sektion"><h4>${titel}${extra || ''}</h4>${inhalt}</section>`;
+let mehrOffen = false;
+const mehr = (inhalt) => `<details class="eig-mehr"${mehrOffen ? ' open' : ''}><summary>Rand, Ecken, Deckkraft <svg class="i" style="width:14px;height:14px"><use href="#s-runter"/></svg></summary>${inhalt}</details>`;
+function advPanel() {
+  if (modus !== 'layout') return;
+  const doc = LS.doc, ziel = $('#eig-inhalt'); if (!doc || !doc.body || !doc._vorlage) return;
+  const en = sprache === 'en', g = lGeraet(doc);
+  if (LS.el && LS.art === 'el') {
+    const e = elDaten(doc, LS.id); if (!e) { ziel.innerHTML = ''; return; }
+    const T = EL_TYPEN[e.typ], text = EL_TEXT.has(e.typ);
+    let h = `<div class="eig-kopf"><svg class="i"><use href="#${T.ico}"/></svg><strong>${T.name}</strong><span class="eig-knoepfe">`
+      + ebeneKnopf('dup', 'Duplizieren (Strg+D)', 's-kopie') + ebeneKnopf('del', 'Löschen (Entf)', 's-papierkorb') + '</span></div>';
+    // Block: Groesse und Abstand (oben, unten, links) wie im Box-Modell; Frei: Lage und Groesse auf der Seite
+    const fl = !!e.fluss, gr = fZahl('w', en ? 'W' : 'B', 'Breite', e.w, { min: 1 }) + fZahl('h', 'H', 'Höhe', EL_AUTOHOCH.has(e.typ) ? '' : e.h, { min: 1, ph: 'Auto', aus: EL_AUTOHOCH.has(e.typ) });
+    h += sektion(fl ? 'Größe und Abstand' : 'Position und Größe', fSegment('lage', fl ? 'fluss' : 'frei', [['fluss', 'Block'], ['frei', 'Frei']])
+      + (fl
+        ? `<div class="feld-raster">${gr}</div><div class="feld-name">Abstand</div><div class="feld-raster drei">${fZahl('abstandOben', '↑', 'Abstand oben', e.abstandOben ?? e.abstand ?? 16, { min: 0 })}${fZahl('abstandUnten', '↓', 'Abstand unten', e.abstandUnten ?? e.abstand ?? 16, { min: 0 })}${fZahl('x', '←', 'Abstand links im Block', e.x || 0, { min: 0 })}</div>`
+          + `<div class="knopfreihe">${ebeneKnopf('links', 'Links im Block', 's-ausr-links')}${ebeneKnopf('mitte', 'Mittig im Block', 's-ausr-mitte')}${ebeneKnopf('rechts', 'Rechts im Block', 's-ausr-rechts')}<span class="trenn"></span>${ebeneKnopf('davor', 'Eine Stelle nach oben (↑)', 's-pfeil-hoch')}${ebeneKnopf('danach', 'Eine Stelle nach unten (↓)', 's-pfeil-runter')}<span class="trenn"></span>${ebeneKnopf('fest', e.fest ? 'Entsperren' : 'Sperren', e.fest ? 's-schloss' : 's-schloss-auf', e.fest)}</div>`
+          + '<p class="eig-notiz">Ziehen setzt den Block um, auch nach links und rechts. Abstände an den Griffen oben und unten.</p>'
+        : `<div class="feld-raster">${fZahl('x', 'X', 'Abstand von links', e.x)}${fZahl('y', 'Y', 'Abstand von oben', e.y)}${gr}</div><div class="knopfreihe">${ebeneKnopf('links', 'Links an die Seite', 's-ausr-links')}${ebeneKnopf('mitte', 'Mittig auf die Seite', 's-ausr-mitte')}${ebeneKnopf('rechts', 'Rechts an die Seite', 's-ausr-rechts')}<span class="trenn"></span>${ebeneKnopf('hinten', 'Nach hinten (Strg+[)', 's-hinten')}${ebeneKnopf('vorn', 'Nach vorn (Strg+])', 's-vorn')}<span class="trenn"></span>${ebeneKnopf('fest', e.fest ? 'Entsperren' : 'Sperren', e.fest ? 's-schloss' : 's-schloss-auf', e.fest)}</div>`));
+    if (text) {
+      h += sektion('Text', `<textarea class="feld-text" data-f="text" rows="${e.typ === 'knopf' ? 1 : 3}" data-sprache-fest>${esc(e.text)}</textarea>`
+        + `<div class="feld-raster"><label class="feld-wahl feld-breit"><select data-f="schrift"><option value="t"${e.schrift === 't' ? ' selected' : ''}>Schrift der Überschriften</option><option value="x"${e.schrift !== 't' ? ' selected' : ''}>Schrift der Texte</option></select></label>`
+        + `${fZahl('groesse', 'Aa', 'Schriftgröße', e.groesse, { min: 6 })}<label class="feld-wahl" title="Schriftstärke"><select data-f="gewicht">${[[300, 'Leicht'], [400, 'Normal'], [500, 'Mittel'], [600, 'Halbfett'], [700, 'Fett']].map(([v, n]) => `<option value="${v}"${+e.gewicht === v ? ' selected' : ''}>${n}</option>`).join('')}</select></label>`
+        + `${fZahl('zeile', '↕', 'Zeilenhöhe', e.zeile, { step: 0.05, min: 0.8 })}${fZahl('sperr', '↔', 'Laufweite in Prozent', e.sperr || 0, { step: 0.5 })}</div>`
+        + `<div class="feld-zeile">${fSegment('ausr', e.ausr || (e.typ === 'knopf' ? 'center' : 'left'), [['left', 'Links', 's-text-links'], ['center', 'Mittig', 's-text-mitte'], ['right', 'Rechts', 's-text-rechts']])}${fSchalter('gross', 'Versalien', e.gross)}</div>`
+        + '<div class="feld-name">Textfarbe</div>' + fFarbe('farbe', e.farbe));
+    }
+    if (e.typ === 'bild') h += sektion('Bild', `<div class="feld-zeile"><button type="button" class="knopf knopf--klein" data-e="bild-waehlen"><svg class="i"><use href="#s-bild"/></svg>${e.src ? 'Zuschneiden' : 'Bild wählen'}</button>${fSegment('fit', e.fit || 'cover', [['cover', 'Füllen'], ['contain', 'Ganz zeigen']])}</div>`);
+    if (e.typ !== 'bild') h += sektion(e.typ === 'linie' ? 'Farbe' : 'Füllung', fFarbe('fill', e.fill, e.typ === 'linie' ? '' : 'Keine'));
+    h += mehr(sektion('Rand', `<div class="feld-raster">${fZahl('randB', '▢', 'Randstärke', e.randB || 0, { min: 0 })}</div>` + (e.randB ? fFarbe('rand', e.rand || 'text-strong') : ''))
+      + sektion('Wirkung', `<div class="feld-raster">${e.typ === 'ellipse' ? '' : fZahl('radius', '◜', 'Ecken', e.radius || 0, { min: 0 })}${fZahl('deck', '%', 'Deckkraft in Prozent', e.deck ?? 100, { min: 0, max: 100 })}</div>${fSchalter('schatten', 'Schatten', e.schatten)}`));
+    ziel.innerHTML = h;
+  } else if (LS.el && LS.art === 'pb') {
+    const el = LS.el, b = lDaten(doc).b[LS.id] || {}, r = el.getBoundingClientRect();
+    const [art, t] = pbName(el);
+    // Pfad nach oben: jeder Eltern-Baustein laesst sich direkt waehlen
+    const pfad = []; for (let p = lWaehlbar(el.parentElement); p && p !== doc.body && pfad.length < 4; p = lWaehlbar(p.parentElement)) pfad.unshift(p);
+    let h = `<div class="eig-kopf"><svg class="i"><use href="#s-baustein"/></svg><strong>${art}</strong><span class="eig-knoepfe">${ebeneKnopf('pb-aus', 'Ausblenden (Entf)', 's-auge')}${ebeneKnopf('pb-reset', 'Zurücksetzen', 's-reset')}</span></div>`
+      + (t ? `<p class="eig-notiz" data-sprache-fest>${esc(t)}</p>` : '')
+      + (pfad.length ? `<div class="pfad">${pfad.map((p) => `<button type="button" data-pfad="${p.dataset.pb}">${PB_ART[p.tagName] || 'Block'}</button>`).join('<span>›</span>')}<span>›</span><b>${art}</b></div>` : '');
+    const cs = doc.defaultView.getComputedStyle(el), grb = fZahl('w', en ? 'W' : 'B', 'Breite, leer heißt wie im Template', b.w || '', { min: 8, ph: Math.round(r.width) }) + fZahl('hoe', 'H', 'Höhe, leer heißt wie im Template', b.hoe || '', { min: 8, ph: Math.round(r.height) });
+    h += sektion(RASTER.fluss ? 'Größe und Abstand' : 'Lage und Größe', (RASTER.fluss
+      ? `<div class="feld-raster">${grb}</div><div class="feld-name">Abstand</div><div class="feld-raster drei">${fZahl('mt', '↑', 'Abstand oben, leer heißt wie im Template', b.mt ?? '', { ph: Math.round(parseFloat(cs.marginTop) || 0) })}${fZahl('mb', '↓', 'Abstand unten, leer heißt wie im Template', b.mb ?? '', { ph: Math.round(parseFloat(cs.marginBottom) || 0) })}${fZahl('x', '←', 'Nach rechts verschoben', b.x || 0)}</div>`
+      : `<div class="feld-raster">${fZahl('x', 'X', 'Versatz nach rechts', b.x || 0)}${fZahl('y', 'Y', 'Versatz nach unten', b.y || 0)}${grb}</div>`)
+      + `<div class="knopfreihe">${ebeneKnopf('pb-hoch', 'In der Reihenfolge nach oben (Alt+↑)', 's-pfeil-hoch')}${ebeneKnopf('pb-runter', 'In der Reihenfolge nach unten (Alt+↓)', 's-pfeil-runter')}<span class="trenn"></span>${ebeneKnopf('pb-eltern', 'Größeren Baustein wählen (Q)', 's-eltern')}</div>`);
+    h += sektion('Schrift', `<div class="feld-zeile"><button type="button" class="knopf knopf--klein knopf--rund" data-e="pb-kleiner" title="Schrift kleiner (−)" aria-label="Schrift kleiner">A−</button><span class="wert-anzeige">${Math.round((b.f || 1) * 100)} %</span><button type="button" class="knopf knopf--klein knopf--rund" data-e="pb-groesser" title="Schrift größer (+)" aria-label="Schrift größer">A+</button></div>`
+      + '<div class="feld-name">Textfarbe</div>' + fFarbe('fg', b.fg, 'Wie im Template'));
+    h += sektion('Füllung', fFarbe('bg', b.bg, 'Wie im Template'));
+    h += mehr(sektion('Wirkung', `<div class="feld-raster">${fZahl('rad', '◜', 'Ecken, leer heißt wie im Template', b.rad ?? '', { min: 0, ph: '–' })}${fZahl('deck', '%', 'Deckkraft in Prozent', b.deck ?? 100, { min: 0, max: 100 })}</div>`));
+    ziel.innerHTML = h;
+  } else {
+    const kurz = [['E', 'Bearbeiten oder Klicken'], ['V', 'Auswählen'], ['H · T', 'Überschrift, Text'], ['R · O · L', 'Fläche, Kreis, Linie'], ['I · B', 'Bild, Knopf'], ['Umschalt+G', 'Raster zeigen'], ['Alt + Ziehen', 'Kopie ziehen'], ['Strg + Ziehen', 'Ohne Einrasten'], ['Umschalt', 'Gerade ziehen, Seitenverhältnis'], ['Pfeiltasten', '1 px, mit Umschalt 10 px'], ['↑ · ↓', 'Block: eine Stelle hoch, runter'], ['Strg+D', 'Duplizieren'], ['Strg+C · Strg+V', 'Kopieren, Einsetzen'], ['Strg+] · Strg+[', 'Nach vorn, nach hinten'], ['Entf', 'Löschen oder ausblenden'], ['Q', 'Größerer Baustein'], ['Doppelklick', 'Text bearbeiten']];
+    ziel.innerHTML = `<div class="eig-kopf"><svg class="i"><use href="#s-seite"/></svg><strong>Seite</strong></div><p class="eig-notiz">Etwas auf der Seite anklicken, um es zu ändern. Neue Blöcke über das Plus zwischen zwei Blöcken oder mit den Werkzeugen oben.</p>`
+      + sektion('Anordnung', `${fSegment('r-modus', RASTER.fluss ? 'bloecke' : 'frei', [['bloecke', 'Blöcke'], ['frei', 'Frei']])}<p class="eig-notiz">${RASTER.fluss ? 'Blöcke: alles steht untereinander. Neues rückt den Inhalt nach unten, Ziehen setzt um, Abstände an den Griffen. Das Plus zwischen zwei Blöcken fügt ein.' : 'Frei: Elemente liegen frei über der Seite, wie in Figma.'}</p>`)
+      + sektion('Raster', `${fSchalter('r-zeigen', 'Raster zeigen (Umschalt+G)', RASTER.zeigen)}${fSchalter('r-fangen', 'Am Raster einrasten', RASTER.fangen)}`
+        + `<div class="feld-raster">${fZahl('r-groesse', '#', 'Rastergröße in px', RASTER.groesse, { min: 2, max: 200 })}${fZahl('r-spalten', '|||', `Spalten auf ${GERAET_NAME[g]}`, RASTER.spalten[g], { min: 0, max: 24 })}${fZahl('r-rand', '⇤', 'Rand links und rechts in px', RASTER.rand[g], { min: 0 })}${fZahl('r-abstand', '⇹', 'Abstand zwischen den Spalten in px', RASTER.abstand[g], { min: 0 })}</div>`
+        + `<p class="eig-notiz">Spalten gelten für ${GERAET_NAME[g]}.</p>`)
+      + sektion('Tastenkürzel', `<dl class="kuerzel">${kurz.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>`)
+      + sektion('Diese Seite', '<p class="eig-notiz">Layout und eigene Elemente gelten je Template, Seite und Gerät.</p><button type="button" class="knopf knopf--klein knopf--gefahr" data-e="alle">Seite zurücksetzen</button>');
+  }
+}
+// Werte im Panel nachziehen, ohne es neu aufzubauen (das Feld, in dem getippt wird, bleibt in Ruhe)
+function eigWerte() {
+  const doc = LS.doc; if (modus !== 'layout' || !doc || !LS.el) return;
+  const e = LS.art === 'el' ? elDaten(doc, LS.id) : lDaten(doc).b[LS.id] || {};
+  if (!e) return;
+  $$('#eig-inhalt input[type=number][data-f]').forEach((i) => {
+    if (i === document.activeElement) return;
+    const f = i.dataset.f, v = f === 'deck' ? (e.deck ?? 100) : LS.art === 'el' && f === 'h' && EL_AUTOHOCH.has(e.typ) ? '' : /^abstand(Oben|Unten)$/.test(f) ? (e[f] ?? e.abstand ?? 16) : (e[f] ?? (LS.art === 'pb' && (f === 'x' || f === 'y') ? 0 : ''));
+    if (String(i.value) !== String(v)) i.value = v;
+  });
+  const wa = $('#eig-inhalt .wert-anzeige'); if (wa) wa.textContent = Math.round((e.f || 1) * 100) + ' %';
+  const tx = $('#eig-inhalt textarea[data-f="text"]'); if (tx && tx !== document.activeElement && LS.art === 'el' && tx.value !== e.text) tx.value = e.text;
+}
+// Ein Feld im Panel hat sich geaendert; fertig: Eintrag im Verlauf
+function advFeld(f, v, fertig) {
+  const doc = LS.doc; if (!doc) return;
+  if (f.startsWith('r-')) {
+    const g = lGeraet(doc), k = f.slice(2);
+    if (k === 'modus') { setzeAnordnung(v === 'bloecke'); return; }
+    if (k === 'zeigen' || k === 'fangen' || k === 'fluss') RASTER[k] = !!v;
+    else if (k === 'groesse') RASTER.groesse = Math.max(2, +v || 8);
+    else if (v !== '' && !isNaN(+v)) RASTER[k][g] = Math.max(0, +v);
+    rasterMerken(); rasterZeichnen(doc); $$('#werkzeuge [data-raster]').forEach((b) => b.setAttribute('aria-pressed', String(!!RASTER[b.dataset.raster])));
+    return;
+  }
+  if (LS.art === 'el' && f === 'lage') { if (fertig) lageWechseln(doc, LS.id, v); return; }
+  if (LS.art === 'el') {
+    const zahl = ['x', 'y', 'w', 'h', 'groesse', 'gewicht', 'zeile', 'sperr', 'randB', 'radius', 'deck', 'abstandOben', 'abstandUnten'];
+    if (zahl.includes(f) && (v === '' || isNaN(+v))) return;
+    elAendern(doc, LS.id, (x) => {
+      // Der alte gemeinsame Abstand wird beim ersten Aendern zu oben und unten
+      if (/^abstand/.test(f) && x.abstand != null) { x.abstandOben = x.abstandOben ?? x.abstand; x.abstandUnten = x.abstandUnten ?? x.abstand; delete x.abstand; }
+      x[f] = zahl.includes(f) ? +v : v;
+      if (f === 'deck') x.deck = Math.min(100, Math.max(0, x.deck));
+      if (x.fluss && /^(x|abstandOben|abstandUnten)$/.test(f)) x[f] = Math.max(0, x[f]);
+      if (['w', 'h', 'groesse'].includes(f)) x[f] = Math.max(f === 'groesse' ? 6 : 1, x[f]);
+      for (const k of ['randB', 'radius', 'sperr', 'gross', 'schatten', 'fill']) if (!x[k]) delete x[k];
+      if (x.deck === 100) delete x.deck;
+    }, !fertig);
+    if (fertig && ['fill', 'farbe', 'rand', 'randB', 'ausr', 'fit'].includes(f)) advPanel();
+  } else if (LS.art === 'pb') {
+    if (['x', 'y', 'deck'].includes(f) && (v === '' || isNaN(+v))) return;
+    lAendern((x) => {
+      if (['bg', 'fg'].includes(f)) { if (v) x[f] = v; else delete x[f]; }
+      else if (v === '' || isNaN(+v)) delete x[f];
+      else x[f] = f === 'deck' ? Math.min(100, Math.max(0, +v)) : +v;
+    }, !fertig);
+    if (fertig && ['bg', 'fg'].includes(f)) advPanel();
+  }
+}
+{
+  const ziel = $('#eig-inhalt');
+  const wert = (i) => (i.type === 'checkbox' ? i.checked : i.value);
+  ziel.addEventListener('input', (ev) => { const i = ev.target; if (i.dataset.f && i.type !== 'checkbox') advFeld(i.dataset.f, wert(i), false); });
+  ziel.addEventListener('change', (ev) => { const i = ev.target; if (i.dataset.f) advFeld(i.dataset.f, wert(i), true); });
+  ziel.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' && ev.target.tagName === 'INPUT') ev.target.blur(); });
+  ziel.addEventListener('toggle', (ev) => { if (ev.target.matches('details.eig-mehr')) mehrOffen = ev.target.open; }, true);
+  ziel.addEventListener('click', (ev) => {
+    const doc = LS.doc; if (!doc) return;
+    const sw = ev.target.closest('button[data-f]');
+    if (sw) { advFeld(sw.dataset.f, sw.dataset.v, true); advPanel(); return; }
+    const pf = ev.target.closest('[data-pfad]');
+    if (pf) { const el = doc.querySelector(`[data-pb="${pf.dataset.pfad}"]`); if (el) waehle(el, 'pb'); return; }
+    const b = ev.target.closest('[data-e]'); if (!b) return;
+    const id = LS.id, e = LS.art === 'el' ? elDaten(doc, id) : null, B = designBreite(doc);
+    ({
+      dup: () => elDuplizieren(doc, id), del: () => elLoeschen(doc, id),
+      links: () => elAendern(doc, id, (x) => { x.x = 0; }),
+      mitte: () => { const bw = e && e.fluss ? blockInnen(elKnoten(doc, id).parentElement).w : B; elAendern(doc, id, (x) => { x.x = Math.max(0, Math.round((bw - x.w) / 2)); }); },
+      rechts: () => { const bw = e && e.fluss ? blockInnen(elKnoten(doc, id).parentElement).w : B; elAendern(doc, id, (x) => { x.x = Math.max(0, Math.round(bw - x.w)); }); },
+      davor: () => flussSchritt(doc, id, -1), danach: () => flussSchritt(doc, id, 1),
+      vorn: () => elEbene(doc, id, 1), hinten: () => elEbene(doc, id, -1),
+      fest: () => { elAendern(doc, id, (x) => { x.fest = !x.fest; if (!x.fest) delete x.fest; }); advPanel(); },
+      'bild-waehlen': () => e && elBildEditor(doc, id),
+      'pb-aus': () => pbAusblenden(id, true), 'pb-reset': () => lZuruecksetzen(false),
+      'pb-hoch': () => lUmordnen(-1), 'pb-runter': () => lUmordnen(1),
+      'pb-eltern': () => { const p = LS.el && lWaehlbar(LS.el.parentElement); if (p && p !== doc.body) waehle(p, 'pb'); },
+      'pb-kleiner': () => lSchrift(-0.05), 'pb-groesser': () => lSchrift(0.05),
+      alle: () => lZuruecksetzen(true),
+    })[b.dataset.e]?.();
+  });
+  // Am Kuerzel ziehen aendert die Zahl: ein Schritt je 2 px, mit Umschalt zehn
+  ziel.addEventListener('pointerdown', (ev) => {
+    const k = ev.target.closest('[data-zieh]'); if (!k) return;
+    const i = k.parentElement.querySelector('input'); if (!i || i.disabled) return;
+    ev.preventDefault(); k.setPointerCapture(ev.pointerId);
+    const x0 = ev.clientX, v0 = +i.value || +i.placeholder || 0, schritt = +i.step || 1;
+    let bewegt = false;
+    const mm = (m) => {
+      const n = Math.round((m.clientX - x0) / 2) * (m.shiftKey ? 10 : 1);
+      if (!n && !bewegt) return; bewegt = true;
+      let v = Math.round((v0 + n * schritt) / schritt) * schritt;
+      if (i.min !== '') v = Math.max(+i.min, v); if (i.max !== '') v = Math.min(+i.max, v);
+      i.value = +v.toFixed(2); advFeld(i.dataset.f, i.value, false);
+    };
+    const mu = () => { k.removeEventListener('pointermove', mm); k.removeEventListener('pointerup', mu); if (bewegt) advFeld(i.dataset.f, i.value, true); };
+    k.addEventListener('pointermove', mm); k.addEventListener('pointerup', mu);
+  });
+}
+// Werkzeugleiste: Klick waehlt das Werkzeug, Ziehen bringt das Element direkt an seinen Platz
+$$('#werkzeuge [data-wz]').forEach((b) => {
+  b.onclick = () => setzeWz(b.dataset.wz === LS.wz ? 'waehlen' : b.dataset.wz);
+  if (b.dataset.wz !== 'waehlen') { b.draggable = true; b.addEventListener('dragstart', (ev) => { ev.dataTransfer.setData(EL_DRAG, b.dataset.wz); ev.dataTransfer.effectAllowed = 'copy'; }); }
+});
+$$('#werkzeuge [data-raster]').forEach((b) => b.onclick = () => { const k = b.dataset.raster; RASTER[k] = !RASTER[k]; rasterMerken(); advSync(); });
+function setzeAnordnung(bloecke) {
+  RASTER.fluss = !!bloecke; rasterMerken(); advSync();
+  melde(RASTER.fluss ? 'Blöcke: neue Elemente rücken den Inhalt nach unten, Ziehen setzt um, Abstände an den Griffen.' : 'Frei: Elemente liegen frei über der Seite, wie in Figma.');
+}
+$$('#werkzeuge [data-fluss]').forEach((b) => b.onclick = () => setzeAnordnung(+b.dataset.fluss));
+// Auswahl der Bloecke am Plus
+$$('#block-menue [data-typ]').forEach((b) => b.onclick = async () => {
+  const m = $('#block-menue'), doc = m._doc, ort = m._ort, typ = b.dataset.typ; blockMenueZu();
+  if (!doc || !ort) return;
+  if (typ !== 'bild') { elEinfuegen(doc, typ, { x: 0, ...flussMass(doc, typ, ort) }, null, ort); return; }
+  const f = await dateiWaehlen(); if (!f) return;
+  const bl = await bildLesen(f); if (!bl) return;
+  elEinfuegen(doc, 'bild', { x: 0, ...bildMass(bl, blockInnen(ort.c).w) }, { src: bl.src, nb: bl.nb, nh: bl.nh }, ort);
+});
+// Alles, was am Modus haengt: Leisten, Raster, Rahmen, Panels
+function advSync() {
+  const an = modus === 'layout';
+  $$('#werkzeuge [data-raster]').forEach((b) => b.setAttribute('aria-pressed', String(!!RASTER[b.dataset.raster])));
+  $$('#werkzeuge [data-fluss]').forEach((b) => b.setAttribute('aria-pressed', String(!!+b.dataset.fluss === !!RASTER.fluss)));
+  const doc = LS.doc;
+  if (doc && doc.body && (!an || !RASTER.fluss)) zeigePlus(doc, null);
+  if (doc && doc.body) { rasterZeichnen(doc); lRahmen(); doc.documentElement.classList.toggle('pitch-wz', an && LS.wz !== 'waehlen'); }
+  if (an) { advPanel(); advLinks(); }
 }
 // ---------- Sprache der Oberflaeche: Deutsch oder Englisch (Robin, 13.10.2026) ----------
 // Die Oberflaeche ist deutsch geschrieben. Auf Englisch uebersetzt ein Beobachter jeden Text und jedes
@@ -2341,12 +3825,11 @@ const EN_TEXT = {
   'Geräte-Vorschau: der Entwurf auf Monitor, Tablet und Smartphone (G)': 'Device preview: the draft on monitor, tablet and smartphone (G)',
   'Präsentieren': 'Present', 'Präsentieren, ohne Leiste (P)': 'Present, without toolbar (P)', 'Exportieren': 'Export',
   'Exportieren: PDF, Geräte-Mockup, Pitch-Datei': 'Export: PDF, device mock-up, draft file', 'Mehr': 'More',
-  'Gerät': 'Device', 'Modus': 'Mode', 'Bearbeiten': 'Edit', 'Ansehen': 'View',
-  'Bearbeiten: Texte und Bilder anklicken und ändern (E)': 'Edit: click texts and images to change them (E)',
-  'Ansehen: durch die Website klicken, Links sind aktiv (E)': 'View: click through the website, links are active (E)',
-  'Advanced: Bausteine verschieben und Schriftgrößen ändern (A)': 'Advanced: move blocks and change font sizes (A)',
-  'Bearbeiten: Texte und Bilder anklicken.': 'Edit: click texts and images.', 'Ansehen: Links führen durch die Website.': 'View: links lead through the website.',
-  'Advanced: Baustein anklicken und ziehen, Pfeiltasten schieben, + und − ändern die Schrift.': 'Advanced: click and drag a block, arrow keys nudge, + and − change the font size.',
+  'Gerät': 'Device', 'Modus': 'Mode',
+  'Simple: Texte, Bilder, Farben und Schrift ändern, für alle (A)': 'Simple: change texts, images, colours and fonts, for everyone (A)',
+  'Advanced: frei gestalten wie in Figma, Elemente einfügen, verschieben, am Raster ausrichten (A)': 'Advanced: design freely like in Figma, add, move and align elements on a grid (A)',
+  'Simple: Texte und Bilder anklicken und ändern.': 'Simple: click texts and images to change them.',
+  'Advanced: Werkzeuge oben, Ebenen links, Design rechts. Alles rastet am Raster ein.': 'Advanced: tools at the top, layers on the left, design on the right. Everything snaps to the grid.',
   'Kleiner': 'Smaller', 'Größer': 'Larger', 'Einpassen': 'Fit', 'Zurück zur Standardansicht': 'Back to the default view', 'Standardansicht': 'Default view',
   'Vorschau der Online-Sammlung': 'Preview of the online collection', 'Einfach anklicken:': 'Just click:',
   'Texte tippen, Bilder ersetzen und verschieben.': 'type texts, replace and move images.', 'Hinweis schließen': 'Close hint',
@@ -2504,6 +3987,75 @@ const EN_TEXT = {
   'Layout dieser Seite zurückgesetzt.': 'Layout of this page reset.', 'Auf dieser Seite ist nichts verändert.': 'Nothing has been changed on this page.',
   'Steht schon ganz oben in seinem Block.': 'Already at the top of its block.', 'Steht schon ganz unten in seinem Block.': 'Already at the bottom of its block.',
   'Sprache': 'Language',
+  // Advanced wie Figma (29.10.2026): Werkzeuge, Ebenen, Design
+  'Werkzeuge': 'Tools', 'Auswählen': 'Select', 'Auswählen und verschieben (V)': 'Select and move (V)',
+  'Überschrift': 'Heading', 'Überschrift (H)': 'Heading (H)', 'Text (T)': 'Text (T)', 'Fläche': 'Shape', 'Fläche (R)': 'Shape (R)', 'Kreis': 'Circle', 'Kreis (O)': 'Circle (O)',
+  'Linie': 'Line', 'Linie (L)': 'Line (L)', 'Bild': 'Image', 'Bild (I)': 'Image (I)', 'Knopf': 'Button', 'Knopf (B)': 'Button (B)',
+  'Raster zeigen (Umschalt+G)': 'Show grid (Shift+G)', 'Raster zeigen': 'Show grid', 'Am Raster einrasten': 'Snap to grid',
+  'Ebenen': 'Layers', 'Eigene Elemente': 'Your elements', 'Geänderte Bausteine der Seite': 'Changed page blocks',
+  'Noch keine eigenen Elemente. Oben ein Werkzeug wählen und auf die Seite klicken, oder es auf die Seite ziehen.': 'No elements of your own yet. Choose a tool above and click on the page, or drag it onto the page.',
+  'Noch nichts geändert. Einen Baustein der Seite anklicken, ziehen oder an den Griffen ändern.': 'Nothing changed yet. Click a block on the page, drag it or change it at the handles.',
+  'Sperren': 'Lock', 'Entsperren': 'Unlock', 'Einblenden': 'Show', 'Duplizieren (Strg+D)': 'Duplicate (Ctrl+D)', 'Löschen (Entf)': 'Delete (Del)',
+  'Position und Größe': 'Position and size', 'Lage und Größe': 'Position and size', 'Abstand von links': 'Distance from the left', 'Abstand von oben': 'Distance from the top',
+  'Breite': 'Width', 'Höhe': 'Height', 'Links an die Seite': 'Align to the left of the page', 'Mittig auf die Seite': 'Centre on the page', 'Rechts an die Seite': 'Align to the right of the page',
+  'Nach hinten (Strg+[)': 'Send backward (Ctrl+[)', 'Nach vorn (Strg+])': 'Bring forward (Ctrl+])',
+  'Schrift der Überschriften': 'Heading font', 'Schrift der Texte': 'Body font', 'Schriftgröße': 'Font size', 'Schriftstärke': 'Font weight',
+  'Leicht': 'Light', 'Normal': 'Regular', 'Mittel': 'Medium', 'Halbfett': 'Semibold', 'Fett': 'Bold', 'Zeilenhöhe': 'Line height', 'Laufweite in Prozent': 'Letter spacing in per cent',
+  'Links': 'Left', 'Mittig': 'Centre', 'Rechts': 'Right', 'Versalien': 'Capitals', 'Textfarbe': 'Text colour',
+  'Bild ersetzen': 'Replace image', 'Bild wählen': 'Choose image', 'Füllen': 'Fill', 'Ganz zeigen': 'Show whole',
+  'Farbe': 'Colour', 'Füllung': 'Fill', 'Keine': 'None', 'Rand': 'Border', 'Randstärke': 'Border width', 'Wirkung': 'Effects', 'Ecken': 'Corners',
+  'Deckkraft in Prozent': 'Opacity in per cent', 'Schatten': 'Shadow', 'Eigene Farbe': 'Custom colour', 'Wie im Template': 'As in the template', 'Weiß': 'White', 'Schwarz': 'Black',
+  'Versatz nach rechts': 'Offset to the right', 'Versatz nach unten': 'Offset downwards',
+  'Breite, leer heißt wie im Template': 'Width, empty means as in the template', 'Höhe, leer heißt wie im Template': 'Height, empty means as in the template',
+  'Ecken, leer heißt wie im Template': 'Corners, empty means as in the template', 'Schrift kleiner': 'Smaller text', 'Schrift größer': 'Larger text',
+  'Block': 'Block', 'Link': 'Link', 'Grafik': 'Graphic', 'Eintrag': 'Item', 'Kopfzeile': 'Header', 'Menü': 'Menu', 'Bereich': 'Section', 'Formular': 'Form', 'Feld': 'Field',
+  'Etwas auf der Seite anklicken, um es zu ändern. Neue Elemente mit den Werkzeugen oben.': 'Click something on the page to change it. Add new elements with the tools above.',
+  'Raster': 'Grid', 'Rastergröße in px': 'Grid size in px', 'Rand links und rechts in px': 'Margin left and right in px', 'Abstand zwischen den Spalten in px': 'Gutter between the columns in px',
+  'Tastenkürzel': 'Keyboard shortcuts', 'Diese Seite': 'This page', 'Seite zurücksetzen': 'Reset page',
+  'Layout und eigene Elemente gelten je Template, Seite und Gerät.': 'Layout and your own elements apply per template, page and device.',
+  'Umschalt+G': 'Shift+G', 'Alt + Ziehen': 'Alt + drag', 'Strg + Ziehen': 'Ctrl + drag', 'Umschalt': 'Shift', 'Pfeiltasten': 'Arrow keys', 'Strg+D': 'Ctrl+D',
+  'Strg+C': 'Ctrl+C', 'Strg+V': 'Ctrl+V', 'Strg+]': 'Ctrl+]', 'Strg+[': 'Ctrl+[', 'Entf': 'Del', 'Doppelklick': 'Double-click',
+  'Überschrift, Text': 'Heading, text', 'Fläche, Kreis, Linie': 'Shape, circle, line', 'Bild, Knopf': 'Image, button', 'Kopie ziehen': 'Drag a copy', 'Ohne Einrasten': 'Without snapping',
+  'Gerade ziehen, Seitenverhältnis': 'Drag straight, keep proportions', '1 px, mit Umschalt 10 px': '1 px, with Shift 10 px', 'Duplizieren': 'Duplicate', 'Kopieren, Einsetzen': 'Copy, paste',
+  'Nach vorn, nach hinten': 'Forward, backward', 'Löschen oder ausblenden': 'Delete or hide', 'Größerer Baustein': 'Larger block', 'Text bearbeiten': 'Edit text',
+  'Gelöscht. Strg+Z holt es zurück.': 'Deleted. Ctrl+Z brings it back.', 'Layout dieser Seite zurückgesetzt. Strg+Z holt es zurück.': 'Layout of this page reset. Ctrl+Z brings it back.',
+  'Ausgeblendet. In der Ebenenliste links wieder einblenden.': 'Hidden. Show it again in the layer list on the left.',
+  'Liegt schon ganz vorn.': 'Already at the front.', 'Liegt schon ganz hinten.': 'Already at the back.',
+  'Kopiert. Strg+V setzt es ein, auch auf anderen Seiten.': 'Copied. Ctrl+V pastes it, on other pages too.',
+  // Bearbeiten oder Klicken, Platz schaffen, Bildfeld (29.10.2026, zweite Runde)
+  'Bearbeiten oder klicken': 'Edit or click', 'Bearbeiten': 'Edit', 'Klicken': 'Click',
+  'Bearbeiten: Texte, Bilder und Elemente anklicken und ändern (E)': 'Edit: click texts, images and elements to change them (E)',
+  'Klicken: durch die Website klicken, Links sind aktiv (E)': 'Click: click through the website, links are active (E)',
+  'Klicken: Links führen durch die Website.': 'Click: links lead through the website.', 'Bearbeiten: anklicken und ändern.': 'Edit: click to change.',
+  'Platz schaffen': 'Make room', 'Platz schaffen: neue Elemente schieben den Inhalt darunter nach unten': 'Make room: new elements push the content below down',
+  'Platz schaffen an: neue Elemente schieben den Inhalt darunter nach unten.': 'Make room on: new elements push the content below down.',
+  'Platz schaffen aus: neue Elemente liegen frei über der Seite.': 'Make room off: new elements float freely above the page.',
+  'Einfügen': 'Insert', 'Platz schaffen beim Einfügen': 'Make room when inserting',
+  'An: ein neues Element schiebt den Inhalt darunter nach unten. Aus: es liegt frei über der Seite.': 'On: a new element pushes the content below down. Off: it floats freely above the page.',
+  'Löschen': 'Delete', 'Im Fluss': 'In flow', 'Frei': 'Free', 'Einzug von links im Block': 'Indent from the left of the block', 'Abstand oben und unten': 'Spacing above and below',
+  'Links im Block': 'Left in the block', 'Mittig im Block': 'Centre in the block', 'Rechts im Block': 'Right in the block',
+  'Eine Stelle nach oben (↑)': 'One place up (↑)', 'Eine Stelle nach unten (↓)': 'One place down (↓)',
+  'Im Fluss: schiebt den Inhalt darunter nach unten. Ziehen setzt es an eine andere Stelle.': 'In flow: pushes the content below down. Drag to put it somewhere else.',
+  'Hier lässt sich nichts einschieben. Das Element über einen Block der Seite ziehen.': 'Nothing can be inserted here. Drag the element over a block of the page.',
+  'Blöcke': 'Blocks', 'Anordnung': 'Arrangement', 'Block einfügen': 'Insert block', 'Block hier einfügen': 'Insert block here',
+  'Blöcke: alles steht untereinander und rückt nach, wie in einem Baukasten': 'Blocks: everything stacks and moves along, like a site builder',
+  'Frei: Elemente liegen frei über der Seite, wie in Figma': 'Free: elements float freely above the page, like in Figma',
+  'Blöcke: neue Elemente rücken den Inhalt nach unten, Ziehen setzt um, Abstände an den Griffen.': 'Blocks: new elements push the content down, drag to move, spacing at the handles.',
+  'Frei: Elemente liegen frei über der Seite, wie in Figma.': 'Free: elements float freely above the page, like in Figma.',
+  'Blöcke: alles steht untereinander. Neues rückt den Inhalt nach unten, Ziehen setzt um, Abstände an den Griffen. Das Plus zwischen zwei Blöcken fügt ein.': 'Blocks: everything stacks. New content pushes the rest down, drag to move, spacing at the handles. The plus between two blocks inserts.',
+  'Advanced: das Plus zwischen den Blöcken fügt ein, Ziehen setzt um, Abstände an den Griffen.': 'Advanced: the plus between blocks inserts, drag to move, spacing at the handles.',
+  'Etwas auf der Seite anklicken, um es zu ändern. Neue Blöcke über das Plus zwischen zwei Blöcken oder mit den Werkzeugen oben.': 'Click something on the page to change it. Add new blocks with the plus between two blocks or the tools above.',
+  'Größe und Abstand': 'Size and spacing', 'Abstand': 'Spacing', 'Abstand oben': 'Spacing above', 'Abstand unten': 'Spacing below', 'Abstand links im Block': 'Spacing left in the block',
+  'Abstand oben, leer heißt wie im Template': 'Spacing above, empty means as in the template', 'Abstand unten, leer heißt wie im Template': 'Spacing below, empty means as in the template',
+  'Nach rechts verschoben': 'Moved to the right', 'Abstand oben: ziehen': 'Spacing above: drag', 'Abstand unten: ziehen': 'Spacing below: drag',
+  'Ziehen setzt den Block um, auch nach links und rechts. Abstände an den Griffen oben und unten.': 'Drag to move the block, also left and right. Spacing at the handles above and below.',
+  'Rand, Ecken, Deckkraft': 'Border, corners, opacity', 'Hier anfassen und ziehen, um den Block zu verschieben': 'Grab here and drag to move the block',
+  'Den Rahmen an den Ecken und Kanten ziehen, um zuzuschneiden. Im Rahmen ziehen verschiebt den Ausschnitt. Ein Format hält das Seitenverhältnis.': 'Drag the frame at its corners and edges to crop. Drag inside the frame to move the crop. A format keeps the aspect ratio.',
+  'Noch kein Bild. Rechts eines hochladen oder wählen.': 'No image yet. Upload or choose one on the right.', 'Bild zuschneiden': 'Crop image', 'Frei': 'Free', 'Zuschneiden': 'Crop', 'Text bearbeiten (Enter)': 'Edit text (Enter)',
+  'Bild (I): Datei wählen, dann auf die Seite klicken': 'Image (I): choose a file, then click on the page',
+  'Format wählen schneidet das Bild zu. Bild ziehen wählt den Ausschnitt, der Regler zoomt.': 'Choosing a format crops the image. Drag the image to choose the crop, the slider zooms.',
+  'Block: eine Stelle hoch, runter': 'Block: one place up, down',
+  'Bild und Ausschnitt': 'Image and crop', 'Bild übernommen.': 'Image applied.', 'Bearbeiten oder Klicken': 'Edit or click', 'Im Fluss: eine Stelle hoch, runter': 'In flow: one place up, down',
 };
 const EN_MUSTER = [
   [/^(Template|Modus|Seite), (Monitor|Laptop|Tablet|Smartphone)$/, (m, a, b) => `${{ Template: 'Template', Modus: 'Mode', Seite: 'Page' }[a]}, ${b}`],
@@ -2517,6 +4069,12 @@ const EN_MUSTER = [
   [/^(\S+) herunterladen(?:, (\d+) Seiten?)?$/, (m, f, n) => `Download ${f}${n ? `, ${n} ${n === '1' ? 'page' : 'pages'}` : ''}`],
   [/^(.+) als Hex$/, (m, a) => `${enText(a)} as hex`],
   [/^Fester Rahmen, (\d+) × (\d+) px wie im Template$/, (m, a, b) => `Fixed frame, ${a} × ${b} px as in the template`],
+  [/^(.+): auf die Seite klicken oder einen Rahmen aufziehen\.$/, (m, a) => `${enText(a)}: click on the page or drag a frame.`],
+  [/^(.+): auf die Seite klicken, die Linie zeigt, wo es hinkommt\.$/, (m, a) => `${enText(a)}: click on the page, the line shows where it goes.`],
+  [/^Bildfeld, (\d+) × (\d+) px$/, (m, a, b) => `Image field, ${a} × ${b} px`],
+  [/^Ausschnitt, (\d+) × (\d+) px$/, (m, a, b) => `Crop, ${a} × ${b} px`],
+  [/^Spalten auf (.+)$/, (m, a) => `Columns on ${a}`],
+  [/^Spalten gelten für (.+)\.$/, (m, a) => `Columns apply to ${a}.`],
 ];
 let sprache = 'de';
 try { sprache = localStorage.getItem(SPRACHE_SPEICHER) || (/^de/i.test(navigator.language || '') ? 'de' : 'en'); } catch (e) { /* ohne Speicher */ }
@@ -2585,16 +4143,22 @@ function setzeSprache(s) {
   uebersetzeKnoten(document.body, true);
   const doc = fenster.contentDocument;
   if (doc && doc.body) doc.querySelectorAll('[data-pitch-ui]').forEach((el) => uebersetzeKnoten(el, true));
+  advPanel();
 }
 $$('[data-sprache]').forEach((b) => b.onclick = () => setzeSprache(b.dataset.sprache));
 sprachBeobachter(document);
 setzeSprache(sprache);
-// Drei Modi: Bearbeiten (Klick aendert Text und Bild), Ansehen (Links fuehren weiter), Advanced (Layout)
-let modusWahl = 'bearbeiten';
-function setzeModus(m) {
-  modusWahl = m; modus = m;
-  if (m !== 'layout') waehle(null);
-  $$('[data-modus]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.modus === m)));
+// Zwei Modi wie im Mockup Studio (Robin, 29.10.2026): Simple ('bearbeiten', Klick aendert Text und Bild, fuer alle)
+// und Advanced ('layout', frei gestalten wie in Figma). Daneben in beiden Modi Bearbeiten oder Klicken (Taste E):
+// Klicken heisst 'ansehen', Links fuehren durch die Website, wie beim Praesentieren
+let modusWahl = 'bearbeiten', klicken = false;
+function modusAnwenden() {
+  modus = klicken || document.body.classList.contains('vorschau') ? 'ansehen' : modusWahl;
+  document.body.classList.toggle('advanced', modusWahl === 'layout');
+  document.body.classList.toggle('klicken', klicken);
+  if (modus !== 'layout') { waehle(null); setzeWz('waehlen'); }
+  $$('[data-modus]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.modus === modusWahl)));
+  $$('[data-klick]').forEach((b) => b.setAttribute('aria-pressed', String(!!+b.dataset.klick === klicken)));
   const doc = fenster.contentDocument;
   if (doc && doc.body) {
     doc.querySelectorAll('.pitch-hover').forEach((e) => e.classList.remove('pitch-hover'));
@@ -2602,16 +4166,24 @@ function setzeModus(m) {
     if (doc.activeElement && doc.activeElement.isContentEditable) doc.activeElement.blur();
   }
   $('#hinweis').hidden = true;
-  wende(doc);
-  melde(m === 'ansehen' ? 'Ansehen: Links führen durch die Website.' : m === 'layout' ? 'Advanced: Baustein anklicken und ziehen, Pfeiltasten schieben, + und − ändern die Schrift.' : 'Bearbeiten: Texte und Bilder anklicken.');
+  wende(doc); masse(); advSync();
+}
+function setzeModus(m) {
+  modusWahl = m; modusAnwenden();
+  melde(m === 'layout' ? 'Advanced: das Plus zwischen den Blöcken fügt ein, Ziehen setzt um, Abstände an den Griffen.' : 'Simple: Texte und Bilder anklicken und ändern.');
+}
+function setzeKlicken(an) {
+  klicken = !!an; modusAnwenden();
+  melde(klicken ? 'Klicken: Links führen durch die Website.' : 'Bearbeiten: anklicken und ändern.');
 }
 $$('[data-modus]').forEach((b) => b.onclick = () => setzeModus(b.dataset.modus));
+$$('[data-klick]').forEach((b) => b.onclick = () => setzeKlicken(!!+b.dataset.klick));
 function vorschau(an) {
   popZu(); menueZu();
   document.body.classList.toggle('vorschau', an);
-  modus = an ? 'ansehen' : modusWahl;
+  modus = an || klicken ? 'ansehen' : modusWahl;
   $('#hinweis').hidden = true;
-  masse(); wende(fenster.contentDocument);
+  masse(); wende(fenster.contentDocument); advSync();
   if (!an && document.fullscreenElement) document.exitFullscreen();
 }
 $('#vorschau-an').onclick = () => vorschau(true);
@@ -2621,6 +4193,7 @@ $('#hinweis-zu').onclick = () => { $('#hinweis').hidden = true; try { localStora
 
 function tasten(e) {
   if (e.key === 'Escape') {
+    if (!$('#block-menue').hidden) { blockMenueZu(); return; }
     if (offen) { popZu(); return; }
     if (!$('#menue').hidden) { menueZu(); return; }
     if (document.body.classList.contains('vorschau') && !document.fullscreenElement) { vorschau(false); return; }
@@ -2636,8 +4209,8 @@ function tasten(e) {
   const dialog = $('#export').open || $('#willkommen').open || $('#be').open || $('#geraete').open;
   if (!strg && k === 'g' && !dialog) geraeteAuf();
   if (!strg && k === 'd' && !dialog) setzeDunkel(!P.dunkel);
-  if (!strg && k === 'e' && !dialog) setzeModus(modusWahl === 'bearbeiten' ? 'ansehen' : 'bearbeiten');
   if (!strg && k === 'a' && !dialog) setzeModus(modusWahl === 'layout' ? 'bearbeiten' : 'layout');
+  if (!strg && k === 'e' && !dialog) setzeKlicken(!klicken);
   if (!strg && k === 'p' && !dialog) vorschau(!document.body.classList.contains('vorschau'));
 }
 document.addEventListener('keydown', tasten);
